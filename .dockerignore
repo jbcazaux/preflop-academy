@@ -1,0 +1,7 @@
+build/
+.idea/
+node_modules
+npm-debug.log
+azure-pipelines.yml
+.prettierrc
+test-report.xml
