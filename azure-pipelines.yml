@@ -71,12 +71,11 @@ stages:
               - task: AzureRmWebAppDeployment@4
                 inputs:
                   ConnectionType: 'AzureRM'
-                  azureSubscription: '$(azureSubscription)'
+                  azureSubscription: 'Abonnement Azure 1(a95d975e-5977-4349-86f4-87b81555a0e0)'
                   appType: 'webAppContainer'
-                  WebAppName: $(appName)
-                  ResourceGroupName: $(resourceGroupName)
-                  DockerNamespace: $(containerRegistry)
-                  DockerRepository: $(imageRepository)
+                  WebAppName: 'preflop-academy'
+                  DockerNamespace: '$(containerRegistry)'
+                  DockerRepository: '$(imageRepository)'
                   DockerImageTag: '$(tag)'
 
 
