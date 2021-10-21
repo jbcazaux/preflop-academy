@@ -1,0 +1,81 @@
+trigger:
+  - master
+pr:
+  drafts: false
+  autoCancel: true
+  branches:
+    include:
+      - master
+
+resources:
+  - repo: self
+
+variables:
+  azureSubscription: 'Abonnement Azure 1(a95d975e-5977-4349-86f4-87b81555a0e0)'
+  dockerRegistryServiceConnection: 'efd620cb-8723-4b45-9528-0912f1444c83'
+  resourceGroupName: 'preflop-academy'
+  imageRepository: 'preflopacademy'
+  containerRegistry: 'preflopacademy.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
+  tag: '$(Build.BuildId)'
+  
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: Build
+  displayName: Build and push stage
+  jobs:
+  - job: InstallAndTest
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+      - task: NodeTool@0
+        displayName: 'npm install & build'
+        inputs:
+          versionSpec: '14.x'
+      - script: |
+          npm ci
+          npm run lint
+          npm run build
+  - job: Build
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
+    displayName: 'Build and Push Docker Image'
+    pool:
+      vmImage: $(vmImageName)
+    steps:  
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest
+
+- stage: Deploy
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+    - deployment: DeployAppService
+      displayName: Deploy App Service on Staging slot
+      pool:
+        vmImage: $(vmImageName)
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - task: AzureRmWebAppDeployment@4
+                inputs:
+                  ConnectionType: 'AzureRM'
+                  azureSubscription: '$(azureSubscription)'
+                  appType: 'webAppContainer'
+                  WebAppName: 'preflop-academy'
+                  ResourceGroupName: $(resourceGroupName)
+                  DockerNamespace: $(containerRegistry)
+                  DockerRepository: $(imageRepository)
+                  DockerImageTag: '$(tag)'
+
+
