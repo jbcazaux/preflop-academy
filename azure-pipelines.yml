@@ -14,6 +14,7 @@ variables:
   azureSubscription: 'Abonnement Azure 1(a95d975e-5977-4349-86f4-87b81555a0e0)'
   dockerRegistryServiceConnection: 'efd620cb-8723-4b45-9528-0912f1444c83'
   resourceGroupName: 'preflop-academy'
+  appName: 'preflop-academy'
   imageRepository: 'preflopacademy'
   containerRegistry: 'preflopacademy.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
@@ -72,7 +73,7 @@ stages:
                   ConnectionType: 'AzureRM'
                   azureSubscription: '$(azureSubscription)'
                   appType: 'webAppContainer'
-                  WebAppName: 'preflop-academy'
+                  WebAppName: $(appName)
                   ResourceGroupName: $(resourceGroupName)
                   DockerNamespace: $(containerRegistry)
                   DockerRepository: $(imageRepository)
