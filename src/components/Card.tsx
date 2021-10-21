@@ -6,6 +6,7 @@ interface CardsProps {
   colorCard: number
   value: number
   selected: boolean
+  mobile: boolean
 }
 
 const Card = styled.div.attrs<CardsProps>(({ colorCard: color, value }) => ({
@@ -16,8 +17,9 @@ const Card = styled.div.attrs<CardsProps>(({ colorCard: color, value }) => ({
   background-position: ${({ colorCard: color, value }) => `-${5 + 50 * (value - 1)}px -${5 + 70 * (color - 1)}px`};
   width: 50px;
   height: 70px;
-  transform: ${({ selected }) => (selected ? 'scale(1.2)' : 'scale(0.75)')};
-  margin: -10px -5px;
+  transform: ${({ selected, mobile }) =>
+    selected ? `scale(${mobile ? '1' : '1.2'})` : `scale(${mobile ? '.5' : '.75'})`};
+  margin: ${({ mobile }) => mobile ? '-10px -10px': '-10px -5px'};
   z-index: ${({ selected }) => (selected ? 2 : 1)};
 `
 
@@ -25,6 +27,7 @@ interface Props {
   card: CardObject
   selected: boolean
   onClick: (card: CardObject) => void
+  mobile: boolean
 }
 
 const colorsIndex: { [key in Color]: number } = {
@@ -34,10 +37,12 @@ const colorsIndex: { [key in Color]: number } = {
 
 const valuesIndex = (value: Value) => value || 1
 
-const CardComponent: React.FC<Props> = ({ card, onClick, selected }) => {
+const CardComponent: React.FC<Props> = ({ card, onClick, selected, mobile }) => {
   const colorIndex = colorsIndex[card.color]
   const valueIndex = valuesIndex(card.value)
-  return <Card colorCard={colorIndex} value={valueIndex} onClick={() => onClick(card)} selected={selected} />
+  return (
+    <Card colorCard={colorIndex} value={valueIndex} onClick={() => onClick(card)} selected={selected} mobile={mobile} />
+  )
 }
 
 export default React.memo(CardComponent)

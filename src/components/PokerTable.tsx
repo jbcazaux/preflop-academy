@@ -196,47 +196,49 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
 
   const onMouseClick = useCallback(
     (event: MouseEvent) => {
-      if (event.x < width / 3 + canvasMarge) {
+      if (event.x < canvas.width / 3 + canvasMarge) {
         onButtonChange(event.y < canvas.centerY ? 2 : 1)
-      } else if (event.x < (width * 2) / 3 + canvasMarge) {
+      } else if (event.x < (canvas.width * 2) / 3 + canvasMarge) {
         onButtonChange(event.y < canvas.centerY ? 3 : 0)
       } else {
         onButtonChange(event.y < canvas.centerY ? 4 : 5)
       }
     },
-    [canvas, width, onButtonChange]
+    [canvas, onButtonChange]
   )
 
   const onContextMenu = useCallback(
     (event: MouseEvent) => {
       event.preventDefault()
-      if (event.x < width / 3 + canvasMarge) {
+      if (event.x < canvas.width / 3 + canvasMarge) {
         addRaisePosition(event.y < canvas.centerY ? 2 : 1)
-      } else if (event.x < (width * 2) / 3 + canvasMarge) {
+      } else if (event.x < (canvas.width * 2) / 3 + canvasMarge) {
         addRaisePosition(event.y < canvas.centerY ? 3 : 0)
       } else {
         addRaisePosition(event.y < canvas.centerY ? 4 : 5)
       }
     },
-    [addRaisePosition, canvas, width]
+    [addRaisePosition, canvas]
   )
 
   useEffect(() => {
     if (context) {
+      context.fillStyle = 'white'
+      context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
       drawTable(
         context,
-        width / 2 + canvasMarge,
-        canvas.height + (canvasMarge * width) / canvas.height,
-        width / 2,
+        canvas.width / 2 + canvasMarge,
+        canvas.height + (canvasMarge * canvas.width) / canvas.height,
+        canvas.width / 2,
         canvas.height / 2
       )
-      drawPlayers(context, width / 2 + canvasMarge, canvas.height / 2 + canvasMarge, width, canvas.height)
+      drawPlayers(context, canvas.width / 2 + canvasMarge, canvas.height / 2 + canvasMarge, canvas.width, canvas.height)
     } else {
       const c = canvasRef.current
       if (!c) return
       setContext(c.getContext('2d'))
     }
-  }, [canvas, width, context])
+  }, [canvas, context])
 
   useEffect(() => {
     const c = canvasRef.current
@@ -256,9 +258,9 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
     }
     drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition)
     return () => {
-      drawPositions(context, canvas.centerX, canvas.centerY, width, canvas.height, buttonPosition, true)
+      drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, true)
     }
-  }, [context, buttonPosition, canvas, width])
+  }, [context, buttonPosition, canvas])
 
   useEffect(() => {
     if (!context) {
@@ -268,14 +270,14 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
     return () => {
       drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions, true)
     }
-  }, [canvas, width, context, raisePositions])
+  }, [canvas, context, raisePositions])
 
   return (
     <canvas
       ref={canvasRef}
-      width={width + 2 * canvas.marge}
+      width={canvas.width + 2 * canvas.marge}
       height={canvas.height + 2 * canvas.marge}
-      style={{ width: `${width + 2 * canvas.marge}px`, height: `${canvas.height + 2 * canvas.marge}px` }}
+      style={{ width: `${canvas.width + 2 * canvas.marge}px`, height: `${canvas.height + 2 * canvas.marge}px` }}
     />
   )
 }

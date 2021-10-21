@@ -1,6 +1,6 @@
 {
-  "name": "flopme",
-  "version": "1.0.0",
+  "name": "preflop-academy",
+  "version": "1.0.1",
   "private": true,
   "devDependencies": {
     "@types/react-dom": "17.0.9",

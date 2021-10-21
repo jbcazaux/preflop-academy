@@ -5,7 +5,7 @@ interface State {
   height: number
 }
 
-const useWindowResize = (): State => {
+const useWindowSize = (): State => {
   const to = useRef<ReturnType<typeof setTimeout>>()
 
   const [windowSize, setWindowSize] = useState<State>({
@@ -37,4 +37,4 @@ const useWindowResize = (): State => {
   return windowSize
 }
 
-export default useWindowResize
+export default useWindowSize

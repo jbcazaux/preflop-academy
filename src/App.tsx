@@ -5,7 +5,7 @@ import { deck, Card as CardObject } from './domain/cards'
 import PokerTable from 'components/PokerTable'
 import Hand from './domain/hand'
 import Gto from './components/Gto'
-import useWindowResize from './useWindowResize'
+import useWindowSize from './useWindowSize'
 
 const Deck = styled.div`
   display: flex;
@@ -22,7 +22,7 @@ const App: React.VFC = () => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [init, setInit] = useState<boolean>(true)
   const [raisePositions, setRaisePositions] = useState<ReadonlyArray<number>>([])
-  const size = useWindowResize()
+  const windowSize = useWindowSize()
 
   const onCardClick = useCallback((card: CardObject) => {
     setHand(prev => prev.addCard(card))
@@ -49,6 +49,8 @@ const App: React.VFC = () => {
     setRaisePositions([])
   }, [buttonPosition])
 
+  const width = Math.min(500,Math.max(250, (windowSize.width * 2) / 3))
+
   return (
     <>
       <PokerTable
@@ -56,7 +58,7 @@ const App: React.VFC = () => {
         onButtonChange={setButtonPosition}
         raisePositions={raisePositions}
         addRaisePosition={onRaise}
-        width={Math.max(250, (size.width * 2) / 3)}
+        width={width}
       />
       <Deck>
         {deck.map(colorDeck => (
@@ -67,6 +69,7 @@ const App: React.VFC = () => {
                 card={card}
                 onClick={onCardClick}
                 selected={init || (!hand.isEmpty() && hand.contains(card))}
+                mobile={windowSize.width <= 470}
               />
             ))}
           </Color>
