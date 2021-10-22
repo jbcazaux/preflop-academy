@@ -62,6 +62,7 @@ stages:
   jobs:
     - deployment: DeployAppService
       displayName: Deploy App Service on Staging slot
+      environment: 'prod'
       pool:
         vmImage: $(vmImageName)
       strategy:
@@ -73,7 +74,7 @@ stages:
                   ConnectionType: 'AzureRM'
                   azureSubscription: 'Abonnement Azure 1(a95d975e-5977-4349-86f4-87b81555a0e0)'
                   appType: 'webAppContainer'
-                  WebAppName: 'preflop-academy'
+                  WebAppName: '$(appName)'
                   DockerNamespace: '$(containerRegistry)'
                   DockerRepository: '$(imageRepository)'
                   DockerImageTag: '$(tag)'
