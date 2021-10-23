@@ -54,6 +54,7 @@
   "scripts": {
     "start": "webpack serve --mode development",
     "build": "webpack --mode production",
+    "lint": "eslint src/** --ext .ts",
     "test": "jest src",
     "test-coverage": "jest --coverage",
     "ncuu": "ncu -u"
