@@ -100,21 +100,21 @@ const foldOrCallOr3bet = (hand: Hand, buttonPosition: number, raisePositions: Re
 
   const _3BetOptions: { [key: number]: { [key: number]: ReadonlyArray<ReadonlyArray<boolean>> } } = {
     0: { 3: b3betsUtg, 4: b3betsMp, 5: b3betsCo },
-    1: { 3: co3betsUtg, 4: co3betsMp },
-    2: { 3: mp3betsUtg },
+    1: { 4: co3betsUtg, 5: co3betsMp },
+    2: { 5: mp3betsUtg },
     3: {},
     4: {
-      0: bb3betsB,
-      1: bb3betsSb,
-      3: bb3betsUtg,
-      4: bb3betsMp,
-      5: bb3betsCo,
+      1: bb3betsUtg,
+      2: bb3betsMp,
+      3: bb3betsCo,
+      4: bb3betsB,
+      5: bb3betsSb,
     },
     5: {
-      0: sb3betsB,
-      3: sb3betsUtg,
-      4: sb3betsMp,
-      5: sb3betsCo,
+      2: sb3betsUtg,
+      3: sb3betsMp,
+      4: sb3betsCo,
+      5: sb3betsB,
     },
   }
 
@@ -131,21 +131,21 @@ const foldOrCallOr3bet = (hand: Hand, buttonPosition: number, raisePositions: Re
       4: bCallsMp,
       5: bCallsCo,
     },
-    1: { 3: coCallsUtg, 4: coCallsMp },
-    2: { 3: mpCallsUtg },
+    1: { 4: coCallsUtg, 5: coCallsMp },
+    2: { 5: mpCallsUtg },
     3: {},
     4: {
-      0: bbCallsB,
-      1: bbCallsSb,
-      3: bbCallsUtg,
-      4: bbCallsMp,
-      5: bbCallsCo,
+      1: bbCallsUtg,
+      2: bbCallsMp,
+      3: bbCallsCo,
+      4: bbCallsB,
+      5: bbCallsSb,
     },
     5: {
-      0: sbCallsB,
       2: sbCallsUtg,
       3: sbCallsMp,
       4: sbCallsCo,
+      5: sbCallsB,
     },
   }
   const callRaise = callRaiseOptions[buttonPosition][rp]
@@ -161,11 +161,17 @@ const foldOrCall3betOr4bet = (hand: Hand, buttonPosition: number, raisePositions
 
   const _4BetOptions: { [key: number]: { [key: number]: ReadonlyArray<ReadonlyArray<boolean>> } } = {
     0: { 1: b4betsSb, 2: b4betsBb },
-    1: {},
-    2: {},
-    3: { 0: utg4betsB, 1: utg4betsSb, 2: utg4betsBb, 4: utg4betsMp, 5: utg4betsCo },
-    4: { 0: mp4betsB, 1: mp4betsSb, 2: mp4betsBb, 5: mp4betsCo },
-    5: { 0: co4betsB, 1: co4betsSb, 2: co4betsBb },
+    1: { 0: co4betsB, 2: co4betsSb, 3: co4betsBb },
+    2: { 1: mp4betsCo, 2: mp4betsB, 3: mp4betsSb, 4: mp4betsBb },
+    3: {
+      1: utg4betsMp,
+      2: utg4betsCo,
+      3: utg4betsB,
+      4: utg4betsSb,
+      5: utg4betsBb,
+    },
+    4: {},
+    5: {},
   }
 
   const [x, y] = xyInTable(hand)
@@ -177,11 +183,22 @@ const foldOrCall3betOr4bet = (hand: Hand, buttonPosition: number, raisePositions
 
   const call3betOptions: { [key: number]: { [key: number]: ReadonlyArray<ReadonlyArray<boolean>> } } = {
     0: { 1: bCalls3betSb, 2: bCalls3betBb },
-    1: { 2: sbCalls3betBb },
-    2: {},
-    3: { 0: utgCalls3betB, 1: utgCalls3betSb, 2: utgCalls3betBb, 4: utgCalls3betMp, 5: utgCalls3betCo },
-    4: { 0: mpCalls3betB, 1: mpCalls3betSb, 2: mpCalls3betBb, 5: mpCalls3betCo },
-    5: { 0: coCalls3betB, 1: coCalls3betSb, 2: coCalls3betBb },
+    1: { 1: coCalls3betB, 2: coCalls3betSb, 3: coCalls3betBb },
+    2: {
+      1: mpCalls3betCo,
+      2: mpCalls3betB,
+      3: mpCalls3betSb,
+      4: mpCalls3betBb,
+    },
+    3: {
+      1: utgCalls3betMp,
+      2: utgCalls3betCo,
+      3: utgCalls3betB,
+      4: utgCalls3betSb,
+      5: utgCalls3betBb,
+    },
+    4: {},
+    5: { 1: sbCalls3betBb },
   }
 
   const call3Bet = call3betOptions[buttonPosition][rp]
