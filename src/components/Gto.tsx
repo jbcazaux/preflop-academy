@@ -1,6 +1,5 @@
 import Hand from 'domain/hand'
-import React from 'react'
-import gto from '../data/gto'
+import gto from 'data/gto'
 import styled from 'styled-components'
 
 const Advice = styled.div`
