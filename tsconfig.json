@@ -7,12 +7,9 @@
     "baseUrl": ".",
     "paths": {
       "actions": ["src/actions/*"],
-      "api": ["src/api/*"],
       "app": ["src/app/*"],
       "components/*": ["src/components/*"],
       "domain/*": ["src/domain/*"],
-      "icons/*": ["src/icons/*"],
-      "reducers/*": ["src/reducers/*"]
     },
     "target": "es5",
     "lib": [
