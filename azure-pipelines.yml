@@ -19,17 +19,15 @@ variables:
   containerRegistry: 'preflopacademy.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
-  
-  # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
 stages:
 - stage: Build
   displayName: Build and push stage
+  pool:
+    vmImage: $(vmImageName)
   jobs:
   - job: InstallAndTest
-    pool:
-      vmImage: $(vmImageName)
     steps:
       - task: NodeTool@0
         displayName: 'npm install & build'
@@ -40,11 +38,10 @@ stages:
           npm run lint
           npm run build
   - job: Build
+    dependsOn: InstallAndTest
     condition: eq(variables['Build.SourceBranch'], 'refs/heads/master')
     displayName: 'Build and Push Docker Image'
-    pool:
-      vmImage: $(vmImageName)
-    steps:  
+    steps:
     - task: Docker@2
       displayName: Build and push an image to container registry
       inputs:
@@ -59,12 +56,12 @@ stages:
 - stage: Deploy
   dependsOn: Build
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  pool:
+    vmImage: $(vmImageName)
   jobs:
     - deployment: DeployAppService
       displayName: Deploy App Service on Staging slot
       environment: 'prod'
-      pool:
-        vmImage: $(vmImageName)
       strategy:
         runOnce:
           deploy:
