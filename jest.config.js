@@ -12,4 +12,8 @@ module.exports = {
     '^(data)/(.*)$': '<rootDir>/src/$1/$2',
     '^(domain)/(.*)$': '<rootDir>/src/$1/$2',
   },
+  "testResultsProcessor": "./node_modules/jest-junit-reporter",
+  "coverageReporters": [
+    "cobertura"
+  ]
 }
