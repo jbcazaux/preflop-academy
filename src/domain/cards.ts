@@ -25,5 +25,7 @@ export const colors = ['DIAMOND', 'CLUB'] as const
 export type Color = typeof colors[number]
 
 export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors.map(color =>
-  Object.values(values).sort((a, b) => a - b).map(value => new Card(color, value))
+  Object.values(values)
+    .sort((a, b) => a - b)
+    .map(value => new Card(color, value))
 )

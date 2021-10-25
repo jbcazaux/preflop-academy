@@ -19,7 +19,7 @@ const Card = styled.div.attrs<CardsProps>(({ colorCard: color, value }) => ({
   height: 70px;
   transform: ${({ selected, mobile }) =>
     selected ? `scale(${mobile ? '1' : '1.2'})` : `scale(${mobile ? '.5' : '.75'})`};
-  margin: ${({ mobile }) => mobile ? '-10px -10px': '-10px -5px'};
+  margin: ${({ mobile }) => (mobile ? '-10px -10px' : '-10px -5px')};
   z-index: ${({ selected }) => (selected ? 2 : 1)};
 `
 

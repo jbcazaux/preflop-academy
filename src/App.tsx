@@ -49,7 +49,7 @@ const App: React.VFC = () => {
     setRaisePositions([])
   }, [buttonPosition])
 
-  const width = Math.min(500,Math.max(250, (windowSize.width * 2) / 3))
+  const width = Math.min(500, Math.max(250, (windowSize.width * 2) / 3))
 
   return (
     <>

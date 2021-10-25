@@ -89,5 +89,3 @@ stages:
                   DockerNamespace: '$(containerRegistry)'
                   DockerRepository: '$(imageRepository)'
                   DockerImageTag: '$(tag)'
-
-
