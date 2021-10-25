@@ -9,7 +9,7 @@ module.exports = (env, argv = {}) => ({
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name]-[hash].js',
+    filename: '[name]-[fullhash].js',
     publicPath: '/',
   },
   plugins: [
@@ -27,6 +27,7 @@ module.exports = (env, argv = {}) => ({
     alias: {
       app: path.resolve(__dirname, 'src/app'),
       components: path.resolve(__dirname, 'src/components'),
+      data: path.resolve(__dirname, 'src/data'),
       domain: path.resolve(__dirname, 'src/domain'),
     },
   },
