@@ -1,6 +1,7 @@
 const HtmlWebPackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 const path = require('path')
 
 module.exports = (env, argv = {}) => ({
@@ -20,6 +21,9 @@ module.exports = (env, argv = {}) => ({
     new MiniCssExtractPlugin({
       filename: argv.mode === 'development' ? '[name].css' : '[name].[hash].css',
       chunkFilename: argv.mode === 'development' ? '[id].css' : '[id].[hash].css',
+    }),
+    new CopyPlugin({
+      patterns: [{ from: 'public' }],
     }),
   ],
   resolve: {
