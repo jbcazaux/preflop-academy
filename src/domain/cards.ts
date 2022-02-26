@@ -1,6 +1,27 @@
 export class Card {
   constructor(readonly color: Color, readonly value: Value) {}
 
+  static random = (not: ReadonlyArray<Card>): Card => {
+    const randomCard = () : Card => {
+      const value = Math.floor(Math.random() * 14)
+      const color = colors[Math.floor(Math.random() * 2)]
+      return new Card(color, value === 1 ? 0 : value)
+    }
+
+    let retriesLeft = 100
+    let card: Card
+    do {
+      retriesLeft--
+      card = randomCard()
+    } while (not.some(c => c.equals(card)) && retriesLeft > 0)
+
+    if (retriesLeft <= 0) {
+      throw new Error('Cannot get a card')
+    }
+
+    return card
+  }
+
   equals = (other: Card): boolean => this.color === other.color && this.value === other.value
 }
 

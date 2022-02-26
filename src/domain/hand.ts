@@ -31,4 +31,10 @@ export default class Hand {
   contains = (card: Card): boolean => this.card1?.equals(card) || this.card2?.equals(card) || false
 
   isFull = (): boolean => this.card1 !== null && this.card2 !== null
+
+  random = () : Hand => {
+    const c1 = Card.random([])
+    const c2 = Card.random([c1])
+    return new Hand(c1, c2)
+  }
 }
