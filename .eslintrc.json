@@ -30,6 +30,7 @@
     "plugin:jest/recommended"
   ],
   "rules": {
+    "@typescript-eslint/no-shadow": "error",
     "arrow-body-style": [
       "error",
       "as-needed"
@@ -41,7 +42,7 @@
     "no-duplicate-imports": "error",
     "no-else-return": "error",
     "no-self-compare": "error",
-    "no-shadow": "error",
+    "no-shadow": "off",
     "jsx-quotes": [
       "error",
       "prefer-double"

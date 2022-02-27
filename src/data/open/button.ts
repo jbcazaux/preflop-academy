@@ -1,4 +1,6 @@
-const sb : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const button : HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
@@ -196,4 +198,4 @@ const sb : ReadonlyArray<ReadonlyArray<boolean>> = [
   ],
 ]
 
-export default sb
+export default button

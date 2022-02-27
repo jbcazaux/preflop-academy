@@ -1,11 +1,13 @@
-const utg : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const mp : HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
     /*AQs*/ true,
     /*AJs*/ true,
     /*ATs*/ true,
-    /*A9s*/ false,
+    /*A9s*/ true,
     /*A8s*/ false,
     /*A7s*/ false,
     /*A6s*/ false,
@@ -19,7 +21,7 @@ const utg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*KK*/ true,
     /*KQs*/ true,
     /*KJs*/ true,
-    /*KTs*/ false,
+    /*KTs*/ true,
     /*K9s*/ false,
     /*K8s*/ false,
     /*K7s*/ false,
@@ -46,7 +48,7 @@ const utg : ReadonlyArray<ReadonlyArray<boolean>> = [
   ],
   [
     /*AJo*/ true,
-    /*KJo*/ false,
+    /*KJo*/ true,
     /*QJo*/ false,
     /*JJ*/ true,
     /*JTs*/ true,
@@ -60,7 +62,7 @@ const utg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*J2s*/ false,
   ],
   [
-    /*ATo*/ false,
+    /*ATo*/ true,
     /*KTo*/ false,
     /*QTo*/ false,
     /*JTo*/ false,
@@ -196,4 +198,4 @@ const utg : ReadonlyArray<ReadonlyArray<boolean>> = [
   ],
 ]
 
-export default utg
+export default mp
