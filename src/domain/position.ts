@@ -5,6 +5,7 @@ enum Position {
   UTG,
   MP,
   CO,
+  ANY,
 }
 
 export default Position
