@@ -1,20 +1,25 @@
-import Move from 'domain/move'
-import Position from 'domain/position'
-import { getHintsTable } from 'data/gto'
+import HintTable from 'domain/hintTable'
 
 interface Props {
-  move: Move
-  hero: Position
-  vilain: Position
+  hintsTable: HintTable | null
 }
 
-const PercentageOfPlayedHand: React.FC<Props> = ({ move, hero, vilain }) => {
-  const hintsTable = getHintsTable(move, hero, vilain)
+const PercentageOfPlayedHand: React.FC<Props> = ({ hintsTable }) => {
   if (!hintsTable) {
     return <div>N/A</div>
   }
-  const moves = hintsTable.flatMap(l => l).reduce((total, current) => (current ? total + 1 : total), 0)
-  return <div>{Number((100 * moves) / (13 * 13)).toFixed(2)}%</div>
+  const moves = hintsTable.reduce((acc, line, i) => {
+    const l = line.reduce((accLine, h, j) => {
+      if (!h) return accLine
+      const pair = i === j
+      const suited = i < j
+      if (pair) return accLine + 12
+      if (suited) return accLine + 4 * 2
+      return accLine + 12 * 2
+    }, 0)
+    return acc + l
+  }, 0)
+  return <div>{Number((100 * moves) / (52 * 51)).toFixed(2)}%</div>
 }
 
 export default PercentageOfPlayedHand

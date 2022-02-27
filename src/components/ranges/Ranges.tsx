@@ -59,7 +59,7 @@ const Ranges: React.VFC = () => {
     <div>
       <Horizontal>
         {heroMove}&nbsp;:&nbsp;
-        <PercentageOfPlayedHands move={heroMove} hero={heroPosition} vilain={vilainPosition} />
+        <PercentageOfPlayedHands hintsTable={getHintsTable(heroMove, heroPosition, vilainPosition)} />
       </Horizontal>
       <Table hero={heroPosition} vilain={vilainPosition} heroMove={heroMove} />
       <Horizontal>

@@ -18,7 +18,7 @@ interface ISquare {
   bgColor: string
   active: boolean
 }
-const Square = styled.div`
+export const Square = styled.div`
   width: 30px;
   height: 30px;
   display: flex;
