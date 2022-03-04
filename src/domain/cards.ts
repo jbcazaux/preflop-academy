@@ -2,7 +2,7 @@ export class Card {
   constructor(readonly color: Color, readonly value: Value) {}
 
   static random = (not: ReadonlyArray<Card>): Card => {
-    const randomCard = () : Card => {
+    const randomCard = (): Card => {
       const value = Math.floor(Math.random() * 14)
       const color = colors[Math.floor(Math.random() * 2)]
       return new Card(color, value === 1 ? 0 : value)
@@ -23,9 +23,22 @@ export class Card {
   }
 
   equals = (other: Card): boolean => this.color === other.color && this.value === other.value
+
+  isBigger = (other: Card | null): boolean => {
+    if (other === null) {
+      return true
+    }
+    if (this.value === 0) {
+      return other.value !== 0
+    }
+    if (other.value === 0) {
+      return false
+    }
+    return this.value > other.value
+  }
 }
 
-export const values: { [key: string]: number } = {
+export const values: { [key: string]: Value } = {
   AS: 0,
   2: 2,
   3: 3,

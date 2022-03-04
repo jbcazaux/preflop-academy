@@ -6,8 +6,7 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "actions": ["src/actions/*"],
-      "app": ["src/app/*"],
+      "app/*": ["src/app/*"],
       "components/*": ["src/components/*"],
       "data/*": ["src/data/*"],
       "domain/*": ["src/domain/*"],

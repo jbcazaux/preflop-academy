@@ -51,7 +51,6 @@ const _4bet: Map<Position, Map<Position, HintTable>> = new Map([
         ]),
     ],
     [Position.SB, new Map<Position, HintTable>([])],
-    [Position.UTG, new Map<Position, HintTable>([])],
 ])
 
 export default _4bet

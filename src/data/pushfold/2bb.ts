@@ -1,4 +1,5 @@
 import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
 
 export const sb: HintTable = [
   [
@@ -989,3 +990,11 @@ export const utg: HintTable = [
     /*22 */ true,
   ],
 ]
+
+export default new Map<Position, HintTable>([
+  [Position.SB, sb],
+  [Position.B, button],
+  [Position.CO, co],
+  [Position.MP, mp],
+  [Position.UTG, utg],
+])

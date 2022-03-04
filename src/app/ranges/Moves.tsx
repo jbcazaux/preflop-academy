@@ -1,6 +1,6 @@
 import React from 'react'
 import Move from 'domain/move'
-import Button from 'components/ranges/Button'
+import Button from 'components/Button'
 
 interface Props {
   setHeroMove: (m: Move) => void

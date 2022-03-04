@@ -1,16 +1,12 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import Position from 'domain/position'
+import Position, {allPositions, positionsNames} from 'domain/position'
 import Move from 'domain/move'
 import { getHintsTable } from 'data/gto'
-import PercentageOfPlayedHands from 'components/ranges/PercentageOfPlayedHands'
-import Table from 'components/ranges/Table'
-import Moves from 'components/ranges/Moves'
-
-const Horizontal = styled.div`
-  display: flex;
-  flex-direction: row;
-`
+import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
+import RangeTable from 'components/RangeTable'
+import Moves from 'app/ranges/Moves'
+import Horizontal from 'components/layout/Horizontal'
 
 interface IActive {
   active: boolean
@@ -47,21 +43,23 @@ const Button: React.FC<Props> = ({ active, onClick, disabled = false, children }
   )
 }
 
-const positionsNames = ['Button', 'SB', 'BB', 'UTG', 'MP', 'CO']
-const allPositions = [Position.B, Position.SB, Position.BB, Position.UTG, Position.MP, Position.CO]
-
 const Ranges: React.VFC = () => {
   const [heroPosition, setHeroPosition] = useState<Position>(Position.B)
   const [vilainPosition, setVilainPosition] = useState<Position>(Position.B)
   const [heroMove, setHeroMove] = useState<Move>(Move.OPEN)
 
+  const hintsTable = useMemo(
+    () => getHintsTable(heroMove, heroPosition, vilainPosition),
+    [heroMove, heroPosition, vilainPosition]
+  )
+
   return (
     <div>
       <Horizontal>
         {heroMove}&nbsp;:&nbsp;
-        <PercentageOfPlayedHands hintsTable={getHintsTable(heroMove, heroPosition, vilainPosition)} />
+        <PercentageOfPlayedHands hintsTable={hintsTable} />
       </Horizontal>
-      <Table hero={heroPosition} vilain={vilainPosition} heroMove={heroMove} />
+      <RangeTable hintsTable={hintsTable} />
       <Horizontal>
         <Moves setHeroMove={setHeroMove} heroMove={heroMove} />
       </Horizontal>

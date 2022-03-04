@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { Square } from 'components/ranges/Table'
+import { Square } from 'components/RangeTable'
 import HintTable from 'domain/hintTable'
-import PercentageOfPlayedHands from 'components/ranges/PercentageOfPlayedHands'
+import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
 
 const Horizontal = styled.div`
   display: flex;
