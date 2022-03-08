@@ -19,6 +19,8 @@ import PreFlopSolver from 'app/PreFlopSolver'
 import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
 import { getHeroPosition } from 'utils/playerPosition'
+import gto from 'data/gto'
+import Score from 'domain/Score'
 
 const Deck = styled.div`
   display: flex;
@@ -28,6 +30,14 @@ const Deck = styled.div`
 const Color = styled.div`
   display: flex;
   flex-direction: row;
+`
+
+const ScoreDisplay = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
 `
 
 const noop: () => void = () => {
@@ -69,18 +79,21 @@ const getRandomRaise3Bet = (buttonPosition: number): ReadonlyArray<number> => {
 }
 
 const Training: React.VFC = () => {
+  const [init, setInit] = useState<boolean>(true)
   const [buttonPosition, setButtonPosition] = useState(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
-  const [init, setInit] = useState<boolean>(true)
   const [raisePositions, setRaisePositions] = useState<ReadonlyArray<number>>([])
   const [guess, setGuess] = useState<Move | null>(null)
+  const [score, setScore] = useState<Score>(new Score())
+  const [randomMoveType, setRandomMoveType] = useState<Move | null>(null)
+
   const windowSize = useWindowSize()
 
   const setRandomPlay = useCallback(() => {
     setGuess(null)
-
-    const randomMoveType = getRandomMoveType()
-    switch (randomMoveType) {
+    const newRandomMoveType = getRandomMoveType()
+    setRandomMoveType(newRandomMoveType)
+    switch (newRandomMoveType) {
       case Move.OPEN: {
         setHand(Hand.random)
         const newButtonPosition = getButtonPositionForOpen()
@@ -104,6 +117,12 @@ const Training: React.VFC = () => {
       }
     }
   }, [])
+
+  useEffect(() => {
+    if (!guess || !randomMoveType) return
+    const answerOK = gto(getHeroPosition(buttonPosition), raisePositions, hand)
+    guess === answerOK ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
+  }, [buttonPosition, guess, hand, raisePositions, randomMoveType])
 
   useLayoutEffect(() => {
     setInit(false)
@@ -139,12 +158,16 @@ const Training: React.VFC = () => {
           ))}
         </Deck>
       </Vertical>
-      <TrainingAnswers
-        buttonPosition={buttonPosition}
-        raisePositions={raisePositions}
-        setAnswer={setGuess}
-        next={setRandomPlay}
-      />
+      <Vertical>
+        <ScoreDisplay>What's your move ?</ScoreDisplay>
+        <TrainingAnswers
+          buttonPosition={buttonPosition}
+          raisePositions={raisePositions}
+          setAnswer={setGuess}
+          next={setRandomPlay}
+        />
+        <ScoreDisplay>Score : {`${score.score} / ${score.total}`}</ScoreDisplay>
+      </Vertical>
       <Vertical>
         {guess && <PreFlopSolver hand={hand} buttonPosition={buttonPosition} raisePositions={raisePositions} />}
       </Vertical>

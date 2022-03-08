@@ -5,5 +5,6 @@ enum Move {
     CALL3BET = 'CALL 3 BET',
     _4BET = '4 BET',
     FOLD = 'FOLD',
+    ALL_IN = 'ALL_IN',
 }
 export default Move

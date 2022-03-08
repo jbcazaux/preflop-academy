@@ -17,8 +17,8 @@ interface Props {
 }
 
 const Gto: React.FC<Props> = ({ hero, raisePositions, hand }) => {
-  const action = gto(hero, raisePositions, hand)
-  return <Action>Action : {action}</Action>
+  const move = gto(hero, raisePositions, hand)
+  return <Action>Action : {move || 'N/A'}</Action>
 }
 
 export default Gto
