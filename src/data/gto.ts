@@ -94,6 +94,7 @@ const gto = (heroPosition: Position, raisePositions: ReadonlyArray<Position>, ha
 
   return null
 }
+export default gto
 
 export const gtoPushFold = (hero: Position, hand: Hand, stack: number): Move | null => {
   if (hand.card1 === null || hand.card2 === null) {
@@ -109,4 +110,4 @@ export const gtoPushFold = (hero: Position, hand: Hand, stack: number): Move | n
   return pushFoldHintsTable[x][y] ? Move.ALL_IN : Move.FOLD
 }
 
-export default gto
+

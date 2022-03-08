@@ -16,7 +16,7 @@ exports[`Gto displays whatever gto says 1`] = `
     class="c0"
   >
     Action : 
-    FOO
+    OPEN
   </div>
 </div>
 `;
