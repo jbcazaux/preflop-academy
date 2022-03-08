@@ -33,7 +33,7 @@ const noop: () => void = () => {
   /*NOOP*/
 }
 
-const getRandomRaise = (buttonPosition: number): ReadonlyArray<number> => {
+const getRandomRaisePositions = (buttonPosition: number): ReadonlyArray<number> => {
   switch (buttonPosition) {
     case 0:
       return [random(3, 5)]
@@ -50,7 +50,7 @@ const getRandomRaise = (buttonPosition: number): ReadonlyArray<number> => {
   }
 }
 
-const getRandomRaise3Bet = (buttonPosition: number): ReadonlyArray<number> => {
+const getRandomRaisePosition3Bet = (buttonPosition: number): ReadonlyArray<number> => {
   switch (buttonPosition) {
     case 0:
       return [0, random(1, 2)]
@@ -93,14 +93,14 @@ const Training: React.VFC = () => {
         setHand(Hand.random)
         const newButtonPosition = getButtonPositionForCall()
         setButtonPosition(newButtonPosition)
-        setRaisePositions(getRandomRaise(newButtonPosition))
+        setRaisePositions(getRandomRaisePositions(newButtonPosition))
         break
       }
       case Move.CALL3BET: {
         const newButtonPosition = getButtonPositionFor3BetCall()
         setButtonPosition(newButtonPosition)
         setHand(randomHandInRange(Move.OPEN, getHeroPosition(newButtonPosition)))
-        setRaisePositions(getRandomRaise3Bet(newButtonPosition))
+        setRaisePositions(getRandomRaisePosition3Bet(newButtonPosition))
         break
       }
     }
