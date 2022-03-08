@@ -51,8 +51,7 @@ const call3bet: Map<Position, Map<Position, HintTable>> = new Map([
       [Position.BB, utgCalls3betBb],
     ]),
   ],
-  [Position.SB, new Map<Position, HintTable>([])],
-  [Position.UTG, new Map<Position, HintTable>([[Position.BB, sbCalls3betBb]])],
+  [Position.SB, new Map<Position, HintTable>([[Position.BB, sbCalls3betBb]])],
 ])
 
 export default call3bet

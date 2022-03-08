@@ -1,16 +1,13 @@
 import Vertical from 'components/layout/Vertical'
 import Button from 'components/Button'
 import Move from 'domain/move'
-import { useMemo } from 'react'
-import getVilainPosition, { getHeroPosition } from 'app/utils/playerPosition'
+import React, { useMemo } from 'react'
+import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import Position from 'domain/position'
 import styled from 'styled-components'
 
 const TrainingAnswersContainer = styled(Vertical)`
   align-items: center;
-`
-const Next = styled(Button)`
-  margin-top: 16px;
 `
 
 interface Props {
@@ -75,18 +72,22 @@ const TrainingAnswers: React.FC<Props> = ({ buttonPosition, raisePositions, setA
       </Button>
       <Button
         active
-        disabled={raises.length !== 3}
+        disabled={raises.length !== 2}
         onClick={() => {
           setAnswer(Move._4BET)
         }}
       >
         {Move._4BET}
       </Button>
-      <Next active onClick={next} activeBgColor="#D7A9EC">
+      <Next active onClick={next} color="secondary">
         NEXT
       </Next>
     </TrainingAnswersContainer>
   )
 }
+
+const Next = styled(Button)`
+  margin-top: 24px;
+`
 
 export default TrainingAnswers

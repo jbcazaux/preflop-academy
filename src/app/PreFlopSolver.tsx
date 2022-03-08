@@ -1,7 +1,7 @@
 import Vertical from 'components/layout/Vertical'
 import Hand from 'domain/hand'
 import React, { useEffect, useMemo, useState } from 'react'
-import getVilainPosition, { getHeroPosition } from 'app/utils/playerPosition'
+import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
 import Gto from 'app/Gto'

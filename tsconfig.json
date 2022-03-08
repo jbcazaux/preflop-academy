@@ -10,6 +10,7 @@
       "components/*": ["src/components/*"],
       "data/*": ["src/data/*"],
       "domain/*": ["src/domain/*"],
+      "utils/*": ["src/utils/*"],
     },
     "target": "es5",
     "lib": [

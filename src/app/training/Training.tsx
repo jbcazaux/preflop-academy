@@ -8,10 +8,17 @@ import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import TrainingAnswers from 'app/training/TrainingAnswers'
-import random from 'app/utils/random'
-import {getButtonPositionForCall, getButtonPositionForOpen, getRandomMoveType} from 'app/training/trainingDistribution'
+import random from 'utils/random'
+import {
+  getButtonPositionFor3BetCall,
+  getButtonPositionForCall,
+  getButtonPositionForOpen,
+} from 'app/training/trainingButtonDistribution'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/PreFlopSolver'
+import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
+import randomHandInRange from 'utils/randomHandInRange'
+import { getHeroPosition } from 'utils/playerPosition'
 
 const Deck = styled.div`
   display: flex;
@@ -44,6 +51,23 @@ const getRandomRaise = (buttonPosition: number): ReadonlyArray<number> => {
   }
 }
 
+const getRandomRaise3Bet = (buttonPosition: number): ReadonlyArray<number> => {
+  switch (buttonPosition) {
+    case 0:
+      return [0, random(1, 2)]
+    case 1:
+      return [0, random(1, 3)]
+    case 2:
+      return [0, random(1, 4)]
+    case 3:
+      return [0, random(1, 5)]
+    case 4:
+      return []
+    default:
+      return [0, 1]
+  }
+}
+
 const Training: React.VFC = () => {
   const [buttonPosition, setButtonPosition] = useState(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
@@ -54,23 +78,28 @@ const Training: React.VFC = () => {
 
   const setRandomPlay = useCallback(() => {
     setGuess(null)
-    setHand(Hand.random())
+
     const randomMoveType = getRandomMoveType()
     switch (randomMoveType) {
       case Move.OPEN: {
+        setHand(Hand.random)
         const newButtonPosition = getButtonPositionForOpen()
         setButtonPosition(newButtonPosition)
         setRaisePositions([])
         break
       }
       case Move.CALL: {
+        setHand(Hand.random)
         const newButtonPosition = getButtonPositionForCall()
         setButtonPosition(newButtonPosition)
         setRaisePositions(getRandomRaise(newButtonPosition))
         break
       }
-      default: {
-        setRaisePositions([0, 1])
+      case Move.CALL3BET: {
+        const newButtonPosition = getButtonPositionFor3BetCall()
+        setButtonPosition(newButtonPosition)
+        setHand(randomHandInRange(Move.OPEN, getHeroPosition(newButtonPosition)))
+        setRaisePositions(getRandomRaise3Bet(newButtonPosition))
         break
       }
     }

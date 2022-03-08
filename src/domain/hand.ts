@@ -32,7 +32,6 @@ export default class Hand {
 
   contains = (card: Card): boolean => this.card1?.equals(card) || this.card2?.equals(card) || false
 
-
   sort = (): Hand => {
     if (!this.isComplete) {
       return new Hand(this.card1, this.card2)

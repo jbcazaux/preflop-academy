@@ -1,10 +1,12 @@
+import randomInt from 'utils/random'
+
 export class Card {
   constructor(readonly color: Color, readonly value: Value) {}
 
   static random = (not: ReadonlyArray<Card>): Card => {
     const randomCard = (): Card => {
-      const value = Math.floor(Math.random() * 14)
-      const color = colors[Math.floor(Math.random() * 2)]
+      const value = randomInt(0, 13)
+      const color = colors[randomInt(0, 1)]
       return new Card(color, value === 1 ? 0 : value)
     }
 

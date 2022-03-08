@@ -120,7 +120,7 @@ const bbCallsSb : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*72s*/ false,
   ],
   [
-    /*A6o*/ true,
+    /*A6o*/ false,
     /*K6o*/ false,
     /*Q6o*/ false,
     /*J6o*/ false,

@@ -1,8 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-
-const boardColor = '#58BD86'
-const boardStrokeColor = '#4C4949'
-const buttonColor = '#E8F63C'
+import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { AppTheme, ThemeContext } from 'styled-components'
 
 const xyByPosition = (position: number, centerX: number, centerY: number, radius: number, ratio: number) => {
   const coefByPosition = [6, 5, 3, 2, 1, -1]
@@ -13,15 +10,15 @@ const xyByPosition = (position: number, centerX: number, centerY: number, radius
   return [x, y]
 }
 
-const drawTable = (ctx: CanvasRenderingContext2D, x: number, y: number, rw: number, rh: number) => {
+const drawTable = (ctx: CanvasRenderingContext2D, x: number, y: number, rw: number, rh: number, theme: AppTheme) => {
   ctx.save()
   ctx.scale(1, rh / rw)
   ctx.beginPath()
   ctx.arc(x, y, rw, 0, 2 * Math.PI)
   ctx.restore()
   ctx.lineWidth = 4
-  ctx.strokeStyle = boardStrokeColor
-  ctx.fillStyle = boardColor
+  ctx.strokeStyle = theme.colors.table.stroke
+  ctx.fillStyle = theme.colors.table.board
   ctx.fill()
   ctx.stroke()
 }
@@ -76,7 +73,8 @@ const drawRaisers = (
   tableWidth: number,
   tableHeight: number,
   raisePositions: ReadonlyArray<number>,
-  clear = false
+  clear = false,
+  theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.6
   const ratio = tableHeight / tableWidth
@@ -88,14 +86,14 @@ const drawRaisers = (
     const [x, y] = xyByPosition(rp, centerX, centerY, radius, ratio)
     ctx.beginPath()
 
-    ctx.fillStyle = '#E34719'
+    ctx.fillStyle = theme.colors.table.raise
     ctx.font = `bold ${tableWidth / 30}px serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ctx.fillText(text, x, y)
 
     if (clear) {
-      ctx.fillStyle = boardColor
+      ctx.fillStyle = theme.colors.table.board
       const { width: size } = ctx.measureText(text)
       const height = parseInt(ctx.font.replaceAll(/[a-zA-Z]/g, ''), 10)
       ctx.fillRect(x - size / 2, y - height / 2, size, height)
@@ -110,17 +108,18 @@ const drawPositions = (
   tableWidth: number,
   tableHeight: number,
   position: number,
-  clear = false
+  clear = false,
+  theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.8
   const ratio = tableHeight / tableWidth
 
-  drawButton(ctx, xyByPosition(position, centerX, centerY, radius, ratio), tableWidth, clear)
-  drawPositionName(ctx, xyByPosition(position + 1, centerX, centerY, radius, ratio), tableWidth, 'SB', clear)
-  drawPositionName(ctx, xyByPosition(position + 2, centerX, centerY, radius, ratio), tableWidth, 'BB', clear)
-  drawPositionName(ctx, xyByPosition(position + 3, centerX, centerY, radius, ratio), tableWidth, 'UTG', clear)
-  drawPositionName(ctx, xyByPosition(position + 4, centerX, centerY, radius, ratio), tableWidth, 'MP', clear)
-  drawPositionName(ctx, xyByPosition(position + 5, centerX, centerY, radius, ratio), tableWidth, 'CO', clear)
+  drawButton(ctx, xyByPosition(position, centerX, centerY, radius, ratio), tableWidth, clear, theme)
+  drawPositionName(ctx, xyByPosition(position + 1, centerX, centerY, radius, ratio), tableWidth, 'SB', clear, theme)
+  drawPositionName(ctx, xyByPosition(position + 2, centerX, centerY, radius, ratio), tableWidth, 'BB', clear, theme)
+  drawPositionName(ctx, xyByPosition(position + 3, centerX, centerY, radius, ratio), tableWidth, 'UTG', clear, theme)
+  drawPositionName(ctx, xyByPosition(position + 4, centerX, centerY, radius, ratio), tableWidth, 'MP', clear, theme)
+  drawPositionName(ctx, xyByPosition(position + 5, centerX, centerY, radius, ratio), tableWidth, 'CO', clear, theme)
 }
 
 const drawPositionName = (
@@ -128,7 +127,8 @@ const drawPositionName = (
   xy: number[],
   tableWidth: number,
   text: string,
-  clear = false
+  clear = false,
+  theme: AppTheme
 ) => {
   const [x, y] = xy
   ctx.beginPath()
@@ -140,20 +140,26 @@ const drawPositionName = (
   ctx.fillText(text, x, y)
 
   if (clear) {
-    ctx.fillStyle = boardColor
+    ctx.fillStyle = theme.colors.table.board
     const { width: size } = ctx.measureText(text)
     const height = parseInt(ctx.font, 10)
     ctx.fillRect(x - size / 2, y - height / 2, size, height)
   }
 }
 
-const drawButton = (ctx: CanvasRenderingContext2D, xy: number[], tableWidth: number, clear = false) => {
+const drawButton = (
+  ctx: CanvasRenderingContext2D,
+  xy: number[],
+  tableWidth: number,
+  clear = false,
+  theme: AppTheme
+) => {
   const [x, y] = xy
   ctx.beginPath()
   ctx.arc(x, y, tableWidth / 35 + (clear ? 1 : 0), 0, 2 * Math.PI)
-  ctx.fillStyle = buttonColor
+  ctx.fillStyle = theme.colors.table.button
   if (clear) {
-    ctx.fillStyle = boardColor
+    ctx.fillStyle = theme.colors.table.board
   }
   ctx.fill()
 
@@ -173,6 +179,7 @@ interface Dimensions {
   centerX: number
   centerY: number
 }
+
 const canvasMarge = 50
 const dimensions = (width: number): Dimensions => ({
   width,
@@ -189,10 +196,12 @@ interface Props {
   addRaisePosition: (p: number) => void
   width: number
 }
+
 const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePositions, addRaisePosition, width }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   const canvas = useMemo(() => dimensions(width), [width])
+  const theme = useContext(ThemeContext)
 
   const onMouseClick = useCallback(
     (event: MouseEvent) => {
@@ -230,7 +239,8 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
         canvas.width / 2 + canvasMarge,
         canvas.height + (canvasMarge * canvas.width) / canvas.height,
         canvas.width / 2,
-        canvas.height / 2
+        canvas.height / 2,
+        theme
       )
       drawPlayers(context, canvas.width / 2 + canvasMarge, canvas.height / 2 + canvasMarge, canvas.width, canvas.height)
     } else {
@@ -238,7 +248,7 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
       if (!c) return
       setContext(c.getContext('2d'))
     }
-  }, [canvas, context])
+  }, [canvas, context, theme])
 
   useEffect(() => {
     const c = canvasRef.current
@@ -256,21 +266,21 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
     if (!context) {
       return
     }
-    drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition)
+    drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, false, theme)
     return () => {
-      drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, true)
+      drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, true, theme)
     }
-  }, [context, buttonPosition, canvas])
+  }, [context, buttonPosition, canvas, theme])
 
   useEffect(() => {
     if (!context) {
       return
     }
-    drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions)
+    drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions, false, theme)
     return () => {
-      drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions, true)
+      drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions, true, theme)
     }
-  }, [canvas, context, raisePositions])
+  }, [canvas, context, raisePositions, theme])
 
   return (
     <canvas

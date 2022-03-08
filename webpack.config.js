@@ -33,6 +33,7 @@ module.exports = (env, argv = {}) => ({
       components: path.resolve(__dirname, 'src/components'),
       data: path.resolve(__dirname, 'src/data'),
       domain: path.resolve(__dirname, 'src/domain'),
+      utils: path.resolve(__dirname, 'src/utils'),
     },
   },
   module: {

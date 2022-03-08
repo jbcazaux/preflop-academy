@@ -1,38 +1,44 @@
 import styled from 'styled-components'
 import React from 'react'
 
-interface IActive {
+interface IAction {
   active: boolean
-  activeBgColor?: string
+  color: string
   disabled?: boolean
 }
 
-const Action = styled.div<IActive>`
+const Action = styled.div<IAction>`
   width: 100px;
   height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ active, activeBgColor }) => (active ? activeBgColor || '#2DDAEE' : 'white')};
+  background-color: ${({ active, theme, color }) => (active ? theme.colors[color] : theme.colors.buttons.default)};
   margin: 4px;
-  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
+  opacity: ${(props: IAction) => (props.disabled ? 0.5 : 1)};
   cursor: pointer;
 `
 
 interface Props {
-  disabled?: boolean
-  activeBgColor?: string
   active?: boolean
+  color?: string
+  disabled?: boolean
   onClick: () => void
 }
 
-const Button: React.FC<Props> = ({ active = false, onClick, disabled = false, children, activeBgColor }) => {
+const Button: React.FC<Props> = ({ active = false, onClick, disabled = false, children, color, ...props }) => {
   const handleClick = () => {
     !disabled && onClick()
   }
 
   return (
-    <Action active={!disabled && active} disabled={disabled} onClick={handleClick} activeBgColor={activeBgColor}>
+    <Action
+      {...props}
+      active={!disabled && active}
+      disabled={disabled}
+      onClick={handleClick}
+      color={color || 'primary'}
+    >
       {children}
     </Action>
   )

@@ -1,7 +1,7 @@
 import Vertical from 'components/layout/Vertical'
 import Hand from 'domain/hand'
 import { useMemo, useState } from 'react'
-import { getHeroPosition } from 'app/utils/playerPosition'
+import { getHeroPosition } from 'utils/playerPosition'
 import { gtoPushFold } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
 import pushfoldHintsTable from 'data/pushfold'

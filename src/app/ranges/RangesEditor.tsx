@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React, { useContext, useEffect, useState } from 'react'
+import styled, { ThemeContext } from 'styled-components'
 import { Square } from 'components/RangeTable'
 import HintTable from 'domain/hintTable'
 import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
@@ -17,7 +17,8 @@ interface HandProps {
 }
 
 const Hand: React.FC<HandProps> = ({ onClick, active, suited, pair, children }) => {
-  const color = active ? '#97DE5D' : suited || pair ? '#0CF9DF' : '#F9E00C'
+  const { colors } = useContext(ThemeContext)
+  const color = active ? colors.range.active : suited || pair ? colors.range.suited : colors.range.offsuit
   return (
     <Square bgColor={color} active={active} onClick={onClick}>
       {children}
