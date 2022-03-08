@@ -16,7 +16,7 @@ import Move from 'domain/move'
 import PreFlopSolver from 'app/PreFlopSolver'
 import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
-import { getHeroPosition } from 'utils/playerPosition'
+import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import gto from 'data/gto'
 import Score from 'domain/Score'
 import Deck from 'app/Deck'
@@ -72,15 +72,14 @@ const Training: React.VFC = () => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [raisePositions, setRaisePositions] = useState<ReadonlyArray<number>>([])
   const [guess, setGuess] = useState<Move | null>(null)
+  const [goodAnswer, setGoodAnswer] = useState<Move | null>(null)
   const [score, setScore] = useState<Score>(new Score())
-  const [randomMoveType, setRandomMoveType] = useState<Move | null>(null)
 
   const windowSize = useWindowSize()
 
   const setRandomPlay = useCallback(() => {
     setGuess(null)
     const newRandomMoveType = getRandomMoveType()
-    setRandomMoveType(newRandomMoveType)
     switch (newRandomMoveType) {
       case Move.OPEN: {
         setHand(Hand.random)
@@ -107,10 +106,15 @@ const Training: React.VFC = () => {
   }, [])
 
   useEffect(() => {
-    if (!guess || !randomMoveType) return
-    const answerOK = gto(getHeroPosition(buttonPosition), raisePositions, hand)
-    guess === answerOK ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
-  }, [buttonPosition, guess, hand, raisePositions, randomMoveType])
+    const rp = raisePositions.map(v => getVilainPosition(v, buttonPosition))
+    const answerOK = gto(getHeroPosition(buttonPosition), rp, hand)
+    setGoodAnswer(answerOK)
+  }, [buttonPosition, hand, raisePositions])
+
+  useEffect(() => {
+    if (!guess || !goodAnswer) return
+    guess === goodAnswer ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
+  }, [guess, goodAnswer])
 
   useEffect(setRandomPlay, [setRandomPlay])
 
@@ -133,6 +137,7 @@ const Training: React.VFC = () => {
         <TrainingAnswers
           buttonPosition={buttonPosition}
           raisePositions={raisePositions}
+          goodAnswer={goodAnswer}
           setAnswer={setGuess}
           next={setRandomPlay}
         />

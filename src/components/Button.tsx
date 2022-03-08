@@ -14,8 +14,7 @@ const Action = styled.div<IAction>`
   justify-content: center;
   align-items: center;
   background-color: ${({ active, theme, color }) => (active ? theme.colors[color] : theme.colors.buttons.default)};
-  margin: 4px;
-  opacity: ${(props: IAction) => (props.disabled ? 0.5 : 1)};
+  opacity: ${({disabled}) => (disabled ? 0.5 : 1)};
   cursor: pointer;
 `
 

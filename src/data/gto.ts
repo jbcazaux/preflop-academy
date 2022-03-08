@@ -9,8 +9,6 @@ import Move from 'domain/move'
 import HintTable from 'domain/hintTable'
 import pushfoldHintsTable from 'data/pushfold'
 
-// type Action = 'FOLD' | 'CALL' | 'RAISE' | '3 BET' | 'CALL 3 BET' | '4 BET'| 'ALL-IN' | 'N/A'
-
 export const getHintsTable = (move: Move, heroPosition: Position, vilainPosition: Position): HintTable | null => {
   if (move === Move.OPEN) {
     return open.get(heroPosition) || null

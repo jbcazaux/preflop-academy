@@ -14,43 +14,44 @@ import utg4betsMp from './utg4betsMp'
 import utg4betsSb from './utg4betsSb'
 import Position from 'domain/position'
 import HintTable from 'domain/hintTable'
+import sb4betsBb from 'data/4bet/sb4betsBb'
 
 const _4bet: Map<Position, Map<Position, HintTable>> = new Map([
-    [
-        Position.B,
-        new Map<Position, HintTable>([
-            [Position.SB, b4betsSb],
-            [Position.BB, b4betsBb],
-        ]),
-    ],
-    [
-        Position.CO,
-        new Map<Position, HintTable>([
-            [Position.B, co4betsB],
-            [Position.SB, co4betsSb],
-            [Position.BB, co4betsBb],
-        ]),
-    ],
-    [
-        Position.MP,
-        new Map<Position, HintTable>([
-            [Position.CO, mp4betsCo],
-            [Position.B, mp4betsB],
-            [Position.SB, mp4betsSb],
-            [Position.BB, mp4betsBb],
-        ]),
-    ],
-    [
-        Position.UTG,
-        new Map<Position, HintTable>([
-            [Position.MP, utg4betsMp],
-            [Position.CO, utg4betsCo],
-            [Position.B, utg4betsB],
-            [Position.SB, utg4betsSb],
-            [Position.BB, utg4betsBb],
-        ]),
-    ],
-    [Position.SB, new Map<Position, HintTable>([])],
+  [
+    Position.B,
+    new Map<Position, HintTable>([
+      [Position.SB, b4betsSb],
+      [Position.BB, b4betsBb],
+    ]),
+  ],
+  [
+    Position.CO,
+    new Map<Position, HintTable>([
+      [Position.B, co4betsB],
+      [Position.SB, co4betsSb],
+      [Position.BB, co4betsBb],
+    ]),
+  ],
+  [
+    Position.MP,
+    new Map<Position, HintTable>([
+      [Position.CO, mp4betsCo],
+      [Position.B, mp4betsB],
+      [Position.SB, mp4betsSb],
+      [Position.BB, mp4betsBb],
+    ]),
+  ],
+  [
+    Position.UTG,
+    new Map<Position, HintTable>([
+      [Position.MP, utg4betsMp],
+      [Position.CO, utg4betsCo],
+      [Position.B, utg4betsB],
+      [Position.SB, utg4betsSb],
+      [Position.BB, utg4betsBb],
+    ]),
+  ],
+  [Position.SB, new Map<Position, HintTable>([[Position.BB, sb4betsBb]])],
 ])
 
 export default _4bet
