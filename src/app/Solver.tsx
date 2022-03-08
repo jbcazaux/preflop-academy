@@ -1,7 +1,5 @@
-import Card from 'components/Card'
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
-import styled from 'styled-components'
-import { Card as CardObject, deck } from 'domain/cards'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Card as CardObject } from 'domain/cards'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
 import Vertical from 'components/layout/Vertical'
@@ -11,21 +9,12 @@ import useWindowSize from 'components/useWindowSize'
 import PreFlopSolver from 'app/PreFlopSolver'
 import Tabs from 'components/Tabs/Tabs'
 import Tab from 'components/Tabs/Tab'
-
-const Deck = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const Color = styled.div`
-  display: flex;
-  flex-direction: row;
-`
+import Deck from 'app/Deck'
 
 const Solver: React.VFC = () => {
   const [buttonPosition, setButtonPosition] = useState(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
-  const [init, setInit] = useState<boolean>(true)
+
   const [raisePositions, setRaisePositions] = useState<ReadonlyArray<number>>([])
   const windowSize = useWindowSize()
 
@@ -45,10 +34,6 @@ const Solver: React.VFC = () => {
     [raisePositions]
   )
 
-  useLayoutEffect(() => {
-    setInit(false)
-  }, [])
-
   useEffect(() => {
     setHand(Hand.newHand)
     setRaisePositions([])
@@ -66,21 +51,7 @@ const Solver: React.VFC = () => {
           addRaisePosition={onRaise}
           width={width}
         />
-        <Deck>
-          {deck.map(colorDeck => (
-            <Color key={colorDeck[0].color}>
-              {colorDeck.map(card => (
-                <Card
-                  key={card.value}
-                  card={card}
-                  onClick={onCardClick}
-                  selected={init || (!hand.isEmpty() && hand.contains(card))}
-                  mobile={windowSize.width <= 470}
-                />
-              ))}
-            </Color>
-          ))}
-        </Deck>
+        <Deck onClick={onCardClick} hand={hand} />
       </Vertical>
       <Tabs>
         <Tab title="MORE THAN 20 Bb">

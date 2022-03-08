@@ -1,7 +1,5 @@
-import Card from 'components/Card'
-import React, { useCallback, useEffect, useLayoutEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { deck } from 'domain/cards'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
@@ -21,16 +19,7 @@ import randomHandInRange from 'utils/randomHandInRange'
 import { getHeroPosition } from 'utils/playerPosition'
 import gto from 'data/gto'
 import Score from 'domain/Score'
-
-const Deck = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
-const Color = styled.div`
-  display: flex;
-  flex-direction: row;
-`
+import Deck from 'app/Deck'
 
 const ScoreDisplay = styled.div`
   display: flex;
@@ -79,7 +68,6 @@ const getRandomRaise3Bet = (buttonPosition: number): ReadonlyArray<number> => {
 }
 
 const Training: React.VFC = () => {
-  const [init, setInit] = useState<boolean>(true)
   const [buttonPosition, setButtonPosition] = useState(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [raisePositions, setRaisePositions] = useState<ReadonlyArray<number>>([])
@@ -124,10 +112,6 @@ const Training: React.VFC = () => {
     guess === answerOK ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
   }, [buttonPosition, guess, hand, raisePositions, randomMoveType])
 
-  useLayoutEffect(() => {
-    setInit(false)
-  }, [])
-
   useEffect(setRandomPlay, [setRandomPlay])
 
   const width = Math.min(500, Math.max(250, (windowSize.width * 2) / 3))
@@ -142,21 +126,7 @@ const Training: React.VFC = () => {
           addRaisePosition={noop}
           width={width}
         />
-        <Deck>
-          {deck.map(colorDeck => (
-            <Color key={colorDeck[0].color}>
-              {colorDeck.map(card => (
-                <Card
-                  key={card.value}
-                  card={card}
-                  onClick={noop}
-                  selected={init || (!hand.isEmpty() && hand.contains(card))}
-                  mobile={windowSize.width <= 470}
-                />
-              ))}
-            </Color>
-          ))}
-        </Deck>
+        <Deck onClick={noop} hand={hand} />
       </Vertical>
       <Vertical>
         <ScoreDisplay>What's your move ?</ScoreDisplay>
