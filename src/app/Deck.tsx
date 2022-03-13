@@ -4,15 +4,11 @@ import React from 'react'
 import styled from 'styled-components'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
+import Horizontal from 'components/layout/Horizontal'
 
 const DeckContainer = styled.div`
   display: flex;
   flex-direction: column;
-`
-
-const Color = styled.div`
-  display: flex;
-  flex-direction: row;
 `
 
 interface Props {
@@ -26,7 +22,7 @@ const Deck: React.FC<Props> = ({ onClick, hand }) => {
   return (
     <DeckContainer>
       {deck.map(colorDeck => (
-        <Color key={colorDeck[0].color}>
+        <Horizontal key={colorDeck[0].color}>
           {colorDeck.map(card => (
             <Card
               key={card.value}
@@ -36,7 +32,7 @@ const Deck: React.FC<Props> = ({ onClick, hand }) => {
               mobile={windowSize.width <= 470}
             />
           ))}
-        </Color>
+        </Horizontal>
       ))}
     </DeckContainer>
   )

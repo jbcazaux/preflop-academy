@@ -57,11 +57,13 @@ export const values: { [key: string]: Value } = {
 }
 export type Value = number
 
-export const colors = ['DIAMOND', 'CLUB'] as const
+export const colors = ['SPADE', 'HEART', 'DIAMOND', 'CLUB' ] as const
 export type Color = typeof colors[number]
 
-export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors.map(color =>
-  Object.values(values)
-    .sort((a, b) => a - b)
-    .map(value => new Card(color, value))
-)
+export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors
+  .filter(color => color === 'DIAMOND' || color === 'CLUB')
+  .map(color =>
+    Object.values(values)
+      .sort((a, b) => a - b)
+      .map(value => new Card(color, value))
+  )

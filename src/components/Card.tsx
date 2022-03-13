@@ -30,15 +30,17 @@ interface Props {
   mobile: boolean
 }
 
-const colorsIndex: { [key in Color]: number } = {
+const colorsIndexInSvg: { [key in Color]: number } = {
   DIAMOND: 1,
   CLUB: 4,
+  HEART: 2,
+  SPADE: 3,
 }
 
 const valuesIndex = (value: Value) => value || 1
 
 const CardComponent: React.FC<Props> = ({ card, onClick, selected, mobile }) => {
-  const colorIndex = colorsIndex[card.color]
+  const colorIndex = colorsIndexInSvg[card.color]
   const valueIndex = valuesIndex(card.value)
   return (
     <Card colorCard={colorIndex} value={valueIndex} onClick={() => onClick(card)} selected={selected} mobile={mobile} />
