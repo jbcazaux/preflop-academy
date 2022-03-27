@@ -13,7 +13,7 @@ import {
   getButtonPositionForOpen,
 } from 'app/training/trainingButtonDistribution'
 import Move from 'domain/move'
-import PreFlopSolver from 'app/PreFlopSolver'
+import PreFlopSolver from 'app/solver/PreFlopSolver'
 import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
 import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
