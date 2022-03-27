@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react'
-import { Card as CardObject } from 'domain/card'
+import React, {useCallback, useEffect, useState} from 'react'
+import {Card as CardObject} from 'domain/card'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
 import Vertical from 'components/layout/Vertical'
@@ -10,39 +10,30 @@ import PreFlopSolver from 'app/solver/PreFlopSolver'
 import Tabs from 'components/Tabs/Tabs'
 import Tab from 'components/Tabs/Tab'
 import Deck from 'app/Deck'
+import Action from 'domain/action'
+import actionsFlow from 'app/solver/actionsFlow'
 
 const Solver: React.VFC = () => {
   const [buttonPosition, setButtonPosition] = useState(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
 
-  const [raisePositions, setRaisePositions] = useState<ReadonlyArray<number>>([])
+  const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const windowSize = useWindowSize()
 
   const onCardClick = useCallback((card: CardObject) => {
     setHand(prev => prev.addCard(card))
   }, [])
 
-  const onRaise = useCallback(
+  const onAction = useCallback(
     (raisePosition: number) => {
-      setRaisePositions(prev => {
-        if (raisePositions.length && raisePositions[raisePositions.length - 1] === raisePosition) {
-          return prev.filter(rp => rp !== raisePosition)
-        }
-        if (raisePositions.length === 1 && raisePositions[0] !== 0 && raisePosition !== 0) {
-          return prev
-        }
-        if (raisePositions.length >= 2 && !raisePositions.includes(raisePosition)) {
-          return prev
-        }
-        return prev.concat(raisePosition)
-      })
+      setActions(prev => actionsFlow(prev, raisePosition))
     },
-    [raisePositions]
+    []
   )
 
   useEffect(() => {
     setHand(Hand.newHand)
-    setRaisePositions([])
+    setActions([])
   }, [buttonPosition])
 
   const width = Math.min(500, Math.max(250, (windowSize.width * 2) / 3))
@@ -53,15 +44,15 @@ const Solver: React.VFC = () => {
         <PokerTable
           buttonPosition={buttonPosition}
           onButtonChange={setButtonPosition}
-          raisePositions={raisePositions}
-          addRaisePosition={onRaise}
+          actions={actions}
+          addRaisePosition={onAction}
           width={width}
         />
         <Deck onClick={onCardClick} hand={hand} />
       </Vertical>
       <Tabs>
         <Tab title="MORE THAN 20 Bb">
-          <PreFlopSolver hand={hand} buttonPosition={buttonPosition} raisePositions={raisePositions} />
+          <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} />
         </Tab>
         <Tab title="PUSH OR FOLD">
           <PushFoldSolver hand={hand} buttonPosition={buttonPosition} />

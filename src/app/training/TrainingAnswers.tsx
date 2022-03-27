@@ -5,6 +5,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import Position from 'domain/position'
 import styled from 'styled-components'
+import Action from 'domain/action'
 
 const TrainingAnswersContainer = styled(Vertical)`
   align-items: center;
@@ -40,21 +41,21 @@ interface Props {
   buttonPosition: number
   goodAnswer: Move | null
   next: () => void
-  raisePositions: ReadonlyArray<number>
+    actions: ReadonlyArray<Action>
   setAnswer: (move: Move) => void
 }
 
-const TrainingAnswers: React.FC<Props> = ({ buttonPosition, raisePositions, setAnswer, goodAnswer, next }) => {
+const TrainingAnswers: React.FC<Props> = ({ buttonPosition, actions, setAnswer, goodAnswer, next }) => {
   const [myAnswer, setMyAnswer] = useState<Move | null>(null)
   const hero = useMemo(() => getHeroPosition(buttonPosition), [buttonPosition])
   const raises = useMemo(
-    () => raisePositions.map(p => getVilainPosition(p, buttonPosition)),
-    [buttonPosition, raisePositions]
+    () => actions.map(a => getVilainPosition(a.position, buttonPosition)),
+    [buttonPosition, actions]
   )
 
   useEffect(() => {
     setMyAnswer(null)
-  }, [buttonPosition, raisePositions])
+  }, [buttonPosition, actions])
 
   const handleClick = (move: Move) => {
     setMyAnswer(move)

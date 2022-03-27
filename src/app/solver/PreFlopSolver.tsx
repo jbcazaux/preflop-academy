@@ -10,21 +10,22 @@ import Move from 'domain/move'
 import HintTable from 'domain/hintTable'
 import Horizontal from 'components/layout/Horizontal'
 import VilainPreFlopRange from 'app/solver/VilainPreFlopRange'
+import Action from 'domain/action'
 
 interface Props {
   hand: Hand
   buttonPosition: number
-  raisePositions: ReadonlyArray<number>
+  actions: ReadonlyArray<Action>
 }
 
-const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, raisePositions }) => {
+const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions }) => {
   const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
 
   const hero = useMemo<Position>(() => getHeroPosition(buttonPosition), [buttonPosition])
   const raises = useMemo<ReadonlyArray<Position>>(
-    () => raisePositions.map(p => getVilainPosition(p, buttonPosition)),
-    [buttonPosition, raisePositions]
+    () => actions.map(a => getVilainPosition(a.position, buttonPosition)),
+    [buttonPosition, actions]
   )
 
   useEffect(() => {
@@ -91,7 +92,7 @@ const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, raisePositions }
         <Gto hero={hero} hand={hand} raisePositions={raises} />
         {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} hintsTableName={hintsTableName} />}
       </Vertical>
-      <VilainPreFlopRange raisePositions={raisePositions} buttonPosition={buttonPosition} />
+      <VilainPreFlopRange actions={actions} buttonPosition={buttonPosition} />
     </Horizontal>
   )
 }

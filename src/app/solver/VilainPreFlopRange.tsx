@@ -3,76 +3,52 @@ import React, { useEffect, useMemo, useState } from 'react'
 import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
-import Position, {positionsNames} from 'domain/position'
-import Move from 'domain/move'
+import Position, { positionsNames } from 'domain/position'
 import HintTable from 'domain/hintTable'
-import Action from 'components/Action'
+import ActionComponent from 'components/Action'
+import Action from 'domain/action'
 
 interface Props {
   buttonPosition: number
-  raisePositions: ReadonlyArray<number>
+  actions: ReadonlyArray<Action>
 }
 
-const VilainPreflopRange: React.FC<Props> = ({ buttonPosition, raisePositions }) => {
+const VilainPreflopRange: React.FC<Props> = ({ buttonPosition, actions }) => {
   const [vilainHintsTable, setVilainHintsTable] = useState<HintTable | null>(null)
-  const [vilainAction, setVilainAction] = useState<Move | null>(null)
-  const [vilainPosition, setVilainPosition] = useState<Position | null>(null)
+  const [vilainAction, setVilainAction] = useState<Action | null>(null)
 
   const hero = useMemo<Position>(() => getHeroPosition(buttonPosition), [buttonPosition])
-  const raises = useMemo<ReadonlyArray<Position>>(
-    () => raisePositions.map(p => getVilainPosition(p, buttonPosition)),
-    [buttonPosition, raisePositions]
+  const actions2 = useMemo<ReadonlyArray<Action>>(
+    () => actions.map(a => new Action(getVilainPosition(a.position, buttonPosition), a.move)),
+    [buttonPosition, actions]
   )
 
   useEffect(() => {
-    if (raises.length === 0 || (raises.length === 1 && raises[0] === hero)) {
+    if (actions2.length === 0 || actions2.every(a => a.position === hero)) {
       setVilainHintsTable(null)
       setVilainAction(null)
-      setVilainPosition(null)
       return
     }
 
-    if (raises.length === 1) {
-      // and initial raiser !== hero
-      const initialRaiser = raises[0]
+    const vilainLastAction = actions2.reduce((acc: Action | null, cur) => {
+      return cur.position !== hero ? cur : acc
+    }, null)
+    if (!vilainLastAction) throw new Error('can not happen')
 
-      setVilainHintsTable(getHintsTable(Move.OPEN, initialRaiser, Position.ANY))
-      setVilainAction(Move.OPEN)
-      setVilainPosition(initialRaiser)
-    }
-
-    if (raises.length === 2) {
-      // hero == initial raiser
-      const initialRaiser = raises[0]
-      const lastRaiser = raises[1]
-      if (hero === initialRaiser) {
-        setVilainHintsTable(getHintsTable(Move._3BET, lastRaiser, hero))
-        setVilainAction(Move._3BET)
-        setVilainPosition(lastRaiser)
-      } else {
-        // hero !== initial raiser
-        setVilainHintsTable(getHintsTable(Move.OPEN, initialRaiser, Position.ANY))
-        setVilainAction(Move.OPEN)
-        setVilainPosition(initialRaiser)
-      }
-    }
-
-    if (raises.length === 3) {
-      const _3betRaiser = raises[1]
-      const lastRaiser = raises[2]
-
-      if (lastRaiser !== hero) {
-        setVilainHintsTable(getHintsTable(Move._4BET, lastRaiser, _3betRaiser))
-        setVilainAction(Move._4BET)
-        setVilainPosition(lastRaiser)
-      }
-    }
-  }, [hero, raises])
+    setVilainHintsTable(getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
+    setVilainAction(vilainLastAction)
+  }, [actions2, hero])
 
   return (
     <Vertical>
-      <Action>{vilainAction} {vilainPosition !== null && <>@ {positionsNames[vilainPosition ]}</>}</Action>
-      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction || ''} />}
+      <ActionComponent>
+        {vilainAction && (
+          <>
+            {vilainAction.move} @ {positionsNames[vilainAction.position]}
+          </>
+        )}
+      </ActionComponent>
+      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction?.move || ''} />}
     </Vertical>
   )
 }

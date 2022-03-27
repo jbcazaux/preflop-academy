@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { AppTheme, ThemeContext } from 'styled-components'
+import Action from 'domain/action'
 
 const xyByPosition = (position: number, centerX: number, centerY: number, radius: number, ratio: number) => {
   const coefByPosition = [6, 5, 3, 2, 1, -1]
@@ -66,37 +67,40 @@ const drawPlayer = (
   ctx.fillText(position === 0 ? 'Hero' : 'Vilain ' + position, x, y)
 }
 
-const drawRaisers = (
+const drawActions = (
   ctx: CanvasRenderingContext2D,
   centerX: number,
   centerY: number,
   tableWidth: number,
   tableHeight: number,
-  raisePositions: ReadonlyArray<number>,
+  actions: ReadonlyArray<Action>,
   clear = false,
   theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.6
   const ratio = tableHeight / tableWidth
 
-  const texts = ['Raise', '3Bet', '4Bet']
-
-  new Set(raisePositions).forEach(rp => {
-    const text = texts[raisePositions.lastIndexOf(rp)] || '?'
-    const [x, y] = xyByPosition(rp, centerX, centerY, radius, ratio)
+  Object.values(
+    actions.reduce((acc: { [key: number]: Action }, cur) => {
+      return { ...acc, [cur.position]: cur }
+    }, {})
+  ).forEach(action => {
+    const text = action.move.toLocaleLowerCase()
+    const [x, y] = xyByPosition(action.position, centerX, centerY, radius, ratio)
     ctx.beginPath()
 
-    ctx.fillStyle = theme.colors.table.raise
+    ctx.fillStyle = theme.colors.table.action
     ctx.font = `bold ${tableWidth / 30}px serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText(text, x, y)
 
     if (clear) {
       ctx.fillStyle = theme.colors.table.board
       const { width: size } = ctx.measureText(text)
       const height = parseInt(ctx.font.replaceAll(/[a-zA-Z]/g, ''), 10)
       ctx.fillRect(x - size / 2, y - height / 2, size, height)
+    } else {
+      ctx.fillText(text, x, y)
     }
   })
 }
@@ -192,12 +196,12 @@ const dimensions = (width: number): Dimensions => ({
 interface Props {
   buttonPosition: number
   onButtonChange: (p: number) => void
-  raisePositions: ReadonlyArray<number>
+  actions: ReadonlyArray<Action>
   addRaisePosition: (p: number) => void
   width: number
 }
 
-const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePositions, addRaisePosition, width }) => {
+const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, actions, addRaisePosition, width }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   const canvas = useMemo(() => dimensions(width), [width])
@@ -276,11 +280,11 @@ const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, raisePosi
     if (!context) {
       return
     }
-    drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions, false, theme)
+    drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, false, theme)
     return () => {
-      drawRaisers(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, raisePositions, true, theme)
+      drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, true, theme)
     }
-  }, [canvas, context, raisePositions, theme])
+  }, [canvas, context, actions, theme])
 
   return (
     <canvas

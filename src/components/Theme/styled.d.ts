@@ -19,7 +19,7 @@ declare module 'styled-components' {
         board: string
         stroke: string
         button: string
-        raise: string
+        action: string
       },
     }
   }

@@ -17,7 +17,7 @@ const style: AppTheme = {
       board: '#58BD86',
       stroke: '#4C4949',
       button: '#E8F63C',
-      raise: '#E34719',
+      action: '#E34719',
     },
   },
 }
