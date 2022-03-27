@@ -21,6 +21,10 @@ declare module 'styled-components' {
         button: string
         action: string
       },
+      deck: {
+        inHand: string
+        onBoard: string
+      }
     }
   }
 }

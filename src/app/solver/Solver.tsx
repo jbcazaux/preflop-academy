@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useState} from 'react'
-import {Card as CardObject} from 'domain/card'
+import React, { useCallback, useEffect, useState } from 'react'
+import { Card as CardObject } from 'domain/card'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
 import Vertical from 'components/layout/Vertical'
@@ -12,27 +12,38 @@ import Tab from 'components/Tabs/Tab'
 import Deck from 'app/Deck'
 import Action from 'domain/action'
 import actionsFlow from 'app/solver/actionsFlow'
+import Board from 'domain/board'
 
 const Solver: React.VFC = () => {
   const [buttonPosition, setButtonPosition] = useState(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
+  const [board, setBoard] = useState<Board>(Board.newBoard)
 
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const windowSize = useWindowSize()
 
-  const onCardClick = useCallback((card: CardObject) => {
-    setHand(prev => prev.addCard(card))
-  }, [])
-
-  const onAction = useCallback(
-    (raisePosition: number) => {
-      setActions(prev => actionsFlow(prev, raisePosition))
+  const onCardClick = useCallback(
+    (card: CardObject) => {
+      if (hand.contains(card)) {
+        setHand(prev => prev.addCard(card))
+      } else if (board.contains(card)) {
+        setBoard(prev => prev.addCard(card))
+      } else if (!hand.isComplete()) {
+        setHand(prev => prev.addCard(card))
+      } else {
+        setBoard(prev => prev.addCard(card))
+      }
     },
-    []
+    [board, hand]
   )
+
+  const onAction = useCallback((raisePosition: number) => {
+    setActions(prev => actionsFlow(prev, raisePosition))
+  }, [])
 
   useEffect(() => {
     setHand(Hand.newHand)
+    setBoard(Board.newBoard)
     setActions([])
   }, [buttonPosition])
 
@@ -48,7 +59,7 @@ const Solver: React.VFC = () => {
           addRaisePosition={onAction}
           width={width}
         />
-        <Deck onClick={onCardClick} hand={hand} />
+        <Deck onClick={onCardClick} hand={hand} board={board} />
       </Vertical>
       <Tabs>
         <Tab title="MORE THAN 20 Bb">

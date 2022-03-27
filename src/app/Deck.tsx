@@ -1,10 +1,11 @@
-import { Card as CardObject, deck } from 'domain/card'
-import Card from 'components/Card'
+import { Card, deck } from 'domain/card'
+import CardComponent from 'components/Card'
 import React from 'react'
 import styled from 'styled-components'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'
+import Board from 'domain/board'
 
 const DeckContainer = styled.div`
   display: flex;
@@ -12,11 +13,12 @@ const DeckContainer = styled.div`
 `
 
 interface Props {
-  onClick: (card: CardObject) => void
+  onClick: (card: Card) => void
   hand: Hand
+  board: Board
 }
 
-const Deck: React.FC<Props> = ({ onClick, hand }) => {
+const Deck: React.FC<Props> = ({ onClick, hand, board }) => {
   const windowSize = useWindowSize()
 
   return (
@@ -24,11 +26,12 @@ const Deck: React.FC<Props> = ({ onClick, hand }) => {
       {deck.map(colorDeck => (
         <Horizontal key={colorDeck[0].id}>
           {colorDeck.map(card => (
-            <Card
+            <CardComponent
               key={card.id}
               card={card}
               onClick={onClick}
-              selected={!hand.isEmpty() && hand.contains(card)}
+              inHand={!hand.isEmpty() && hand.contains(card)}
+              onBoard={board.contains(card)}
               mobile={windowSize.width <= 470}
             />
           ))}

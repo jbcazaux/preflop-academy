@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -14,13 +14,14 @@ import {
 } from 'app/training/trainingButtonDistribution'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/solver/PreFlopSolver'
-import {getRandomMoveType} from 'app/training/trainingMoveDistribution'
+import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
-import getVilainPosition, {getHeroPosition} from 'utils/playerPosition'
+import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import gto from 'data/gto'
 import Score from 'domain/Score'
 import Deck from 'app/Deck'
 import Action from 'domain/action'
+import Board from 'domain/board'
 
 const Text = styled.div`
   display: flex;
@@ -131,7 +132,7 @@ const Training: React.VFC = () => {
           addRaisePosition={noop}
           width={width}
         />
-        <Deck onClick={noop} hand={hand} />
+        <Deck onClick={noop} hand={hand} board={Board.newBoard} />
       </Vertical>
       <Vertical>
         <Text>What's your move ?</Text>
@@ -144,9 +145,7 @@ const Training: React.VFC = () => {
         />
         <Text>Score : {`${score.score} / ${score.total}`}</Text>
       </Vertical>
-      <Vertical>
-        {guess && <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} />}
-      </Vertical>
+      <Vertical>{guess && <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} />}</Vertical>
     </Horizontal>
   )
 }

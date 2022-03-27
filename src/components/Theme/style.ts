@@ -19,6 +19,10 @@ const style: AppTheme = {
       button: '#E8F63C',
       action: '#E34719',
     },
+    deck: {
+      inHand: 'green',
+      onBoard: 'red',
+    },
   },
 }
 
