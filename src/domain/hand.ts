@@ -1,4 +1,4 @@
-import { Card } from './cards'
+import { Card } from './card'
 
 export default class Hand {
   constructor(readonly card1: Card | null, readonly card2: Card | null) {}
@@ -24,7 +24,7 @@ export default class Hand {
     return this
   }
 
-  isSuited = (): boolean => this.card1?.color === this.card2?.color
+  isSuited = (): boolean => (this.card1 && this.card2) ? (this.card1.id - this.card2.id) % 4 === 0 : false
 
   isEmpty = (): boolean => this.card1 === null && this.card2 === null
 
@@ -50,8 +50,8 @@ export default class Hand {
     if (!h.card1 || !h.card2) {
       throw new Error('Can not compute range if hand is not complete')
     }
-    const x = h.card1.value === 0 ? 0 : -h.card1.value + 14
-    const y = h.card2.value === 0 ? 0 : -h.card2?.value + 14
+    const x = - Math.floor((h.card1.id - 1) / 4) + 12
+    const y = - Math.floor((h.card2.id - 1) / 4) + 12
 
     return this.isSuited() ? [x, y] : [y, x]
   }

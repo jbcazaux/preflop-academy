@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "lib": ["es2020", "dom"],
+    "esModuleInterop": true,
+    "strict": true,
+    "moduleResolution": "node",
+    "types": ["jest", "node"],
+    "sourceMap": true,
+    "outDir": "dist",
+  },
+  "exclude": [
+    "**/*.test.ts"
+  ]
+}

@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Card as CardObject } from 'domain/cards'
+import { Card as CardObject } from 'domain/card'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
 import Vertical from 'components/layout/Vertical'
@@ -27,6 +27,12 @@ const Solver: React.VFC = () => {
       setRaisePositions(prev => {
         if (raisePositions.length && raisePositions[raisePositions.length - 1] === raisePosition) {
           return prev.filter(rp => rp !== raisePosition)
+        }
+        if (raisePositions.length === 1 && raisePositions[0] !== 0 && raisePosition !== 0) {
+          return prev
+        }
+        if (raisePositions.length >= 2 && !raisePositions.includes(raisePosition)) {
+          return prev
         }
         return prev.concat(raisePosition)
       })

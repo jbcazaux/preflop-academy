@@ -1,14 +1,7 @@
 import Hand from 'domain/hand'
 import gto from 'data/gto'
-import styled from 'styled-components'
 import Position from 'domain/position'
-
-const Action = styled.div`
-  display: flex;
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 2em;
-`
+import Action from 'components/Action'
 
 interface Props {
   hero: Position
@@ -18,7 +11,7 @@ interface Props {
 
 const Gto: React.FC<Props> = ({ hero, raisePositions, hand }) => {
   const move = gto(hero, raisePositions, hand)
-  return <Action>Action : {move || 'N/A'}</Action>
+  return <Action>You should : {move || 'N/A'}</Action>
 }
 
 export default Gto

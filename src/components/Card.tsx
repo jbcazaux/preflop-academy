@@ -1,20 +1,22 @@
 import styled from 'styled-components'
-import { Color, colors, Card as CardObject, Value } from '../domain/cards'
+import { Card as CardObject, CardId, colors, names } from 'domain/card'
 import React from 'react'
 
 interface CardsProps {
-  colorCard: number
-  value: number
+  alt: string
+  colorIndex: number
+  valueIndex: number
   selected: boolean
   mobile: boolean
 }
 
-const Card = styled.div.attrs<CardsProps>(({ colorCard: color, value }) => ({
-  alt: `${colors[color - 1]}-${value}`,
+const Card = styled.div.attrs<CardsProps>(({ alt }) => ({
+  alt,
 }))<CardsProps>`
   background-image: url('/images/deck.svg');
   background-repeat: no-repeat;
-  background-position: ${({ colorCard: color, value }) => `-${5 + 50 * (value - 1)}px -${5 + 70 * (color - 1)}px`};
+  background-position: ${({ colorIndex, valueIndex }) =>
+    `-${5 + 50 * (valueIndex - 1)}px -${5 + 70 * (colorIndex - 1)}px`};
   width: 50px;
   height: 70px;
   transform: ${({ selected, mobile }) =>
@@ -30,20 +32,22 @@ interface Props {
   mobile: boolean
 }
 
-const colorsIndexInSvg: { [key in Color]: number } = {
-  DIAMOND: 1,
-  CLUB: 4,
-  HEART: 2,
-  SPADE: 3,
-}
-
-const valuesIndex = (value: Value) => value || 1
+const colorIndex = [3, 2, 1, 4]
+const valueIndex = (value: CardId) => (Math.floor((value - 1) / 4) + 2) % 14 || 1
 
 const CardComponent: React.FC<Props> = ({ card, onClick, selected, mobile }) => {
-  const colorIndex = colorsIndexInSvg[card.color]
-  const valueIndex = valuesIndex(card.value)
+  const cIndex = colorIndex[(card.id - 1) % 4]
+  const vIndex = valueIndex(card.id)
+  const cardName = `${colors[(card.id - 1) % 4]}-${names[Math.floor((card.id - 1) / 4)]}`
   return (
-    <Card colorCard={colorIndex} value={valueIndex} onClick={() => onClick(card)} selected={selected} mobile={mobile} />
+    <Card
+      colorIndex={cIndex}
+      valueIndex={vIndex}
+      onClick={() => onClick(card)}
+      selected={selected}
+      mobile={mobile}
+      alt={cardName}
+    />
   )
 }
 

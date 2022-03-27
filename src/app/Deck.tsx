@@ -1,4 +1,4 @@
-import { Card as CardObject, deck } from 'domain/cards'
+import { Card as CardObject, deck } from 'domain/card'
 import Card from 'components/Card'
 import React from 'react'
 import styled from 'styled-components'
@@ -22,10 +22,10 @@ const Deck: React.FC<Props> = ({ onClick, hand }) => {
   return (
     <DeckContainer>
       {deck.map(colorDeck => (
-        <Horizontal key={colorDeck[0].color}>
+        <Horizontal key={colorDeck[0].id}>
           {colorDeck.map(card => (
             <Card
-              key={card.value}
+              key={card.id}
               card={card}
               onClick={onClick}
               selected={!hand.isEmpty() && hand.contains(card)}

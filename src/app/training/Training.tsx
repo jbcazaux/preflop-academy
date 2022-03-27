@@ -21,7 +21,7 @@ import gto from 'data/gto'
 import Score from 'domain/Score'
 import Deck from 'app/Deck'
 
-const ScoreDisplay = styled.div`
+const Text = styled.div`
   display: flex;
   flex: 1;
   justify-content: center;
@@ -133,7 +133,7 @@ const Training: React.VFC = () => {
         <Deck onClick={noop} hand={hand} />
       </Vertical>
       <Vertical>
-        <ScoreDisplay>What's your move ?</ScoreDisplay>
+        <Text>What's your move ?</Text>
         <TrainingAnswers
           buttonPosition={buttonPosition}
           raisePositions={raisePositions}
@@ -141,7 +141,7 @@ const Training: React.VFC = () => {
           setAnswer={setGuess}
           next={setRandomPlay}
         />
-        <ScoreDisplay>Score : {`${score.score} / ${score.total}`}</ScoreDisplay>
+        <Text>Score : {`${score.score} / ${score.total}`}</Text>
       </Vertical>
       <Vertical>
         {guess && <PreFlopSolver hand={hand} buttonPosition={buttonPosition} raisePositions={raisePositions} />}
