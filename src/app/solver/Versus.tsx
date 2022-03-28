@@ -29,20 +29,41 @@ const Versus: React.FC<Props> = ({ hero, hand, board, actions }) => {
     return getRange(hintsTable)
   }, [actions, hero])
 
-  const { data: result = null } = useQuery<VsResult | null>(
-    [range, hand, board],
-    () => versusApi.range(range || [], hand, board),
-    { enabled: !!range?.length && hand.isComplete() }
+  const { data: resultPreflop = null } = useQuery<VsResult | null>(
+    [range, hand, board, 'preflop'],
+    () => versusApi.rangePreflop(range || [], hand),
+    { enabled: !!range?.length && hand.isComplete() && board.cards.length === 0 }
   )
 
-  return result ? (
+  const { data: resultPostFlop = null } = useQuery<VsResult | null>(
+    [range, hand, board, 'postflop'],
+    () => versusApi.range(range || [], hand, board),
+    { enabled: !!range?.length && hand.isComplete() && board.cards.length > 0 }
+  )
+
+  return (
     <div>
-      <div>WIN: {result.winner.toFixed(2)} %</div>
-      <div>LOSE: {result.lose.toFixed(2)} %</div>
-      <div>DRAW:{result.draw.toFixed(2)} %</div>
-      <div>TOTAL: {result.total}</div>
+      {resultPreflop ? (
+        <div>
+          PREFLOP
+          <div>WIN: {resultPreflop.winner.toFixed(2)} %</div>
+          <div>LOSE: {resultPreflop.lose.toFixed(2)} %</div>
+          <div>DRAW:{resultPreflop.draw.toFixed(2)} %</div>
+          <div>TOTAL: {resultPreflop.total}</div>
+        </div>
+      ) : null}
+
+      {resultPostFlop ? (
+        <div>
+          POSTFLOP
+          <div>WIN: {resultPostFlop.winner.toFixed(2)} %</div>
+          <div>LOSE: {resultPostFlop.lose.toFixed(2)} %</div>
+          <div>DRAW:{resultPostFlop.draw.toFixed(2)} %</div>
+          <div>TOTAL: {resultPostFlop.total}</div>
+        </div>
+      ) : null}
     </div>
-  ) : null
+  )
 }
 
 export default Versus

@@ -1,6 +1,6 @@
 import Vertical from 'components/layout/Vertical'
 import React, { useEffect, useMemo, useState } from 'react'
-import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
+import { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
 import Position, { positionsNames } from 'domain/position'
@@ -18,26 +18,20 @@ const VilainPreflopRange: React.FC<Props> = ({ buttonPosition, actions }) => {
   const [vilainAction, setVilainAction] = useState<Action | null>(null)
 
   const hero = useMemo<Position>(() => getHeroPosition(buttonPosition), [buttonPosition])
-  const actionsWithPosition = useMemo<ReadonlyArray<Action>>(
-    () => actions.map(a => new Action(getVilainPosition(a.position, buttonPosition), a.move)),
-    [buttonPosition, actions]
-  )
 
   useEffect(() => {
-    if (actionsWithPosition.length === 0 || actionsWithPosition.every(a => a.position === hero)) {
+    if (actions.length === 0 || actions.every(a => a.position === hero)) {
       setVilainHintsTable(null)
       setVilainAction(null)
       return
     }
 
-    const vilainLastAction = actionsWithPosition.reduce((acc: Action | null, cur) => {
-      return cur.position !== hero ? cur : acc
-    }, null)
+    const vilainLastAction = actions.reduce((acc: Action | null, cur) => (cur.position !== hero ? cur : acc), null)
     if (!vilainLastAction) throw new Error('can not happen')
 
     setVilainHintsTable(getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
     setVilainAction(vilainLastAction)
-  }, [actionsWithPosition, hero])
+  }, [actions, hero])
 
   return (
     <Vertical>
