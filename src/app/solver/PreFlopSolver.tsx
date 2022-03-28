@@ -1,7 +1,7 @@
 import Vertical from 'components/layout/Vertical'
 import Hand from 'domain/hand'
 import React, { useEffect, useMemo, useState } from 'react'
-import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
+import { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
 import Gto from 'app/Gto'
@@ -11,33 +11,32 @@ import HintTable from 'domain/hintTable'
 import Horizontal from 'components/layout/Horizontal'
 import VilainPreFlopRange from 'app/solver/VilainPreFlopRange'
 import Action from 'domain/action'
+import Board from 'domain/board'
+import Versus from 'app/solver/Versus'
 
 interface Props {
   hand: Hand
+  board: Board
   buttonPosition: number
   actions: ReadonlyArray<Action>
 }
 
-const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions }) => {
+const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions, board }) => {
   const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
 
   const hero = useMemo<Position>(() => getHeroPosition(buttonPosition), [buttonPosition])
-  const raises = useMemo<ReadonlyArray<Position>>(
-    () => actions.map(a => getVilainPosition(a.position, buttonPosition)),
-    [buttonPosition, actions]
-  )
 
   useEffect(() => {
-    if (raises.length === 0 || (raises.length === 1 && raises[0] === hero)) {
+    if (actions.length === 0 || (actions.length === 1 && actions[0].position === hero)) {
       setHintsTable(getHintsTable(Move.OPEN, hero, Position.ANY))
       setHintsTableName('OPEN')
       return
     }
 
-    if (raises.length === 1) {
+    if (actions.length === 1) {
       // and initial raiser !== hero
-      const initialRaiser = raises[0]
+      const initialRaiser = actions[0].position
 
       if (!hand.isComplete()) {
         setHintsTable(getHintsTable(Move.CALL, hero, initialRaiser))
@@ -56,10 +55,10 @@ const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions }) => {
       setHintsTableName('CALL')
     }
 
-    if (raises.length === 2) {
+    if (actions.length === 2) {
       // hero == initial raiser
-      const initialRaiser = raises[0]
-      const lastRaiser = raises[1]
+      const initialRaiser = actions[0].position
+      const lastRaiser = actions[1].position
       if (hero === initialRaiser) {
         if (!hand.isComplete()) {
           setHintsTable(getHintsTable(Move.CALL3BET, hero, lastRaiser))
@@ -84,13 +83,16 @@ const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions }) => {
         setHintsTableName(Move._3BET)
       }
     }
-  }, [hand, hero, raises])
+  }, [hand, hero, actions])
 
   return (
     <Horizontal>
       <Vertical>
-        <Gto hero={hero} hand={hand} raisePositions={raises} />
+        <Gto hero={hero} hand={hand} actions={actions} />
         {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} hintsTableName={hintsTableName} />}
+      </Vertical>
+      <Vertical>
+        <Versus hand={hand} board={board} actions={actions} hero={hero} />
       </Vertical>
       <VilainPreFlopRange actions={actions} buttonPosition={buttonPosition} />
     </Horizontal>

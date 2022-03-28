@@ -18,26 +18,26 @@ const VilainPreflopRange: React.FC<Props> = ({ buttonPosition, actions }) => {
   const [vilainAction, setVilainAction] = useState<Action | null>(null)
 
   const hero = useMemo<Position>(() => getHeroPosition(buttonPosition), [buttonPosition])
-  const actions2 = useMemo<ReadonlyArray<Action>>(
+  const actionsWithPosition = useMemo<ReadonlyArray<Action>>(
     () => actions.map(a => new Action(getVilainPosition(a.position, buttonPosition), a.move)),
     [buttonPosition, actions]
   )
 
   useEffect(() => {
-    if (actions2.length === 0 || actions2.every(a => a.position === hero)) {
+    if (actionsWithPosition.length === 0 || actionsWithPosition.every(a => a.position === hero)) {
       setVilainHintsTable(null)
       setVilainAction(null)
       return
     }
 
-    const vilainLastAction = actions2.reduce((acc: Action | null, cur) => {
+    const vilainLastAction = actionsWithPosition.reduce((acc: Action | null, cur) => {
       return cur.position !== hero ? cur : acc
     }, null)
     if (!vilainLastAction) throw new Error('can not happen')
 
     setVilainHintsTable(getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
     setVilainAction(vilainLastAction)
-  }, [actions2, hero])
+  }, [actionsWithPosition, hero])
 
   return (
     <Vertical>

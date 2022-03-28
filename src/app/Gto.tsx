@@ -1,17 +1,22 @@
 import Hand from 'domain/hand'
 import gto from 'data/gto'
 import Position from 'domain/position'
-import Action from 'components/Action'
+import ActionComponent from 'components/Action'
+import Action from 'domain/action'
 
 interface Props {
   hero: Position
-  raisePositions: ReadonlyArray<Position>
+  actions: ReadonlyArray<Action>
   hand: Hand
 }
 
-const Gto: React.FC<Props> = ({ hero, raisePositions, hand }) => {
-  const move = gto(hero, raisePositions, hand)
-  return <Action>You should : {move || 'N/A'}</Action>
+const Gto: React.FC<Props> = ({ hero, actions, hand }) => {
+  const move = gto(
+    hero,
+    actions.map(a => a.position),
+    hand
+  )
+  return <ActionComponent>You should : {move || 'N/A'}</ActionComponent>
 }
 
 export default Gto

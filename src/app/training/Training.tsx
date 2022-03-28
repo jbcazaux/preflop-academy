@@ -145,7 +145,11 @@ const Training: React.VFC = () => {
         />
         <Text>Score : {`${score.score} / ${score.total}`}</Text>
       </Vertical>
-      <Vertical>{guess && <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} />}</Vertical>
+      <Vertical>
+        {guess && (
+          <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={Board.newBoard} />
+        )}
+      </Vertical>
     </Horizontal>
   )
 }

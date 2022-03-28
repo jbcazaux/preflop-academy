@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Card as CardObject } from 'domain/card'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -13,6 +13,7 @@ import Deck from 'app/Deck'
 import Action from 'domain/action'
 import actionsFlow from 'app/solver/actionsFlow'
 import Board from 'domain/board'
+import getVilainPosition from 'utils/playerPosition'
 
 const Solver: React.VFC = () => {
   const [buttonPosition, setButtonPosition] = useState(0)
@@ -37,9 +38,14 @@ const Solver: React.VFC = () => {
     [board, hand]
   )
 
-  const onAction = useCallback((raisePosition: number) => {
-    setActions(prev => actionsFlow(prev, raisePosition))
+  const onAction = useCallback((actionPosition: number) => {
+    setActions(prev => actionsFlow(prev, actionPosition))
   }, [])
+
+  const actionWithPositions = useMemo(
+    () => actions.map(a => new Action(getVilainPosition(a.position, buttonPosition), a.move)),
+    [actions, buttonPosition]
+  )
 
   useEffect(() => {
     setHand(Hand.newHand)
@@ -61,14 +67,16 @@ const Solver: React.VFC = () => {
         />
         <Deck onClick={onCardClick} hand={hand} board={board} />
       </Vertical>
-      <Tabs>
-        <Tab title="MORE THAN 20 Bb">
-          <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} />
-        </Tab>
-        <Tab title="PUSH OR FOLD">
-          <PushFoldSolver hand={hand} buttonPosition={buttonPosition} />
-        </Tab>
-      </Tabs>
+      <Horizontal style={{ flex: 2 }}>
+        <Tabs>
+          <Tab title="MORE THAN 20 Bb">
+            <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actionWithPositions} board={board} />
+          </Tab>
+          <Tab title="PUSH OR FOLD">
+            <PushFoldSolver hand={hand} buttonPosition={buttonPosition} />
+          </Tab>
+        </Tabs>
+      </Horizontal>
     </Horizontal>
   )
 }

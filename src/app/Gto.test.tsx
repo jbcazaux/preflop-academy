@@ -8,7 +8,7 @@ import Move from 'domain/move'
 jest.mock('data/gto', () => () => Move.OPEN)
 describe('Gto', () => {
   it('displays whatever gto says', () => {
-    const { container } = render(<Gto hero={Position.B} raisePositions={[]} hand={Hand.newHand} />)
+    const { container } = render(<Gto hero={Position.B} actions={[]} hand={Hand.newHand} />)
 
     expect(container).toMatchSnapshot()
   })
