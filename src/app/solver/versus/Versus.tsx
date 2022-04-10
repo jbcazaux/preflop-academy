@@ -6,8 +6,8 @@ import Position from 'domain/position'
 import { useMemo } from 'react'
 import { getRange } from 'domain/hintTable'
 import { useQuery } from 'react-query'
-import versusApi, { VsResult } from '../../api/versus'
-import WLResults from 'components/WLResults/WLResults'
+import versusApi, { VsResult } from 'api/versus'
+import WLResults from 'app/solver/versus/WLResults'
 import Loader from 'components/Loader/Loader'
 import styled from 'styled-components'
 import Vertical from 'components/layout/Vertical'
@@ -54,7 +54,6 @@ const Versus: React.FC<Props> = ({ hero, hand, board, actions }) => {
     enabled: !!range?.length && hand.isComplete() && board.cards.length > 0,
   })
 
-  // eslint-disable-next-line no-constant-condition
   if (isLoadingPreflop || isLoadingPostflop) {
     return (
       <CenterVertical>

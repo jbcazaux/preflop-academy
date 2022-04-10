@@ -31,7 +31,7 @@ const Deck: React.FC<Props> = ({ onClick, hand, board }) => {
               card={card}
               onClick={onClick}
               inHand={!hand.isEmpty() && hand.contains(card)}
-              onBoard={board.contains(card)}
+              isOnBoard={board.contains(card)}
               mobile={windowSize.width <= 470}
             />
           ))}

@@ -12,7 +12,8 @@ import Horizontal from 'components/layout/Horizontal'
 import VilainPreFlopRange from 'app/solver/VilainPreFlopRange'
 import Action from 'domain/action'
 import Board from 'domain/board'
-import Versus from 'app/solver/Versus'
+import Versus from 'app/solver/versus/Versus'
+import ImprovementCards from 'app/solver/improvements/ImprovementCards'
 
 interface Props {
   hand: Hand
@@ -93,6 +94,7 @@ const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions, board }
       </Vertical>
       <Vertical>
         <Versus hand={hand} board={board} actions={actions} hero={hero} />
+        <ImprovementCards hand={hand} board={board} />
       </Vertical>
       <VilainPreFlopRange actions={actions} buttonPosition={buttonPosition} />
     </Horizontal>

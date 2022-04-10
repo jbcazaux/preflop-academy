@@ -60,3 +60,12 @@ export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors.map((color, i) =>
     .sort((a, b) => b - a)
     .map(value => new Card(value + i))
 )
+
+const values = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+const colorsSmall = ['s', 'h', 'd', 'c']
+const cardHeight = (c: number): number => Math.floor((c - 1) / 4)
+export const cardName = (id: number): string => {
+  const value = values[cardHeight(id)]
+  const color = colorsSmall[(id - 1) % 4]
+  return `${value}${color}`
+}

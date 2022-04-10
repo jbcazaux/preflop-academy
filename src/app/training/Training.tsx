@@ -22,6 +22,7 @@ import Score from 'domain/Score'
 import Deck from 'app/Deck'
 import Action from 'domain/action'
 import Board from 'domain/board'
+import noop from 'utils/noop'
 
 const Text = styled.div`
   display: flex;
@@ -30,10 +31,6 @@ const Text = styled.div`
   align-items: center;
   font-weight: bolder;
 `
-
-const noop: () => void = () => {
-  /*NOOP*/
-}
 
 const getRandomActions = (buttonPosition: number): ReadonlyArray<Action> => {
   switch (buttonPosition) {
