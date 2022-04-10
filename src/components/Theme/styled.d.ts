@@ -7,6 +7,10 @@ declare module 'styled-components' {
     colors: {
       primary: string
       secondary: string
+      loader: {
+        background: string
+        color: string
+      }
       range: {
         active: string
         suited: string

@@ -5,6 +5,10 @@ const style: AppTheme = {
   colors: {
     primary: '#2DDAEE',
     secondary: 'pink',
+    loader: {
+      background: '#D5E2E3',
+      color: '#3498DB',
+    },
     range: {
       active: '#97DE5D',
       suited: '#0CF9DF',
