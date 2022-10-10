@@ -1,38 +1,39 @@
 import random from 'utils/random'
+import Position from 'domain/position'
 
 type Distribution = { [key: number]: number }
 
 export const buttonPositionForCall = {
-  0: 20,
-  1: 14,
-  2: 8,
-  3: 0,
-  4: 32,
-  5: 26,
+  [Position.B]: 20,
+  [Position.SB]: 14,
+  [Position.BB]: 8,
+  [Position.UTG]: 0,
+  [Position.MP]: 32,
+  [Position.CO]: 26,
 }
 export const getButtonPositionForCall = (): number => randomPositionWithDistributionMap(buttonPositionForCall)
 
 export const buttonPositionForOpen = {
-  0: 20,
-  1: 20,
-  2: 20,
-  3: 20,
-  4: 0,
-  5: 20,
+  [Position.B]: 20,
+  [Position.SB]: 20,
+  [Position.BB]: 20,
+  [Position.UTG]: 20,
+  [Position.MP]: 0,
+  [Position.CO]: 20,
 }
-export const getButtonPositionForOpen = (): number => randomPositionWithDistributionMap(buttonPositionForOpen)
+export const getButtonPositionForOpen = (): Position => randomPositionWithDistributionMap(buttonPositionForOpen)
 
 export const buttonPositionFor3BetCall = {
-  0: 14,
-  1: 20,
-  2: 26,
-  3: 32,
-  4: 0,
-  5: 8,
+  [Position.B]: 14,
+  [Position.SB]: 20,
+  [Position.BB]: 26,
+  [Position.UTG]: 32,
+  [Position.MP]: 0,
+  [Position.CO]: 8,
 }
-export const getButtonPositionFor3BetCall = (): number => randomPositionWithDistributionMap(buttonPositionFor3BetCall)
+export const getButtonPositionFor3BetCall = (): Position => randomPositionWithDistributionMap(buttonPositionFor3BetCall)
 
-const randomPositionWithDistributionMap = (distributionMap: Distribution): number => {
+const randomPositionWithDistributionMap = (distributionMap: Distribution): Position => {
   const max = Object.values(distributionMap).reduce((total, i) => total + i, 0)
   const summedDistribution: Distribution = Object.entries(distributionMap).reduce(
     (distrib: Distribution, [position, d], i) => {

@@ -7,11 +7,6 @@ import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import TrainingAnswers from 'app/training/TrainingAnswers'
 import random from 'utils/random'
-import {
-  getButtonPositionFor3BetCall,
-  getButtonPositionForCall,
-  getButtonPositionForOpen,
-} from 'app/training/trainingButtonDistribution'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/solver/PreFlopSolver'
 import {getRandomMoveType} from 'app/training/trainingMoveDistribution'
@@ -23,7 +18,7 @@ import Deck from 'app/Deck'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import noop from 'utils/noop'
-import Position from "domain/position";
+import Position from 'domain/position'
 
 const Text = styled.div`
   display: flex;
@@ -33,42 +28,47 @@ const Text = styled.div`
   font-weight: bolder;
 `
 
-const getRandomActions = (buttonPosition: number): ReadonlyArray<Action> => {
+const getRandomOpenActionForCall = (buttonPosition: Position): ReadonlyArray<Action> => {
   switch (buttonPosition) {
-    case 0:
+    case Position.B:
       return [new Action(random(3, 5), Move.OPEN)]
-    case 1:
+    case Position.SB:
       return [new Action(random(4, 5), Move.OPEN)]
-    case 2:
+    case Position.BB:
       return [new Action(5, Move.OPEN)]
-    case 4:
+    case Position.MP:
       return [new Action(random(1, 5), Move.OPEN)]
-    case 5:
+    case Position.CO:
       return [new Action(random(2, 5), Move.OPEN)]
     default:
       return []
   }
 }
 
-const getRandomRaisePosition3Bet = (buttonPosition: number): ReadonlyArray<Action> => {
+const getRandomActionForCall3Bet = (buttonPosition: Position): ReadonlyArray<Action> => {
   switch (buttonPosition) {
-    case 0:
+    case Position.B:
       return [new Action(0, Move.OPEN), new Action(random(1, 2), Move._3BET)]
-    case 1:
+    case Position.SB:
       return [new Action(0, Move.OPEN), new Action(random(1, 3), Move._3BET)]
-    case 2:
+    case Position.BB:
       return [new Action(0, Move.OPEN), new Action(random(1, 4), Move._3BET)]
-    case 3:
+    case Position.UTG:
       return [new Action(0, Move.OPEN), new Action(random(1, 5), Move._3BET)]
-    case 4:
+    case Position.MP:
       return []
     default:
       return [new Action(0, Move.OPEN), new Action(1, Move._3BET)]
   }
 }
 
-const Training: React.VFC = () => {
-  const [buttonPosition, setButtonPosition] = useState<Position>(Position.B)
+
+interface Props {
+  buttonPosition: Position
+}
+
+
+const Training: React.VFC<Props> = ({buttonPosition}) => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
@@ -83,23 +83,17 @@ const Training: React.VFC = () => {
     switch (newRandomMoveType) {
       case Move.OPEN: {
         setHand(Hand.random)
-        const newButtonPosition = getButtonPositionForOpen()
-        setButtonPosition(newButtonPosition)
         setActions([])
         break
       }
       case Move.CALL: {
         setHand(Hand.random)
-        const newButtonPosition = getButtonPositionForCall()
-        setButtonPosition(newButtonPosition)
-        setActions(getRandomActions(newButtonPosition))
+        setActions(getRandomOpenActionForCall(buttonPosition))
         break
       }
       case Move.CALL3BET: {
-        const newButtonPosition = getButtonPositionFor3BetCall()
-        setButtonPosition(newButtonPosition)
-        setHand(randomHandInRange(Move.OPEN, getHeroPosition(newButtonPosition)))
-        setActions(getRandomRaisePosition3Bet(newButtonPosition))
+        setHand(randomHandInRange(Move.OPEN, getHeroPosition(buttonPosition)))
+        setActions(getRandomActionForCall3Bet(buttonPosition))
         break
       }
     }
