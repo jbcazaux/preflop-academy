@@ -5,15 +5,19 @@ interface IAction {
   active: boolean
   color: string
   disabled?: boolean
+  width?: number
+  height?: number
+  margin?: string
 }
 
 const Action = styled.div<IAction>`
-  width: 100px;
-  height: 30px;
+  width: ${({width}) => (width ? `${width}px` : '100px')};
+  height: ${({height}) => (height ? `${height}px` : '30px')};
+  margin: ${({margin}) => margin || '0'};
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ active, theme, color }) => (active ? theme.colors[color] : theme.colors.buttons.default)};
+  background-color: ${({active, theme, color}) => (active ? theme.colors[color] : theme.colors.buttons.default)};
   opacity: ${({disabled}) => (disabled ? 0.5 : 1)};
   cursor: pointer;
 `
@@ -31,15 +35,15 @@ const Button: React.FC<Props> = ({ active = false, onClick, disabled = false, ch
   }
 
   return (
-    <Action
-      {...props}
-      active={!disabled && active}
-      disabled={disabled}
-      onClick={handleClick}
-      color={color || 'primary'}
-    >
-      {children}
-    </Action>
+      <Action
+          {...props}
+          active={!disabled && active}
+          disabled={disabled}
+          onClick={handleClick}
+          color={color || 'primary'}
+      >
+        {children}
+      </Action>
   )
 }
 

@@ -18,7 +18,7 @@ import Deck from 'app/Deck'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import noop from 'utils/noop'
-import Position from 'domain/position'
+import ButtonPosition from 'domain/buttonPosition'
 
 const Text = styled.div`
   display: flex;
@@ -28,47 +28,46 @@ const Text = styled.div`
   font-weight: bolder;
 `
 
-const getRandomOpenActionForCall = (buttonPosition: Position): ReadonlyArray<Action> => {
+const getRandomOpenActionForCall = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
   switch (buttonPosition) {
-    case Position.B:
+    case 0:
       return [new Action(random(3, 5), Move.OPEN)]
-    case Position.SB:
+    case 1:
       return [new Action(random(4, 5), Move.OPEN)]
-    case Position.BB:
+    case 2:
       return [new Action(5, Move.OPEN)]
-    case Position.MP:
+    case 4:
       return [new Action(random(1, 5), Move.OPEN)]
-    case Position.CO:
+    case 5:
       return [new Action(random(2, 5), Move.OPEN)]
     default:
       return []
   }
 }
 
-const getRandomActionForCall3Bet = (buttonPosition: Position): ReadonlyArray<Action> => {
+const getRandomActionForCall3Bet = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
   switch (buttonPosition) {
-    case Position.B:
+    case 0:
       return [new Action(0, Move.OPEN), new Action(random(1, 2), Move._3BET)]
-    case Position.SB:
+    case 1:
       return [new Action(0, Move.OPEN), new Action(random(1, 3), Move._3BET)]
-    case Position.BB:
+    case 2:
       return [new Action(0, Move.OPEN), new Action(random(1, 4), Move._3BET)]
-    case Position.UTG:
+    case 3:
       return [new Action(0, Move.OPEN), new Action(random(1, 5), Move._3BET)]
-    case Position.MP:
+    case 4:
       return []
     default:
       return [new Action(0, Move.OPEN), new Action(1, Move._3BET)]
   }
 }
 
-
 interface Props {
-  buttonPosition: Position
+  buttonPosition: ButtonPosition
+  move: Move | null
 }
 
-
-const Training: React.VFC<Props> = ({buttonPosition}) => {
+const Training: React.VFC<Props> = ({buttonPosition, move}) => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
@@ -79,7 +78,7 @@ const Training: React.VFC<Props> = ({buttonPosition}) => {
 
   const setRandomPlay = useCallback(() => {
     setGuess(null)
-    const newRandomMoveType = getRandomMoveType()
+    const newRandomMoveType = move || getRandomMoveType()
     switch (newRandomMoveType) {
       case Move.OPEN: {
         setHand(Hand.random)
@@ -97,7 +96,7 @@ const Training: React.VFC<Props> = ({buttonPosition}) => {
         break
       }
     }
-  }, [])
+  }, [move, buttonPosition])
 
   useEffect(() => {
     const vilain = actions.map(v => getVilainPosition(v.position, buttonPosition))
