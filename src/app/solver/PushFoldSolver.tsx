@@ -7,6 +7,7 @@ import Ranges from 'app/ranges/Ranges'
 import pushfoldHintsTable from 'data/pushfold'
 import styled from 'styled-components'
 import { positionsNames } from 'domain/position'
+import ButtonPosition from 'domain/buttonPosition'
 
 const Action = styled.div`
   display: flex;
@@ -24,7 +25,7 @@ const Select = styled.select`
 
 interface Props {
   hand: Hand
-  buttonPosition: number
+  buttonPosition: ButtonPosition
 }
 
 const PushFoldSolver: React.FC<Props> = ({ hand, buttonPosition }) => {

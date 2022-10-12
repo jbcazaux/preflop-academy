@@ -14,9 +14,10 @@ import Action from 'domain/action'
 import actionsFlow from 'app/solver/actionsFlow'
 import Board from 'domain/board'
 import getVilainPosition from 'utils/playerPosition'
+import ButtonPosition from 'domain/buttonPosition'
 
 const Solver: React.VFC = () => {
-  const [buttonPosition, setButtonPosition] = useState(0)
+  const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [board, setBoard] = useState<Board>(Board.newBoard)
 

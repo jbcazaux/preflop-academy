@@ -7,9 +7,10 @@ import Position, { positionsNames } from 'domain/position'
 import HintTable from 'domain/hintTable'
 import ActionComponent from 'components/Action'
 import Action from 'domain/action'
+import ButtonPosition from 'domain/buttonPosition'
 
 interface Props {
-  buttonPosition: number
+  buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
 }
 

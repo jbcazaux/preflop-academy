@@ -6,10 +6,12 @@ import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import Position from 'domain/position'
 import styled from 'styled-components'
 import Action from 'domain/action'
+import ButtonPosition from 'domain/buttonPosition'
 
 const TrainingAnswersContainer = styled(Vertical)`
   align-items: center;
 `
+
 interface IAnswerWrapper {
   correct: boolean
   answered: boolean
@@ -31,17 +33,21 @@ interface AnswerButtonProps {
 }
 const AnswerButton: React.FC<AnswerButtonProps> = ({ move, chosenAnswer, goodAnswer, onClick, disabled, ...props }) => (
   <AnswerWrapper correct={chosenAnswer === goodAnswer} answered={!!chosenAnswer && chosenAnswer === move}>
-    <Button onClick={() => !chosenAnswer && onClick(move)} disabled={disabled || (!!chosenAnswer && chosenAnswer !== move)} {...props}>
+    <Button
+      onClick={() => !chosenAnswer && onClick(move)}
+      disabled={disabled || (!!chosenAnswer && chosenAnswer !== move)}
+      {...props}
+    >
       {move}
     </Button>
   </AnswerWrapper>
 )
 
 interface Props {
-  buttonPosition: number
+  buttonPosition: ButtonPosition
   goodAnswer: Move | null
   next: () => void
-    actions: ReadonlyArray<Action>
+  actions: ReadonlyArray<Action>
   setAnswer: (move: Move) => void
 }
 

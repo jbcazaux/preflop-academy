@@ -14,11 +14,12 @@ import Action from 'domain/action'
 import Board from 'domain/board'
 import Versus from 'app/solver/versus/Versus'
 import ImprovementCards from 'app/solver/improvements/ImprovementCards'
+import ButtonPosition from 'domain/buttonPosition'
 
 interface Props {
   hand: Hand
   board: Board
-  buttonPosition: number
+  buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
 }
 

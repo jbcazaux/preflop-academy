@@ -8,12 +8,12 @@
     "@types/koa": "2.13.5",
     "@types/koa-json": "2.0.20",
     "@types/koa-router": "7.4.4",
-    "@types/node": "18.8.3",
+    "@types/node": "18.8.4",
     "@types/react-dom": "18.0.6",
     "@types/react-router-dom": "5.3.3",
     "@types/styled-components": "5.1.26",
-    "@typescript-eslint/eslint-plugin": "5.39.0",
-    "@typescript-eslint/parser": "5.39.0",
+    "@typescript-eslint/eslint-plugin": "5.40.0",
+    "@typescript-eslint/parser": "5.40.0",
     "clean-webpack-plugin": "4.0.0",
     "copy-webpack-plugin": "11.0.0",
     "css-loader": "6.7.1",
@@ -21,19 +21,19 @@
     "eslint-config-standard-jsx": "11.0.0",
     "eslint-plugin-jest": "27.1.1",
     "eslint-plugin-prettier": "4.2.1",
-    "eslint-plugin-react": "7.31.9",
+    "eslint-plugin-react": "7.31.10",
     "eslint-plugin-react-hooks": "4.6.0",
     "html-webpack-plugin": "5.5.0",
     "husky": "8.0.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "29.1.2",
+    "jest-environment-jsdom": "29.1.2",
     "jest-junit-reporter": "1.1.0",
     "jest-styled-components": "7.1.1",
     "lint-staged": "13.0.3",
     "mini-css-extract-plugin": "2.6.1",
     "node-sass": "7.0.3",
     "npm-check-updates": "16.3.11",
-    "optimize-css-assets-webpack-plugin": "6.0.1",
     "prettier": "2.7.1",
     "react-test-renderer": "18.2.0",
     "sass-loader": "13.1.0",
@@ -75,17 +75,13 @@
     "lint": "eslint \"src/**\" --ext .tsx?",
     "test": "jest src",
     "test:coverage": "jest --coverage",
-    "ncuu": "ncu -u"
+    "ncuu": "ncu -u",
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "*.{js,json}": [
+    "*.{js,jsx,ts,tsx,json}": [
       "prettier --write",
       "git add"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   }
 }

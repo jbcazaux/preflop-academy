@@ -1,6 +1,7 @@
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { AppTheme, ThemeContext } from 'styled-components'
 import Action from 'domain/action'
+import ButtonPosition from 'domain/buttonPosition'
 
 const xyByPosition = (position: number, centerX: number, centerY: number, radius: number, ratio: number) => {
   const coefByPosition = [6, 5, 3, 2, 1, -1]
@@ -195,7 +196,7 @@ const dimensions = (width: number): Dimensions => ({
 
 interface Props {
   buttonPosition: number
-  onButtonChange: (p: number) => void
+  onButtonChange: (p: ButtonPosition) => void
   actions: ReadonlyArray<Action>
   addRaisePosition: (p: number) => void
   width: number
