@@ -1,5 +1,5 @@
 import Vertical from 'components/layout/Vertical'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
@@ -14,7 +14,7 @@ interface Props {
   actions: ReadonlyArray<Action>
 }
 
-const VilainPreflopRange: React.FC<Props> = ({ buttonPosition, actions }) => {
+const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
   const [vilainHintsTable, setVilainHintsTable] = useState<HintTable | null>(null)
   const [vilainAction, setVilainAction] = useState<Action | null>(null)
 

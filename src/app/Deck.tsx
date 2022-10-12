@@ -1,6 +1,6 @@
 import { Card, deck } from 'domain/card'
 import CardComponent from 'components/Card'
-import React from 'react'
+
 import styled from 'styled-components'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
@@ -18,7 +18,7 @@ interface Props {
   board: Board
 }
 
-const Deck: React.FC<Props> = ({ onClick, hand, board }) => {
+const Deck = ({ onClick, hand, board }: Props) => {
   const windowSize = useWindowSize()
 
   return (

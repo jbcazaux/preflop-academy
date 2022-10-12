@@ -44,7 +44,7 @@ interface Props {
   board: Board
 }
 
-const ImprovementStats: React.FC<Props> = ({ title, cards, board }) => {
+const ImprovementStats = ({ title, cards, board }: Props) => {
   const odds = Number(cards.length / (52 - 2 - board.cards.length))
   return (
     <CenterVertical>

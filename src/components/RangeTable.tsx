@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import Vertical from 'components/layout/Vertical'
 import Horizontal from 'components/layout/Horizontal'
@@ -32,7 +31,7 @@ interface HandProps {
   selected?: boolean
 }
 
-const Hand: React.FC<HandProps> = ({ active, suited, pair, selected = false, children }) => {
+const Hand = ({ active, suited, pair, selected = false, children }: HandProps) => {
   const color = active ? '#97DE5D' : suited || pair ? '#0CF9DF' : '#F9E00C'
   return (
     <Square bgColor={color} active={active} selected={selected}>
@@ -48,7 +47,7 @@ interface Props {
   hand?: PokerHand
 }
 
-const RangeTable: React.FC<Props> = ({ hintsTable, hand }) => {
+const RangeTable = ({ hintsTable, hand }: Props) => {
   const xyInRangeTable = hand?.isComplete() ? hand?.xyInRangeTable() : null
   return (
     <Vertical>

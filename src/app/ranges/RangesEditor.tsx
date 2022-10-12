@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import { Square } from 'components/RangeTable'
 import HintTable from 'domain/hintTable'
@@ -16,7 +16,7 @@ interface HandProps {
   onClick: () => void
 }
 
-const Hand: React.FC<HandProps> = ({ onClick, active, suited, pair, children }) => {
+const Hand = ({ onClick, active, suited, pair, children }: HandProps) => {
   const { colors } = useContext(ThemeContext)
   const color = active ? colors.range.active : suited || pair ? colors.range.suited : colors.range.offsuit
   return (
@@ -35,7 +35,7 @@ const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6
 
 const defaultTable = new Array(13).fill('').map(() => new Array(13).fill(false))
 
-const RangesEditor: React.VFC = () => {
+const RangesEditor = () => {
   const [hints, setHints] = useState<HintTable>(defaultTable)
   const [json, setJson] = useState<string>('')
 

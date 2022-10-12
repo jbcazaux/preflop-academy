@@ -24,7 +24,7 @@ interface Props {
   actions: ReadonlyArray<Action>
 }
 
-const Versus: React.FC<Props> = ({ hero, hand, board, actions }) => {
+const Versus = ({ hero, hand, board, actions }: Props) => {
   const range = useMemo(() => {
     const vilainLastAction = actions.reduce(
       (lastAction: Action | null, cur) => (cur.position !== hero ? cur : lastAction),

@@ -1,4 +1,3 @@
-import React from 'react'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Solver from 'app/solver/Solver'
 import NotFound from 'app/NotFound'
@@ -11,7 +10,7 @@ import TrainingSelector from 'app/training/TrainingSelector'
 
 const queryClient = new QueryClient()
 
-const App: React.VFC = () => (
+const App = () => (
   <ThemeProvider theme={style}>
     <QueryClientProvider client={queryClient}>
       <Router>

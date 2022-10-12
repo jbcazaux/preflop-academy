@@ -16,7 +16,7 @@ interface Props {
   board: Board
 }
 
-const ImprovementCards: React.FC<Props> = ({ hand, board }) => {
+const ImprovementCards = ({ hand, board }: Props) => {
   const {
     data: improvementCardsFlop = null,
     isLoading: isLoadingImprovementCardsFlop,

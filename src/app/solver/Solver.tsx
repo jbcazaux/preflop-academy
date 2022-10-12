@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { Card as CardObject } from 'domain/card'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -16,7 +16,7 @@ import Board from 'domain/board'
 import getVilainPosition from 'utils/playerPosition'
 import ButtonPosition from 'domain/buttonPosition'
 
-const Solver: React.VFC = () => {
+const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [board, setBoard] = useState<Board>(Board.newBoard)

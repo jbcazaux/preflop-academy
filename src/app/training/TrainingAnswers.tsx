@@ -1,7 +1,7 @@
 import Vertical from 'components/layout/Vertical'
 import Button from 'components/Button'
 import Move from 'domain/move'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import Position from 'domain/position'
 import styled from 'styled-components'
@@ -31,7 +31,8 @@ interface AnswerButtonProps {
   goodAnswer: Move | null
   chosenAnswer: Move | null
 }
-const AnswerButton: React.FC<AnswerButtonProps> = ({ move, chosenAnswer, goodAnswer, onClick, disabled, ...props }) => (
+
+const AnswerButton = ({ move, chosenAnswer, goodAnswer, onClick, disabled, ...props }: AnswerButtonProps) => (
   <AnswerWrapper correct={chosenAnswer === goodAnswer} answered={!!chosenAnswer && chosenAnswer === move}>
     <Button
       onClick={() => !chosenAnswer && onClick(move)}
@@ -51,7 +52,7 @@ interface Props {
   setAnswer: (move: Move) => void
 }
 
-const TrainingAnswers: React.FC<Props> = ({ buttonPosition, actions, setAnswer, goodAnswer, next }) => {
+const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next }: Props) => {
   const [myAnswer, setMyAnswer] = useState<Move | null>(null)
   const hero = useMemo(() => getHeroPosition(buttonPosition), [buttonPosition])
   const raises = useMemo(

@@ -1,3 +1,3 @@
-const NotFound : React.VFC = () => <>Page Not Found !</>
+const NotFound = () => <>Page Not Found !</>
 
 export default NotFound

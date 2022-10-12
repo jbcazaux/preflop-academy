@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import { AppTheme, ThemeContext } from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
@@ -202,7 +202,7 @@ interface Props {
   width: number
 }
 
-const PokerTable: React.FC<Props> = ({ buttonPosition, onButtonChange, actions, addRaisePosition, width }) => {
+const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition, width }: Props) => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   const canvas = useMemo(() => dimensions(width), [width])

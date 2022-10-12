@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { Card as CardObject, CardId, colors, names } from 'domain/card'
-import React from 'react'
+
 import noop from 'utils/noop'
 
 interface CardsProps {
@@ -41,7 +41,7 @@ interface Props {
 const colorIndex = [3, 2, 1, 4]
 const valueIndex = (value: CardId) => (Math.floor((value - 1) / 4) + 2) % 14 || 1
 
-const CardComponent: React.FC<Props> = ({ card, onClick = noop, inHand = false, isOnBoard = false, mobile= false }) => {
+const CardComponent = ({ card, onClick = noop, inHand = false, isOnBoard = false, mobile = false }: Props) => {
   const cIndex = colorIndex[(card.id - 1) % 4]
   const vIndex = valueIndex(card.id)
   const cardName = `${colors[(card.id - 1) % 4]}-${names[Math.floor((card.id - 1) / 4)]}`

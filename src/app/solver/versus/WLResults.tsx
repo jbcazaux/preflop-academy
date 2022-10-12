@@ -47,7 +47,7 @@ interface Props {
   total: number
 }
 
-const WLResults: React.FC<Props> = ({ title, winRate, loseRate, tieRate, total }) => (
+const WLResults = ({ title, winRate, loseRate, tieRate, total }: Props) => (
   <CenterVertical>
     <Vertical0>
       <Horizontal>{title}</Horizontal>

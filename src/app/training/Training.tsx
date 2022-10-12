@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -9,9 +9,9 @@ import TrainingAnswers from 'app/training/TrainingAnswers'
 import random from 'utils/random'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/solver/PreFlopSolver'
-import {getRandomMoveType} from 'app/training/trainingMoveDistribution'
+import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
-import getVilainPosition, {getHeroPosition} from 'utils/playerPosition'
+import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import gto from 'data/gto'
 import Score from 'domain/Score'
 import Deck from 'app/Deck'
@@ -67,7 +67,7 @@ interface Props {
   move: Move | null
 }
 
-const Training: React.VFC<Props> = ({buttonPosition, move}) => {
+const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)

@@ -4,7 +4,7 @@ interface Props {
   hintsTable: HintTable | null
 }
 
-const PercentageOfPlayedHand: React.FC<Props> = ({ hintsTable }) => {
+const PercentageOfPlayedHand = ({ hintsTable }: Props) => {
   if (!hintsTable) {
     return <div>N/A</div>
   }

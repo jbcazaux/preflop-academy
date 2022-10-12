@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import TabTitle from 'components/Tabs/TabTitle'
 import Tab from 'components/Tabs/Tab'
@@ -23,7 +23,7 @@ interface Props {
   children: React.ReactElement<TabProps> | React.ReactElement<TabProps>[]
 }
 
-const Tabs: React.FC<Props> = ({ children }) => {
+const Tabs = ({ children }: Props) => {
   const [currentTabId, setCurrentTabId] = useState<number>(0)
 
   return (

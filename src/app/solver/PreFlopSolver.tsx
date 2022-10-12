@@ -1,6 +1,6 @@
 import Vertical from 'components/layout/Vertical'
 import Hand from 'domain/hand'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
@@ -23,7 +23,7 @@ interface Props {
   actions: ReadonlyArray<Action>
 }
 
-const PreFlopSolver: React.FC<Props> = ({ hand, buttonPosition, actions, board }) => {
+const PreFlopSolver = ({ hand, buttonPosition, actions, board }: Props) => {
   const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
 

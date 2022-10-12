@@ -1,4 +1,3 @@
-import React from 'react'
 import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
 import RangeTable from 'components/RangeTable'
 import HintTable from 'domain/hintTable'
@@ -11,7 +10,7 @@ interface Props {
   hand?: Hand
 }
 
-const Ranges: React.FC<Props> = ({ hintsTable, hand, hintsTableName }) => (
+const Ranges = ({ hintsTable, hand, hintsTableName }: Props) => (
   <div>
     <Horizontal>
       {hintsTableName && <>{hintsTableName}&nbsp;:&nbsp;</>}

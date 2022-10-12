@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Position, { allPositions, positionsNames } from 'domain/position'
 import Move from 'domain/move'
 import { getHintsTable } from 'data/gto'
@@ -8,7 +8,7 @@ import Moves from 'app/ranges/Moves'
 import Horizontal from 'components/layout/Horizontal'
 import Button from 'components/Button'
 
-const Ranges: React.VFC = () => {
+const Ranges = () => {
   const [heroPosition, setHeroPosition] = useState<Position>(Position.B)
   const [vilainPosition, setVilainPosition] = useState<Position>(Position.B)
   const [heroMove, setHeroMove] = useState<Move>(Move.OPEN)

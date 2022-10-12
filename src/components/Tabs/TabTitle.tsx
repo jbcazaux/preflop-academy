@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 
 interface ITab {
@@ -21,7 +20,7 @@ interface TabTitleProps {
   selected: boolean
   onClick: () => void
 }
-const TabTitle: React.FC<TabTitleProps> = ({ selected, children, onClick }) => (
+const TabTitle = ({ selected, children, onClick }: TabTitleProps) => (
   <Tab onClick={onClick} selected={selected} role="tab">
     {children}
   </Tab>

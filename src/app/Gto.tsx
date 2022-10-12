@@ -10,7 +10,7 @@ interface Props {
   hand: Hand
 }
 
-const Gto: React.FC<Props> = ({ hero, actions, hand }) => {
+const Gto = ({ hero, actions, hand }: Props) => {
   const move = gto(
     hero,
     actions.map(a => a.position),

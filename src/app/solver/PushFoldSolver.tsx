@@ -28,7 +28,7 @@ interface Props {
   buttonPosition: ButtonPosition
 }
 
-const PushFoldSolver: React.FC<Props> = ({ hand, buttonPosition }) => {
+const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
   const [stack, setStack] = useState<number>(5)
 
   const action = useMemo(() => {
