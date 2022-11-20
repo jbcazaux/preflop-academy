@@ -14,6 +14,7 @@ interface HandProps {
   pair: boolean
   suited: boolean
   onClick: () => void
+  children: string
 }
 
 const Hand = ({ onClick, active, suited, pair, children }: HandProps) => {

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import { Card as CardObject, CardId, colors, names } from 'domain/card'
 
 import noop from 'utils/noop'
+import React from 'react'
 
 interface CardsProps {
   alt: string

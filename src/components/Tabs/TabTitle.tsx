@@ -19,6 +19,7 @@ const Tab = styled.div<ITab>`
 interface TabTitleProps {
   selected: boolean
   onClick: () => void
+  children: string
 }
 const TabTitle = ({ selected, children, onClick }: TabTitleProps) => (
   <Tab onClick={onClick} selected={selected} role="tab">

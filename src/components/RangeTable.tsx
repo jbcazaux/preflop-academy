@@ -29,6 +29,7 @@ interface HandProps {
   pair: boolean
   suited: boolean
   selected?: boolean
+  children: string
 }
 
 const Hand = ({ active, suited, pair, selected = false, children }: HandProps) => {

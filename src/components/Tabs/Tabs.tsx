@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { PropsWithChildren, useState } from 'react'
 import styled from 'styled-components'
 import TabTitle from 'components/Tabs/TabTitle'
 import Tab from 'components/Tabs/Tab'
@@ -14,9 +14,8 @@ const TabList = styled.div`
   flex-direction: row;
 `
 
-interface TabProps {
+interface TabProps extends PropsWithChildren<React.ReactElement> {
   title: string
-  children: React.ReactElement | React.ReactElement[]
 }
 
 interface Props {

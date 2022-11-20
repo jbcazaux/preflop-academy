@@ -1,4 +1,6 @@
-interface Props {
+import { PropsWithChildren } from 'react'
+
+interface Props extends PropsWithChildren<any> {
   title: string
 }
 
