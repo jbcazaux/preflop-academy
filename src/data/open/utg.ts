@@ -1,6 +1,6 @@
 import HintTable from 'domain/hintTable'
 
-const utg : HintTable = [
+const utg: HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
@@ -67,7 +67,7 @@ const utg : HintTable = [
     /*QTo*/ false,
     /*JTo*/ false,
     /*TT*/ true,
-    /*T9s*/ true,
+    /*T9s*/ false,
     /*T8s*/ false,
     /*T7s*/ false,
     /*T6s*/ false,
@@ -83,7 +83,7 @@ const utg : HintTable = [
     /*J9o*/ false,
     /*T9o*/ false,
     /*99*/ true,
-    /*98s*/ true,
+    /*98s*/ false,
     /*97s*/ false,
     /*96s*/ false,
     /*95s*/ false,
@@ -146,7 +146,7 @@ const utg : HintTable = [
     /*85o*/ false,
     /*75o*/ false,
     /*65o*/ false,
-    /*55*/ true,
+    /*55*/ false,
     /*54s*/ false,
     /*53s*/ false,
     /*52s*/ false,
@@ -162,7 +162,7 @@ const utg : HintTable = [
     /*74o*/ false,
     /*64o*/ false,
     /*54o*/ false,
-    /*44*/ true,
+    /*44*/ false,
     /*43s*/ false,
     /*42s*/ false,
   ],
@@ -178,7 +178,7 @@ const utg : HintTable = [
     /*63o*/ false,
     /*53o*/ false,
     /*43o*/ false,
-    /*33*/ true,
+    /*33*/ false,
     /*32s*/ false,
   ],
   [
@@ -194,7 +194,7 @@ const utg : HintTable = [
     /*52o*/ false,
     /*42o*/ false,
     /*32s*/ false,
-    /*22*/ true,
+    /*22*/ false,
   ],
 ]
 

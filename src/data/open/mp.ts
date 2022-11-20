@@ -1,6 +1,6 @@
 import HintTable from 'domain/hintTable'
 
-const mp : HintTable = [
+const mp: HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
@@ -162,7 +162,7 @@ const mp : HintTable = [
     /*74o*/ false,
     /*64o*/ false,
     /*54o*/ false,
-    /*44*/ true,
+    /*44*/ false,
     /*43s*/ false,
     /*42s*/ false,
   ],
@@ -178,7 +178,7 @@ const mp : HintTable = [
     /*63o*/ false,
     /*53o*/ false,
     /*43o*/ false,
-    /*33*/ true,
+    /*33*/ false,
     /*32s*/ false,
   ],
   [
@@ -194,7 +194,7 @@ const mp : HintTable = [
     /*52o*/ false,
     /*42o*/ false,
     /*32s*/ false,
-    /*22*/ true,
+    /*22*/ false,
   ],
 ]
 
