@@ -2,10 +2,11 @@ import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'r
 import { AppTheme, ThemeContext } from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
+import { seatNumberByPositionAndButtonPosition } from 'domain/position'
 
-const xyByPosition = (position: number, centerX: number, centerY: number, radius: number, ratio: number) => {
+const xyBySeatNumber = (seatNumber: number, centerX: number, centerY: number, radius: number, ratio: number) => {
   const coefByPosition = [6, 5, 3, 2, 1, -1]
-  const p = (coefByPosition[position % 6] * Math.PI) / 4
+  const p = (coefByPosition[seatNumber % 6] * Math.PI) / 4
   const x = centerX + radius * Math.cos(p)
   const y = centerY - ratio * radius * Math.sin(p)
 
@@ -45,8 +46,6 @@ const drawPlayers = (
   drawPlayer(ctx, radius, ratio, centerX, centerY, 3)
   drawPlayer(ctx, radius, ratio, centerX, centerY, 4)
   drawPlayer(ctx, radius, ratio, centerX, centerY, 5)
-
-  return []
 }
 
 const drawPlayer = (
@@ -55,17 +54,17 @@ const drawPlayer = (
   ratio: number,
   centerX: number,
   centerY: number,
-  position: number
+  seatNumber: number
 ) => {
-  const [x, y] = xyByPosition(position, centerX, centerY, radius, ratio)
+  const [x, y] = xyBySeatNumber(seatNumber, centerX, centerY, radius, ratio)
   const alignByPosition = ['center', 'right', 'right', 'center', 'left', 'left']
 
   ctx.beginPath()
   ctx.font = `normal ${20}px serif`
-  ctx.textAlign = alignByPosition[position % 6] as CanvasTextAlign
+  ctx.textAlign = alignByPosition[seatNumber % 6] as CanvasTextAlign
   ctx.textBaseline = 'middle'
   ctx.fillStyle = '#000000'
-  ctx.fillText(position === 0 ? 'Hero' : 'Vilain ' + position, x, y)
+  ctx.fillText(seatNumber === 0 ? 'Hero' : 'Vilain ' + seatNumber, x, y)
 }
 
 const drawActions = (
@@ -75,35 +74,40 @@ const drawActions = (
   tableWidth: number,
   tableHeight: number,
   actions: ReadonlyArray<Action>,
+  buttonPosition: ButtonPosition,
   clear = false,
   theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.6
   const ratio = tableHeight / tableWidth
 
-  Object.values(
-    actions.reduce((acc: { [key: number]: Action }, cur) => {
-      return { ...acc, [cur.position]: cur }
-    }, {})
-  ).forEach(action => {
-    const text = action.move.toLocaleLowerCase()
-    const [x, y] = xyByPosition(action.position, centerX, centerY, radius, ratio)
-    ctx.beginPath()
+  Object.values(actions.reduce((acc: { [key: string]: Action }, cur) => ({ ...acc, [cur.position]: cur }), {})).forEach(
+    action => {
+      const text = action.move.toLocaleLowerCase()
+      const [x, y] = xyBySeatNumber(
+        seatNumberByPositionAndButtonPosition(action.position, buttonPosition),
+        centerX,
+        centerY,
+        radius,
+        ratio
+      )
+      ctx.beginPath()
 
-    ctx.fillStyle = theme.colors.table.action
-    ctx.font = `bold ${tableWidth / 30}px serif`
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
+      ctx.fillStyle = theme.colors.table.action
+      ctx.font = `bold ${tableWidth / 30}px serif`
+      ctx.textAlign = 'center'
+      ctx.textBaseline = 'middle'
 
-    if (clear) {
-      ctx.fillStyle = theme.colors.table.board
-      const { width: size } = ctx.measureText(text)
-      const height = parseInt(ctx.font.replaceAll(/[a-zA-Z]/g, ''), 10)
-      ctx.fillRect(x - size / 2, y - height / 2, size, height)
-    } else {
-      ctx.fillText(text, x, y)
+      if (clear) {
+        ctx.fillStyle = theme.colors.table.board
+        const { width: size } = ctx.measureText(text)
+        const height = parseInt(ctx.font.replaceAll(/[a-zA-Z]/g, ''), 10)
+        ctx.fillRect(x - size / 2, y - height / 2, size, height)
+      } else {
+        ctx.fillText(text, x, y)
+      }
     }
-  })
+  )
 }
 
 const drawPositions = (
@@ -112,19 +116,26 @@ const drawPositions = (
   centerY: number,
   tableWidth: number,
   tableHeight: number,
-  position: number,
+  seatNumber: number,
   clear = false,
   theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.8
   const ratio = tableHeight / tableWidth
 
-  drawButton(ctx, xyByPosition(position, centerX, centerY, radius, ratio), tableWidth, clear, theme)
-  drawPositionName(ctx, xyByPosition(position + 1, centerX, centerY, radius, ratio), tableWidth, 'SB', clear, theme)
-  drawPositionName(ctx, xyByPosition(position + 2, centerX, centerY, radius, ratio), tableWidth, 'BB', clear, theme)
-  drawPositionName(ctx, xyByPosition(position + 3, centerX, centerY, radius, ratio), tableWidth, 'UTG', clear, theme)
-  drawPositionName(ctx, xyByPosition(position + 4, centerX, centerY, radius, ratio), tableWidth, 'MP', clear, theme)
-  drawPositionName(ctx, xyByPosition(position + 5, centerX, centerY, radius, ratio), tableWidth, 'CO', clear, theme)
+  drawButton(ctx, xyBySeatNumber(seatNumber, centerX, centerY, radius, ratio), tableWidth, clear, theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 1, centerX, centerY, radius, ratio), tableWidth, 'SB', clear, theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 2, centerX, centerY, radius, ratio), tableWidth, 'BB', clear, theme)
+  drawPositionName(
+    ctx,
+    xyBySeatNumber(seatNumber + 3, centerX, centerY, radius, ratio),
+    tableWidth,
+    'UTG',
+    clear,
+    theme
+  )
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 4, centerX, centerY, radius, ratio), tableWidth, 'MP', clear, theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 5, centerX, centerY, radius, ratio), tableWidth, 'CO', clear, theme)
 }
 
 const drawPositionName = (
@@ -139,7 +150,7 @@ const drawPositionName = (
   ctx.beginPath()
 
   ctx.fillStyle = '#000000'
-  ctx.font = `${tableWidth / 40}px serif`
+  ctx.font = `${tableWidth / 30}px serif`
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(text, x, y)
@@ -187,18 +198,18 @@ interface Dimensions {
 
 const canvasMarge = 50
 const dimensions = (width: number): Dimensions => ({
-  width,
-  height: width / 2,
+  width: width - 2 * canvasMarge,
+  height: (width - 2 * canvasMarge) / 2,
   marge: canvasMarge,
-  centerX: width / 2 + canvasMarge,
-  centerY: width / 4 + canvasMarge,
+  centerX: (width - 2 * canvasMarge) / 2 + canvasMarge,
+  centerY: (width - 2 * canvasMarge) / 4 + canvasMarge,
 })
 
 interface Props {
-  buttonPosition: number
+  buttonPosition: ButtonPosition
   onButtonChange: (p: ButtonPosition) => void
   actions: ReadonlyArray<Action>
-  addRaisePosition: (p: number) => void
+  addRaisePosition: (seatNumber: number) => void
   width: number
 }
 
@@ -281,11 +292,31 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
     if (!context) {
       return
     }
-    drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, false, theme)
+    drawActions(
+      context,
+      canvas.centerX,
+      canvas.centerY,
+      canvas.width,
+      canvas.height,
+      actions,
+      buttonPosition,
+      false,
+      theme
+    )
     return () => {
-      drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, true, theme)
+      drawActions(
+        context,
+        canvas.centerX,
+        canvas.centerY,
+        canvas.width,
+        canvas.height,
+        actions,
+        buttonPosition,
+        true,
+        theme
+      )
     }
-  }, [canvas, context, actions, theme])
+  }, [canvas, context, actions, theme, buttonPosition])
 
   return (
     <canvas

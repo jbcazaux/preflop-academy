@@ -1,9 +1,8 @@
 import Vertical from 'components/layout/Vertical'
 import { useEffect, useMemo, useState } from 'react'
-import { getHeroPosition } from 'utils/playerPosition'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
-import Position, { positionsNames } from 'domain/position'
+import Position, { heroPositionByButtonPosition, positionsNamesMap } from 'domain/position'
 import HintTable from 'domain/hintTable'
 import ActionComponent from 'components/Action'
 import Action from 'domain/action'
@@ -18,7 +17,7 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
   const [vilainHintsTable, setVilainHintsTable] = useState<HintTable | null>(null)
   const [vilainAction, setVilainAction] = useState<Action | null>(null)
 
-  const hero = useMemo<Position>(() => getHeroPosition(buttonPosition), [buttonPosition])
+  const hero = useMemo<Position>(() => heroPositionByButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
     if (actions.length === 0 || actions.every(a => a.position === hero)) {
@@ -39,7 +38,7 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
       <ActionComponent>
         {vilainAction && (
           <>
-            {vilainAction.move} @ {positionsNames[vilainAction.position]}
+            {vilainAction.move} @ {positionsNamesMap.get(vilainAction.position)}
           </>
         )}
       </ActionComponent>

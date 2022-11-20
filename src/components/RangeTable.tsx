@@ -22,6 +22,11 @@ export const Square = styled.div<ISquare>`
   border: ${({ selected }) => (selected ? '3px solid red' : '1px solid black')};
   border-radius: 3px;
   box-sizing: border-box;
+  @media (max-width: 1400px) {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6em;
+  }
 `
 
 interface HandProps {

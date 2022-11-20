@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Training from 'app/training/Training'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { useParams } from 'react-router'
 import VerticalComponent from 'components/layout/Vertical'
 import Horizontal from 'components/layout/Horizontal'
@@ -8,15 +8,21 @@ import ButtonComponent from 'components/Button'
 import styled from 'styled-components'
 import Move from 'domain/move'
 import ButtonPosition from 'domain/buttonPosition'
-import Position, { positionByButtonPosition } from 'domain/position'
+import Position, { heroPositionByButtonPosition } from 'domain/position'
 
 const PositionButton = styled(ButtonComponent)`
   margin: 10px;
+  @media (max-width: 768px) {
+    margin: 2px;
+  }
 `
 
 const MoveButton = styled(ButtonComponent)`
   width: 200px;
   margin: 10px;
+  @media (max-width: 768px) {
+    margin: 2px;
+  }
 `
 
 const Vertical = styled(VerticalComponent)`
@@ -82,21 +88,21 @@ const TrainingMapper = () => {
         <MoveButton
           onClick={() => setMoveType(Move.OPEN)}
           active={moveType === Move.OPEN}
-          disabled={!isMoveTypeAllowed(Move.OPEN, positionByButtonPosition(buttonPosition))}
+          disabled={!isMoveTypeAllowed(Move.OPEN, heroPositionByButtonPosition(buttonPosition))}
         >
           OPEN
         </MoveButton>
         <MoveButton
           onClick={() => setMoveType(Move.CALL)}
           active={moveType === Move.CALL}
-          disabled={!isMoveTypeAllowed(Move.CALL, positionByButtonPosition(buttonPosition))}
+          disabled={!isMoveTypeAllowed(Move.CALL, heroPositionByButtonPosition(buttonPosition))}
         >
           FOLD / CALL / 3BET
         </MoveButton>
         <MoveButton
           onClick={() => setMoveType(Move.CALL3BET)}
           active={moveType === Move.CALL3BET}
-          disabled={!isMoveTypeAllowed(Move.CALL3BET, positionByButtonPosition(buttonPosition))}
+          disabled={!isMoveTypeAllowed(Move.CALL3BET, heroPositionByButtonPosition(buttonPosition))}
         >
           FOLD/ CALL 3BET
         </MoveButton>
@@ -109,12 +115,11 @@ const TrainingMapper = () => {
   )
 }
 
-const TrainingSelector = () => {
-  return (
-    <Routes>
-      <Route path=":position" element={<TrainingMapper />} />
-    </Routes>
-  )
-}
+const TrainingSelector = () => (
+  <Routes>
+    <Route path=":position" element={<TrainingMapper />} />
+    <Route path="/" element={<Navigate to="B" replace />} />
+  </Routes>
+)
 
 export default TrainingSelector

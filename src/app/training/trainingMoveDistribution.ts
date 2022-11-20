@@ -1,7 +1,7 @@
 import Move from 'domain/move'
-import random from 'utils/random'
+import { random } from 'utils/random'
 
-type Distribution = { [key: string ]: number }
+type Distribution = { [key: string]: number }
 
 const moveTypes: Distribution = {
   [Move.OPEN]: 50,

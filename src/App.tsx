@@ -7,6 +7,7 @@ import { ThemeProvider } from 'styled-components'
 import style from 'components/Theme/style'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import TrainingSelector from 'app/training/TrainingSelector'
+import Home from 'app/Home'
 
 const queryClient = new QueryClient()
 
@@ -15,7 +16,8 @@ const App = () => (
     <QueryClientProvider client={queryClient}>
       <Router>
         <Routes>
-          <Route path="/" element={<Solver />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/solver" element={<Solver />} />
           <Route path="/training/*" element={<TrainingSelector />} />
           <Route path="/ranges" element={<PreflopRanges />} />
           <Route path="/editor" element={<RangesEditor />} />

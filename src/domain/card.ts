@@ -1,4 +1,4 @@
-import randomInt from 'utils/random'
+import { random as randomInt } from 'utils/random'
 
 export class Card {
   constructor(readonly id: CardId) {}
@@ -62,10 +62,10 @@ export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors.map((color, i) =>
 )
 
 const values = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
-const colorsSmall = ['s', 'h', 'd', 'c']
+const colorsShort = ['s', 'h', 'd', 'c']
 const cardHeight = (c: number): number => Math.floor((c - 1) / 4)
 export const cardName = (id: number): string => {
   const value = values[cardHeight(id)]
-  const color = colorsSmall[(id - 1) % 4]
+  const color = colorsShort[(id - 1) % 4]
   return `${value}${color}`
 }

@@ -6,40 +6,45 @@ import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import TrainingAnswers from 'app/training/TrainingAnswers'
-import random from 'utils/random'
+import { randomPosition } from 'utils/random'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/solver/PreFlopSolver'
 import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
-import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
 import gto from 'data/gto'
 import Score from 'domain/Score'
-import Deck from 'app/Deck'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import noop from 'utils/noop'
 import ButtonPosition from 'domain/buttonPosition'
+import Card from 'components/Card'
+import Position, { heroPositionByButtonPosition } from 'domain/position'
 
 const Text = styled.div`
   display: flex;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   font-weight: bolder;
+`
+
+const HandDisplay = styled(Horizontal)<{ width: number }>`
+  justify-content: center;
+  width: ${({ width }) => width + 'px'};
 `
 
 const getRandomOpenActionForCall = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
   switch (buttonPosition) {
     case 0:
-      return [new Action(random(3, 5), Move.OPEN)]
+      return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO]), Move.OPEN)]
     case 1:
-      return [new Action(random(4, 5), Move.OPEN)]
+      return [new Action(randomPosition([Position.UTG, Position.MP]), Move.OPEN)]
     case 2:
-      return [new Action(5, Move.OPEN)]
+      return [new Action(Position.UTG, Move.OPEN)]
     case 4:
-      return [new Action(random(1, 5), Move.OPEN)]
+      return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO, Position.B, Position.SB]), Move.OPEN)]
     case 5:
-      return [new Action(random(2, 5), Move.OPEN)]
+      return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO, Position.B]), Move.OPEN)]
     default:
       return []
   }
@@ -48,17 +53,26 @@ const getRandomOpenActionForCall = (buttonPosition: ButtonPosition): ReadonlyArr
 const getRandomActionForCall3Bet = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
   switch (buttonPosition) {
     case 0:
-      return [new Action(0, Move.OPEN), new Action(random(1, 2), Move._3BET)]
+      return [new Action(Position.B, Move.OPEN), new Action(randomPosition([Position.SB, Position.BB]), Move._3BET)]
     case 1:
-      return [new Action(0, Move.OPEN), new Action(random(1, 3), Move._3BET)]
+      return [
+        new Action(Position.CO, Move.OPEN),
+        new Action(randomPosition([Position.B, Position.SB, Position.BB]), Move._3BET),
+      ]
     case 2:
-      return [new Action(0, Move.OPEN), new Action(random(1, 4), Move._3BET)]
+      return [
+        new Action(Position.MP, Move.OPEN),
+        new Action(randomPosition([Position.CO, Position.B, Position.SB, Position.BB]), Move._3BET),
+      ]
     case 3:
-      return [new Action(0, Move.OPEN), new Action(random(1, 5), Move._3BET)]
-    case 4:
-      return []
+      return [
+        new Action(Position.UTG, Move.OPEN),
+        new Action(randomPosition([Position.MP, Position.CO, Position.B, Position.SB, Position.BB]), Move._3BET),
+      ]
+    case 5:
+      return [new Action(Position.SB, Move.OPEN), new Action(Position.BB, Move._3BET)]
     default:
-      return [new Action(0, Move.OPEN), new Action(1, Move._3BET)]
+      throw new Error('should not be there - getRandomActionForCall3Bet')
   }
 }
 
@@ -67,7 +81,7 @@ interface Props {
   move: Move | null
 }
 
-const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
+const Training = ({ buttonPosition, move }: Props) => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
@@ -91,7 +105,7 @@ const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
         break
       }
       case Move.CALL3BET: {
-        setHand(randomHandInRange(Move.OPEN, getHeroPosition(buttonPosition)))
+        setHand(randomHandInRange(Move.OPEN, heroPositionByButtonPosition(buttonPosition)))
         setActions(getRandomActionForCall3Bet(buttonPosition))
         break
       }
@@ -99,8 +113,8 @@ const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
   }, [move, buttonPosition])
 
   useEffect(() => {
-    const vilain = actions.map(v => getVilainPosition(v.position, buttonPosition))
-    const answerOK = gto(getHeroPosition(buttonPosition), vilain, hand)
+    const actionPositions = actions.map(action => action.position)
+    const answerOK = gto(heroPositionByButtonPosition(buttonPosition), actionPositions, hand)
     setGoodAnswer(answerOK)
   }, [buttonPosition, hand, actions])
 
@@ -111,7 +125,7 @@ const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
 
   useEffect(setRandomPlay, [setRandomPlay])
 
-  const width = Math.min(500, Math.max(250, (windowSize.width * 2) / 3))
+  const width = Math.max(350, Math.min(500, windowSize.width / 2))
 
   return (
     <Horizontal>
@@ -123,9 +137,10 @@ const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
           addRaisePosition={noop}
           width={width}
         />
-        <Deck onClick={noop} hand={hand} board={Board.newBoard} />
-      </Vertical>
-      <Vertical>
+        <HandDisplay width={width}>
+          {hand.card1 && <Card card={hand.card1} />}
+          {hand.card2 && <Card card={hand.card2} />}
+        </HandDisplay>
         <Text>What's your move ?</Text>
         <TrainingAnswers
           buttonPosition={buttonPosition}
@@ -135,12 +150,13 @@ const Training: React.VFC<Props> = ({ buttonPosition, move }) => {
           next={setRandomPlay}
         />
         <Text>Score : {`${score.score} / ${score.total}`}</Text>
-      </Vertical>
-      <Vertical>
-        {guess && (
+        {windowSize.width < 1024 && guess && (
           <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={Board.newBoard} />
         )}
       </Vertical>
+      {windowSize.width >= 1024 && guess && (
+        <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={Board.newBoard} />
+      )}
     </Horizontal>
   )
 }

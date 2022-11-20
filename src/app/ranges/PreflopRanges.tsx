@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react'
-import Position, { allPositions, positionsNames } from 'domain/position'
+import Position, { allPositions, positionsNamesMap } from 'domain/position'
 import Move from 'domain/move'
 import { getHintsTable } from 'data/gto'
 import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
@@ -36,7 +36,7 @@ const Ranges = () => {
             onClick={() => setHeroPosition(position)}
             active={heroPosition === position}
           >
-            {positionsNames[position]}
+            {positionsNamesMap.get(position) || ''}
           </Button>
         ))}
       </Horizontal>
@@ -48,7 +48,7 @@ const Ranges = () => {
             onClick={() => setVilainPosition(position)}
             active={vilainPosition === position}
           >
-            {positionsNames[position]}
+            {positionsNamesMap.get(position) || ''}
           </Button>
         ))}
       </Horizontal>

@@ -1,4 +1,5 @@
-import random from 'utils/random'
+/*
+import { random } from 'utils/random'
 import Position from 'domain/position'
 
 type Distribution = { [key: number]: number }
@@ -46,3 +47,5 @@ const randomPositionWithDistributionMap = (distributionMap: Distribution): Posit
   const entry = Object.entries(summedDistribution).find(([, d]) => r < d) || [0, 0]
   return Number(entry[0])
 }
+*/
+export {}

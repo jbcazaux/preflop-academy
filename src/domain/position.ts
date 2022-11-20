@@ -1,27 +1,41 @@
 import ButtonPosition from 'domain/buttonPosition'
-import buttonPosition from 'domain/buttonPosition'
 
 enum Position {
-  B,
-  SB,
-  BB,
-  UTG,
-  MP,
-  CO,
-  ANY,
+  B = 'B',
+  SB = 'SB',
+  BB = 'BB',
+  UTG = 'UTG',
+  MP = 'MP',
+  CO = 'CO',
+  ANY = 'ANY',
 }
 
 export default Position
 
-export const positionsNames = ['Button', 'SB', 'BB', 'UTG', 'MP', 'CO']
-export const allPositions = [Position.B, Position.SB, Position.BB, Position.UTG, Position.MP, Position.CO]
-export const positionByButtonPositionMap = new Map<ButtonPosition, Position>([
-  [0, Position.B],
-  [5, Position.SB],
-  [4, Position.BB],
-  [3, Position.UTG],
-  [2, Position.MP],
-  [1, Position.CO],
+export const positionsNamesMap = new Map<Position, string>([
+  [Position.B, 'Button'],
+  [Position.SB, 'SB'],
+  [Position.BB, 'BB'],
+  [Position.UTG, 'UTG'],
+  [Position.MP, 'MP'],
+  [Position.CO, 'CO'],
 ])
-export const positionByButtonPosition = (buttonPosition: buttonPosition): Position =>
-    positionByButtonPositionMap.get(buttonPosition) || Position.B
+export const allPositions: ReadonlyArray<Position> = [
+  Position.B,
+  Position.SB,
+  Position.BB,
+  Position.UTG,
+  Position.MP,
+  Position.CO,
+]
+
+export const seatNumberByPositionAndButtonPosition = (position: Position, buttonPosition: ButtonPosition) => {
+  const index = allPositions.indexOf(position)
+  return (index + buttonPosition) % 6
+}
+
+export const positionBySeatNumberAndButtonPosition = (seatNumber: number, buttonPosition: ButtonPosition): Position =>
+  allPositions[(seatNumber - buttonPosition + 6) % 6]
+
+export const heroPositionByButtonPosition = (buttonPosition: ButtonPosition): Position =>
+  positionBySeatNumberAndButtonPosition(0, buttonPosition)

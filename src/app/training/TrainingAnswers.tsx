@@ -1,14 +1,13 @@
-import Vertical from 'components/layout/Vertical'
 import Button from 'components/Button'
 import Move from 'domain/move'
 import { useEffect, useMemo, useState } from 'react'
-import getVilainPosition, { getHeroPosition } from 'utils/playerPosition'
-import Position from 'domain/position'
+import Position, { heroPositionByButtonPosition } from 'domain/position'
 import styled from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
+import Horizontal from 'components/layout/Horizontal'
 
-const TrainingAnswersContainer = styled(Vertical)`
+const TrainingAnswersContainer = styled(Horizontal)`
   align-items: center;
 `
 
@@ -54,11 +53,7 @@ interface Props {
 
 const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next }: Props) => {
   const [myAnswer, setMyAnswer] = useState<Move | null>(null)
-  const hero = useMemo(() => getHeroPosition(buttonPosition), [buttonPosition])
-  const raises = useMemo(
-    () => actions.map(a => getVilainPosition(a.position, buttonPosition)),
-    [buttonPosition, actions]
-  )
+  const hero = useMemo(() => heroPositionByButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
     setMyAnswer(null)
@@ -77,7 +72,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
         move={Move.OPEN}
         onClick={handleClick}
         goodAnswer={goodAnswer}
-        disabled={hero === Position.BB || raises.length > 0}
+        disabled={hero === Position.BB || actions.length > 0}
         chosenAnswer={myAnswer}
       />
       <AnswerButton
@@ -85,7 +80,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
         move={Move.CALL}
         onClick={handleClick}
         goodAnswer={goodAnswer}
-        disabled={raises.length !== 1}
+        disabled={actions.length !== 1}
         chosenAnswer={myAnswer}
       />
       <AnswerButton
@@ -93,7 +88,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
         move={Move._3BET}
         onClick={handleClick}
         goodAnswer={goodAnswer}
-        disabled={raises.length !== 1}
+        disabled={actions.length !== 1}
         chosenAnswer={myAnswer}
       />
       <AnswerButton
@@ -101,7 +96,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
         move={Move.CALL3BET}
         onClick={handleClick}
         goodAnswer={goodAnswer}
-        disabled={raises.length !== 2}
+        disabled={actions.length !== 2}
         chosenAnswer={myAnswer}
       />
       <AnswerButton
@@ -109,7 +104,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
         move={Move._4BET}
         onClick={handleClick}
         goodAnswer={goodAnswer}
-        disabled={raises.length !== 2}
+        disabled={actions.length !== 2}
         chosenAnswer={myAnswer}
       />
       <Next active={!!myAnswer} disabled={!myAnswer} onClick={next} color="secondary">
@@ -120,7 +115,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
 }
 
 const Next = styled(Button)`
-  margin-top: 24px;
+  margin-left: 20px;
 `
 
 export default TrainingAnswers

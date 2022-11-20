@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Card as CardObject } from 'domain/card'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -13,8 +13,8 @@ import Deck from 'app/Deck'
 import Action from 'domain/action'
 import actionsFlow from 'app/solver/actionsFlow'
 import Board from 'domain/board'
-import getVilainPosition from 'utils/playerPosition'
 import ButtonPosition from 'domain/buttonPosition'
+import { positionBySeatNumberAndButtonPosition } from 'domain/position'
 
 const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
@@ -39,13 +39,11 @@ const Solver = () => {
     [board, hand]
   )
 
-  const onAction = useCallback((actionPosition: number) => {
-    setActions(prev => actionsFlow(prev, actionPosition))
-  }, [])
-
-  const actionWithPositions = useMemo(
-    () => actions.map(a => new Action(getVilainPosition(a.position, buttonPosition), a.move)),
-    [actions, buttonPosition]
+  const onAction = useCallback(
+    (seatPosition: number) => {
+      setActions(prev => actionsFlow(prev, positionBySeatNumberAndButtonPosition(seatPosition, buttonPosition)))
+    },
+    [buttonPosition]
   )
 
   useEffect(() => {
@@ -71,7 +69,7 @@ const Solver = () => {
       <Horizontal style={{ flex: 2 }}>
         <Tabs>
           <Tab title="MORE THAN 20 Bb">
-            <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actionWithPositions} board={board} />
+            <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={board} />
           </Tab>
           <Tab title="PUSH OR FOLD">
             <PushFoldSolver hand={hand} buttonPosition={buttonPosition} />

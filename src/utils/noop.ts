@@ -1,5 +1,3 @@
-const noop: () => void = () => {
-  /*NOOP*/
-}
+const noop: () => void = () => undefined
 
 export default noop

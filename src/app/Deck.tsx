@@ -3,7 +3,6 @@ import CardComponent from 'components/Card'
 
 import styled from 'styled-components'
 import Hand from 'domain/hand'
-import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'
 import Board from 'domain/board'
 
@@ -18,27 +17,22 @@ interface Props {
   board: Board
 }
 
-const Deck = ({ onClick, hand, board }: Props) => {
-  const windowSize = useWindowSize()
-
-  return (
-    <DeckContainer>
-      {deck.map(colorDeck => (
-        <Horizontal key={colorDeck[0].id}>
-          {colorDeck.map(card => (
-            <CardComponent
-              key={card.id}
-              card={card}
-              onClick={onClick}
-              inHand={!hand.isEmpty() && hand.contains(card)}
-              isOnBoard={board.contains(card)}
-              mobile={windowSize.width <= 470}
-            />
-          ))}
-        </Horizontal>
-      ))}
-    </DeckContainer>
-  )
-}
+const Deck = ({ onClick, hand, board }: Props) => (
+  <DeckContainer>
+    {deck.map(colorDeck => (
+      <Horizontal key={colorDeck[0].id}>
+        {colorDeck.map(card => (
+          <CardComponent
+            key={card.id}
+            card={card}
+            onClick={onClick}
+            inHand={!hand.isEmpty() && hand.contains(card)}
+            isOnBoard={board.contains(card)}
+          />
+        ))}
+      </Horizontal>
+    ))}
+  </DeckContainer>
+)
 
 export default Deck
