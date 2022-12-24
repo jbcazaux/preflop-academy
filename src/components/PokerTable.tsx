@@ -1,8 +1,8 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { AppTheme, ThemeContext } from 'styled-components'
+import {useCallback, useContext, useEffect, useMemo, useRef, useState} from 'react'
+import {AppTheme, ThemeContext} from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
-import { seatNumberByPositionAndButtonPosition } from 'domain/position'
+import {seatNumberByPositionAndButtonPosition} from 'domain/position'
 
 const xyBySeatNumber = (seatNumber: number, centerX: number, centerY: number, radius: number, ratio: number) => {
   const coefByPosition = [6, 5, 3, 2, 1, -1]
@@ -323,7 +323,11 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
       ref={canvasRef}
       width={canvas.width + 2 * canvas.marge}
       height={canvas.height + 2 * canvas.marge}
-      style={{ width: `${canvas.width + 2 * canvas.marge}px`, height: `${canvas.height + 2 * canvas.marge}px` }}
+      style={{
+        margin: '0 auto',
+        width: `${canvas.width + 2 * canvas.marge}px`,
+        height: `${canvas.height + 2 * canvas.marge}px`,
+      }}
     />
   )
 }

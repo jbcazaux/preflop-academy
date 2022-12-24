@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import {useCallback, useEffect, useState} from 'react'
 import styled from 'styled-components'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -6,10 +6,10 @@ import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import TrainingAnswers from 'app/training/TrainingAnswers'
-import { randomPosition } from 'utils/random'
+import {randomPosition} from 'utils/random'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/solver/PreFlopSolver'
-import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
+import {getRandomMoveType} from 'app/training/trainingMoveDistribution'
 import randomHandInRange from 'utils/randomHandInRange'
 import gto from 'data/gto'
 import Score from 'domain/Score'
@@ -18,19 +18,17 @@ import Board from 'domain/board'
 import noop from 'utils/noop'
 import ButtonPosition from 'domain/buttonPosition'
 import Card from 'components/Card'
-import Position, { heroPositionByButtonPosition } from 'domain/position'
+import Position, {heroPositionByButtonPosition} from 'domain/position'
 
 const Text = styled.div`
   display: flex;
-  flex: 1;
-  justify-content: flex-start;
-  align-items: center;
   font-weight: bolder;
+  margin: 10px 0;
 `
 
-const HandDisplay = styled(Horizontal)<{ width: number }>`
+const HandDisplay = styled(Horizontal)`
+  flex: 0;
   justify-content: center;
-  width: ${({ width }) => width + 'px'};
 `
 
 const getRandomOpenActionForCall = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
@@ -125,7 +123,7 @@ const Training = ({ buttonPosition, move }: Props) => {
 
   useEffect(setRandomPlay, [setRandomPlay])
 
-  const width = Math.max(350, Math.min(500, windowSize.width / 2))
+  const width = Math.min(windowSize.width / 1.1, 700)
 
   return (
     <Horizontal>
@@ -137,7 +135,7 @@ const Training = ({ buttonPosition, move }: Props) => {
           addRaisePosition={noop}
           width={width}
         />
-        <HandDisplay width={width}>
+        <HandDisplay>
           {hand.card1 && <Card card={hand.card1} />}
           {hand.card2 && <Card card={hand.card2} />}
         </HandDisplay>
