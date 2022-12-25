@@ -5,7 +5,7 @@ import { gtoPushFold } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
 import pushfoldHintsTable from 'data/pushfold'
 import styled from 'styled-components'
-import { heroPositionByButtonPosition, positionsNamesMap } from 'domain/position'
+import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import ButtonPosition from 'domain/buttonPosition'
 
 const Action = styled.div`
@@ -31,12 +31,12 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
   const [stack, setStack] = useState<number>(5)
 
   const action = useMemo(() => {
-    const hero = heroPositionByButtonPosition(buttonPosition)
+    const hero = heroPositionFromButtonPosition(buttonPosition)
     return gtoPushFold(hero, hand, stack)
   }, [buttonPosition, hand, stack])
 
   const hintsTable = useMemo(() => {
-    const hero = heroPositionByButtonPosition(buttonPosition)
+    const hero = heroPositionFromButtonPosition(buttonPosition)
     return pushfoldHintsTable(hero, stack)
   }, [buttonPosition, stack])
 
@@ -50,7 +50,7 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
         ))}
       </Select>
       <Action>
-        PUSH/FOLD @ {positionsNamesMap.get(heroPositionByButtonPosition(buttonPosition))}: {action}
+        PUSH/FOLD @ {positionsNamesMap.get(heroPositionFromButtonPosition(buttonPosition))}: {action}
       </Action>
       {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} />}
     </Vertical>

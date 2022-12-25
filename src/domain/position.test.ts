@@ -1,17 +1,17 @@
 import Position, {
-  heroPositionByButtonPosition,
+  heroPositionFromButtonPosition,
   positionBySeatNumberAndButtonPosition,
   seatNumberByPositionAndButtonPosition,
 } from 'domain/position'
 
 describe('position', () => {
   it('should get hero position', () => {
-    expect(heroPositionByButtonPosition(0)).toBe(Position.B)
-    expect(heroPositionByButtonPosition(1)).toBe(Position.CO)
-    expect(heroPositionByButtonPosition(2)).toBe(Position.MP)
-    expect(heroPositionByButtonPosition(3)).toBe(Position.UTG)
-    expect(heroPositionByButtonPosition(4)).toBe(Position.BB)
-    expect(heroPositionByButtonPosition(5)).toBe(Position.SB)
+    expect(heroPositionFromButtonPosition(0)).toBe(Position.B)
+    expect(heroPositionFromButtonPosition(1)).toBe(Position.CO)
+    expect(heroPositionFromButtonPosition(2)).toBe(Position.MP)
+    expect(heroPositionFromButtonPosition(3)).toBe(Position.UTG)
+    expect(heroPositionFromButtonPosition(4)).toBe(Position.BB)
+    expect(heroPositionFromButtonPosition(5)).toBe(Position.SB)
   })
 
   it('should get vilain position @ seat 1', () => {

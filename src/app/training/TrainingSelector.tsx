@@ -1,13 +1,12 @@
-import {useEffect, useState} from 'react'
+import { useEffect, useState } from 'react'
 import Training from 'app/training/Training'
-import {Navigate, Route, Routes, useNavigate} from 'react-router-dom'
-import {useParams} from 'react-router'
+import { Navigate, Route, Routes, useNavigate } from 'react-router-dom'
+import { useParams } from 'react-router'
 import Vertical from 'components/layout/Vertical'
 import ButtonComponent from 'components/Button'
 import styled from 'styled-components'
 import Move from 'domain/move'
-import ButtonPosition from 'domain/buttonPosition'
-import Position, {heroPositionByButtonPosition} from 'domain/position'
+import Position from 'domain/position'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 
 const Positions = styled(Vertical)`
@@ -20,7 +19,7 @@ const Moves = styled(Vertical)`
   margin-top: 30px;
 `
 
-const PositionButton = styled(ButtonComponent)`
+const HeroPosition = styled(ButtonComponent)`
   width: 150px;
   margin: 5px 0;
 `
@@ -30,13 +29,13 @@ const MoveButton = styled(ButtonComponent)`
   margin: 5px 0;
 `
 
-const buttonPositionForHeroPosition = new Map<string, ButtonPosition>([
-  ['B', 0],
-  ['SB', 5],
-  ['BB', 4],
-  ['UTG', 3],
-  ['MP', 2],
-  ['CO', 1],
+const heroPositionFromString = new Map<string, Position>([
+  ['B', Position.B],
+  ['SB', Position.SB],
+  ['BB', Position.BB],
+  ['UTG', Position.UTG],
+  ['MP', Position.MP],
+  ['CO', Position.CO],
 ])
 
 const isMoveTypeAllowed = (move: Move, hero: Position): boolean => {
@@ -55,58 +54,58 @@ const isMoveTypeAllowed = (move: Move, hero: Position): boolean => {
 const TrainingMapper = () => {
   const [moveType, setMoveType] = useState<Move | null>(null)
   const { position = 'B' } = useParams()
-  const buttonPosition: ButtonPosition = buttonPositionForHeroPosition.get(position.toUpperCase()) ?? 0
+  const heroPosition: Position = heroPositionFromString.get(position.toUpperCase()) ?? Position.BB
 
   const navigate = useNavigate()
 
-  useEffect(() => setMoveType(null), [buttonPosition])
+  useEffect(() => setMoveType(null), [heroPosition])
   return (
     <Vertical>
       <SideMenu position="left" width={200} title="Training">
         <Positions>
           <div>Choose your position : </div>
-          <PositionButton onClick={() => navigate('../B')} active={buttonPosition === 0}>
+          <HeroPosition onClick={() => navigate('../B')} active={heroPosition === Position.B}>
             Button
-          </PositionButton>
-          <PositionButton onClick={() => navigate('../SB')} active={buttonPosition === 5}>
+          </HeroPosition>
+          <HeroPosition onClick={() => navigate('../SB')} active={heroPosition === Position.SB}>
             Small Blind
-          </PositionButton>
-          <PositionButton onClick={() => navigate('../BB')} active={buttonPosition === 4}>
+          </HeroPosition>
+          <HeroPosition onClick={() => navigate('../BB')} active={heroPosition === Position.BB}>
             Big Blind
-          </PositionButton>
-          <PositionButton onClick={() => navigate('../UTG')} active={buttonPosition === 3}>
+          </HeroPosition>
+          <HeroPosition onClick={() => navigate('../UTG')} active={heroPosition === Position.UTG}>
             UTG
-          </PositionButton>
-          <PositionButton onClick={() => navigate('../MP')} active={buttonPosition === 2}>
+          </HeroPosition>
+          <HeroPosition onClick={() => navigate('../MP')} active={heroPosition === Position.MP}>
             Middle
-          </PositionButton>
-          <PositionButton onClick={() => navigate('../CO')} active={buttonPosition === 1}>
+          </HeroPosition>
+          <HeroPosition onClick={() => navigate('../CO')} active={heroPosition === Position.CO}>
             Cut Off
-          </PositionButton>
-          <PositionButton disabled onClick={() => navigate('../random')} active={buttonPosition === null}>
+          </HeroPosition>
+          <HeroPosition disabled onClick={() => navigate('../random')} active={heroPosition === null}>
             Random
-          </PositionButton>
+          </HeroPosition>
         </Positions>
         <Moves>
           <div>Choose your move : </div>
           <MoveButton
             onClick={() => setMoveType(Move.OPEN)}
             active={moveType === Move.OPEN}
-            disabled={!isMoveTypeAllowed(Move.OPEN, heroPositionByButtonPosition(buttonPosition))}
+            disabled={!isMoveTypeAllowed(Move.OPEN, heroPosition)}
           >
             OPEN
           </MoveButton>
           <MoveButton
             onClick={() => setMoveType(Move.CALL)}
             active={moveType === Move.CALL}
-            disabled={!isMoveTypeAllowed(Move.CALL, heroPositionByButtonPosition(buttonPosition))}
+            disabled={!isMoveTypeAllowed(Move.CALL, heroPosition)}
           >
             FOLD / CALL / 3BET
           </MoveButton>
           <MoveButton
             onClick={() => setMoveType(Move.CALL3BET)}
             active={moveType === Move.CALL3BET}
-            disabled={!isMoveTypeAllowed(Move.CALL3BET, heroPositionByButtonPosition(buttonPosition))}
+            disabled={!isMoveTypeAllowed(Move.CALL3BET, heroPosition)}
           >
             FOLD/ CALL 3BET
           </MoveButton>
@@ -115,10 +114,7 @@ const TrainingMapper = () => {
           </MoveButton>
         </Moves>
       </SideMenu>
-      <SideMenu position="right" width={200}>
-        <div>Coucou</div>
-      </SideMenu>
-      <Training buttonPosition={buttonPosition} move={moveType} />
+      <Training heroPosition={heroPosition} move={moveType} />
     </Vertical>
   )
 }

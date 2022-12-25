@@ -1,4 +1,4 @@
-import {useCallback, useEffect, useState} from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import PokerTable from 'components/PokerTable'
 import Hand from 'domain/hand'
@@ -6,19 +6,17 @@ import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import TrainingAnswers from 'app/training/TrainingAnswers'
-import {randomPosition} from 'utils/random'
 import Move from 'domain/move'
 import PreFlopSolver from 'app/solver/PreFlopSolver'
-import {getRandomMoveType} from 'app/training/trainingMoveDistribution'
-import randomHandInRange from 'utils/randomHandInRange'
 import gto from 'data/gto'
 import Score from 'domain/Score'
 import Action from 'domain/action'
-import Board from 'domain/board'
 import noop from 'utils/noop'
-import ButtonPosition from 'domain/buttonPosition'
 import Card from 'components/Card'
-import Position, {heroPositionByButtonPosition} from 'domain/position'
+import Position, { buttonPositionFromHeroPosition } from 'domain/position'
+import SideMenu from 'components/layout/SideMenu/SideMenu'
+import Board from 'domain/board'
+import { setRandomPlay } from 'app/training/setPlay'
 
 const Text = styled.div`
   display: flex;
@@ -31,55 +29,12 @@ const HandDisplay = styled(Horizontal)`
   justify-content: center;
 `
 
-const getRandomOpenActionForCall = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
-  switch (buttonPosition) {
-    case 0:
-      return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO]), Move.OPEN)]
-    case 1:
-      return [new Action(randomPosition([Position.UTG, Position.MP]), Move.OPEN)]
-    case 2:
-      return [new Action(Position.UTG, Move.OPEN)]
-    case 4:
-      return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO, Position.B, Position.SB]), Move.OPEN)]
-    case 5:
-      return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO, Position.B]), Move.OPEN)]
-    default:
-      return []
-  }
-}
-
-const getRandomActionForCall3Bet = (buttonPosition: ButtonPosition): ReadonlyArray<Action> => {
-  switch (buttonPosition) {
-    case 0:
-      return [new Action(Position.B, Move.OPEN), new Action(randomPosition([Position.SB, Position.BB]), Move._3BET)]
-    case 1:
-      return [
-        new Action(Position.CO, Move.OPEN),
-        new Action(randomPosition([Position.B, Position.SB, Position.BB]), Move._3BET),
-      ]
-    case 2:
-      return [
-        new Action(Position.MP, Move.OPEN),
-        new Action(randomPosition([Position.CO, Position.B, Position.SB, Position.BB]), Move._3BET),
-      ]
-    case 3:
-      return [
-        new Action(Position.UTG, Move.OPEN),
-        new Action(randomPosition([Position.MP, Position.CO, Position.B, Position.SB, Position.BB]), Move._3BET),
-      ]
-    case 5:
-      return [new Action(Position.SB, Move.OPEN), new Action(Position.BB, Move._3BET)]
-    default:
-      throw new Error('should not be there - getRandomActionForCall3Bet')
-  }
-}
-
 interface Props {
-  buttonPosition: ButtonPosition
+  heroPosition: Position
   move: Move | null
 }
 
-const Training = ({ buttonPosition, move }: Props) => {
+const Training = ({ heroPosition, move }: Props) => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
@@ -87,46 +42,41 @@ const Training = ({ buttonPosition, move }: Props) => {
   const [score, setScore] = useState<Score>(new Score())
 
   const windowSize = useWindowSize()
+  const buttonPosition = buttonPositionFromHeroPosition(heroPosition)
 
-  const setRandomPlay = useCallback(() => {
+  const newRandomPlay = useCallback(() => {
     setGuess(null)
-    const newRandomMoveType = move || getRandomMoveType()
-    switch (newRandomMoveType) {
-      case Move.OPEN: {
-        setHand(Hand.random)
-        setActions([])
-        break
-      }
-      case Move.CALL: {
-        setHand(Hand.random)
-        setActions(getRandomOpenActionForCall(buttonPosition))
-        break
-      }
-      case Move.CALL3BET: {
-        setHand(randomHandInRange(Move.OPEN, heroPositionByButtonPosition(buttonPosition)))
-        setActions(getRandomActionForCall3Bet(buttonPosition))
-        break
-      }
-    }
-  }, [move, buttonPosition])
+    const play = setRandomPlay(move, heroPosition)
+    setHand(play.hand)
+    setActions(play.actions)
+  }, [move, heroPosition])
 
   useEffect(() => {
     const actionPositions = actions.map(action => action.position)
-    const answerOK = gto(heroPositionByButtonPosition(buttonPosition), actionPositions, hand)
+    const answerOK = gto(heroPosition, actionPositions, hand)
     setGoodAnswer(answerOK)
-  }, [buttonPosition, hand, actions])
+  }, [heroPosition, hand, actions])
 
   useEffect(() => {
     if (!guess || !goodAnswer) return
     guess === goodAnswer ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
   }, [guess, goodAnswer])
 
-  useEffect(setRandomPlay, [setRandomPlay])
+  useEffect(newRandomPlay, [newRandomPlay])
 
   const width = Math.min(windowSize.width / 1.1, 700)
 
   return (
-    <Horizontal>
+    <>
+      <SideMenu position="right" width={400} title="Ranges">
+        <PreFlopSolver
+          hand={hand}
+          buttonPosition={buttonPosition}
+          actions={actions}
+          board={Board.newBoard}
+          displayStats={false}
+        />
+      </SideMenu>
       <Vertical>
         <PokerTable
           buttonPosition={buttonPosition}
@@ -145,17 +95,11 @@ const Training = ({ buttonPosition, move }: Props) => {
           actions={actions}
           goodAnswer={goodAnswer}
           setAnswer={setGuess}
-          next={setRandomPlay}
+          next={newRandomPlay}
         />
         <Text>Score : {`${score.score} / ${score.total}`}</Text>
-        {windowSize.width < 1024 && guess && (
-          <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={Board.newBoard} />
-        )}
       </Vertical>
-      {windowSize.width >= 1024 && guess && (
-        <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={Board.newBoard} />
-      )}
-    </Horizontal>
+    </>
   )
 }
 

@@ -1,7 +1,7 @@
 import Button from 'components/Button'
 import Move from 'domain/move'
-import {useEffect, useMemo, useState} from 'react'
-import Position, {heroPositionByButtonPosition} from 'domain/position'
+import { useEffect, useMemo, useState } from 'react'
+import Position, { heroPositionFromButtonPosition } from 'domain/position'
 import styled from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
@@ -10,6 +10,9 @@ import Vertical from 'components/layout/Vertical'
 
 const Container = styled(Vertical)`
   flex: 0;
+  @media (min-width: 800px) {
+    margin: 0 10vw;
+  }
 `
 
 const Buttons = styled(Horizontal)`
@@ -59,7 +62,7 @@ interface Props {
 
 const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next }: Props) => {
   const [myAnswer, setMyAnswer] = useState<Move | null>(null)
-  const hero = useMemo(() => heroPositionByButtonPosition(buttonPosition), [buttonPosition])
+  const hero = useMemo(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
     setMyAnswer(null)

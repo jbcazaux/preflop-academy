@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { getHintsTable } from 'data/gto'
 import Ranges from 'app/ranges/Ranges'
 import Gto from 'app/Gto'
-import Position, { heroPositionByButtonPosition } from 'domain/position'
+import Position, { heroPositionFromButtonPosition } from 'domain/position'
 import Move from 'domain/move'
 import HintTable from 'domain/hintTable'
 import VilainPreFlopRange from 'app/solver/VilainPreFlopRange'
@@ -17,8 +17,7 @@ import styled from 'styled-components'
 
 const Hv = styled.div`
   display: flex;
-  flex-direction: row;
-  flex: 1;
+  flex-direction: column;
   flex-wrap: wrap;
 `
 
@@ -27,13 +26,14 @@ interface Props {
   board: Board
   buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
+  displayStats?: boolean
 }
 
-const PreFlopSolver = ({ hand, buttonPosition, actions, board }: Props) => {
+const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = true }: Props) => {
   const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
 
-  const hero = useMemo<Position>(() => heroPositionByButtonPosition(buttonPosition), [buttonPosition])
+  const hero = useMemo<Position>(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
     if (actions.length === 0 || (actions.length === 1 && actions[0].position === hero)) {
@@ -99,10 +99,12 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, board }: Props) => {
         <Gto hero={hero} hand={hand} actions={actions} />
         {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} hintsTableName={hintsTableName} />}
       </Vertical>
-      <Vertical>
-        <Versus hand={hand} board={board} actions={actions} hero={hero} />
-        <ImprovementCards hand={hand} board={board} />
-      </Vertical>
+      {displayStats && (
+        <Vertical>
+          <Versus hand={hand} board={board} actions={actions} hero={hero} />
+          <ImprovementCards hand={hand} board={board} />
+        </Vertical>
+      )}
       <VilainPreFlopRange actions={actions} buttonPosition={buttonPosition} />
     </Hv>
   )

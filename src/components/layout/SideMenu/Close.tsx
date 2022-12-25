@@ -1,8 +1,9 @@
 import styled from 'styled-components'
-import {Position} from "components/layout/SideMenu/types";
+import { Position } from 'components/layout/SideMenu/types'
 
 const Container = styled.div<{ position: Position }>`
   display: flex;
+  flex-direction: column;
   font-size: 22px;
   padding: 2px 10px 5px 10px;
   font-weight: bold;

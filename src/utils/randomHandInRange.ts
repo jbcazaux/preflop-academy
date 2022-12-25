@@ -6,7 +6,7 @@ import Position from 'domain/position'
 const randomHandInRange = (move: Move, hero: Position): Hand => {
   if (move === Move.OPEN) {
     const hintsTable = getHintsTable(Move.OPEN, hero, Position.ANY)
-    let retriesLeft = 100
+    let retriesLeft = 300
     let hand: Hand
     let xy: [number, number]
     do {

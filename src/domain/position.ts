@@ -28,6 +28,14 @@ export const allPositions: ReadonlyArray<Position> = [
   Position.MP,
   Position.CO,
 ]
+export const buttonPositionByHeroPositionMap = new Map<Position, ButtonPosition>([
+  [Position.B, 0],
+  [Position.SB, 5],
+  [Position.BB, 4],
+  [Position.UTG, 3],
+  [Position.MP, 2],
+  [Position.CO, 1],
+])
 
 export const seatNumberByPositionAndButtonPosition = (position: Position, buttonPosition: ButtonPosition) => {
   const index = allPositions.indexOf(position)
@@ -37,5 +45,11 @@ export const seatNumberByPositionAndButtonPosition = (position: Position, button
 export const positionBySeatNumberAndButtonPosition = (seatNumber: number, buttonPosition: ButtonPosition): Position =>
   allPositions[(seatNumber - buttonPosition + 6) % 6]
 
-export const heroPositionByButtonPosition = (buttonPosition: ButtonPosition): Position =>
+export const heroPositionFromButtonPosition = (buttonPosition: ButtonPosition): Position =>
   positionBySeatNumberAndButtonPosition(0, buttonPosition)
+
+export const buttonPositionFromHeroPosition = (heroPosition: Position): ButtonPosition => {
+  const hero = buttonPositionByHeroPositionMap.get(heroPosition)
+  if (hero === undefined) throw Error('Cannot get button position for Hero @' + heroPosition)
+  return hero
+}
