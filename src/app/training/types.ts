@@ -5,3 +5,5 @@ export type Play = {
   hand: Hand
   actions: ReadonlyArray<Action>
 }
+
+export type Distribution = { [key: string]: number }

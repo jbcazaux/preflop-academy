@@ -1,35 +1,7 @@
 import Move from 'domain/move'
 import { random } from 'utils/random'
 import Position from 'domain/position'
-
-type Distribution = { [key: string]: number }
-
-const moveTypes: Distribution = {
-  [Move.OPEN]: 50,
-  [Move.CALL]: 35,
-  [Move.CALL3BET]: 15,
-}
-export const getRandomMoveType2 = (): Move.OPEN | Move.CALL | Move.CALL3BET => {
-  const max = Object.values(moveTypes).reduce((total, i) => total + i, 0)
-  const summedDistribution = Object.entries(moveTypes).reduce((distrib: Distribution, [position, d], i) => {
-    const last = i < 1 ? 0 : Object.values(distrib)[i - 1]
-    return { ...distrib, [position]: last + d }
-  }, {})
-  const r = random(0, max)
-  const entry = Object.entries(summedDistribution).find(([, d]) => r < d) || [0, 0]
-  return entry[0] as Move.OPEN | Move.CALL | Move.CALL3BET
-}
-
-export const getRandomActions = (heroMoveType: Distribution): Move => {
-  const max = Object.values(heroMoveType).reduce((total, i) => total + i, 0)
-  const summedDistribution = Object.entries(moveTypes).reduce((distrib: Distribution, [position, d], i) => {
-    const last = i < 1 ? 0 : Object.values(distrib)[i - 1]
-    return { ...distrib, [position]: last + d }
-  }, {})
-  const r = random(0, max)
-  const entry = Object.entries(summedDistribution).find(([, d]) => r < d) || [0, 0]
-  return entry[0] as Move
-}
+import { Distribution } from 'app/training/types'
 
 export const getRandomMoveDistribution = (heroPosition: Position): Distribution => {
   switch (heroPosition) {
@@ -54,11 +26,11 @@ export const getRandomMoveDistribution = (heroPosition: Position): Distribution 
     case Position.CO:
     case Position.MP:
       return {
-        [Move.OPEN]: 30,
-        [Move.CALL]: 35,
-        [Move._3BET]: 15,
-        [Move.CALL3BET]: 15,
-        [Move._4BET]: 5,
+        [Move.OPEN]: 10,
+        [Move.CALL]: 10,
+        [Move._3BET]: 5,
+        [Move.CALL3BET]: 5,
+        [Move._4BET]: 2,
       }
     default:
       throw new Error('should not be there - getRandomMoveType / ' + heroPosition)

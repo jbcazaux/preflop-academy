@@ -29,6 +29,10 @@ const HandDisplay = styled(Horizontal)`
   justify-content: center;
 `
 
+const Margin = styled.div`
+  margin: 0 10vw;
+`
+
 interface Props {
   heroPosition: Position
   move: Move | null
@@ -89,15 +93,17 @@ const Training = ({ heroPosition, move }: Props) => {
           {hand.card1 && <Card card={hand.card1} />}
           {hand.card2 && <Card card={hand.card2} />}
         </HandDisplay>
-        <Text>What's your move ?</Text>
-        <TrainingAnswers
-          buttonPosition={buttonPosition}
-          actions={actions}
-          goodAnswer={goodAnswer}
-          setAnswer={setGuess}
-          next={newRandomPlay}
-        />
-        <Text>Score : {`${score.score} / ${score.total}`}</Text>
+        <Margin>
+          <Text>What's your move ?</Text>
+          <TrainingAnswers
+            buttonPosition={buttonPosition}
+            actions={actions}
+            goodAnswer={goodAnswer}
+            setAnswer={setGuess}
+            next={newRandomPlay}
+          />
+          <Text>Score : {`${score.score} / ${score.total}`}</Text>
+        </Margin>
       </Vertical>
     </>
   )

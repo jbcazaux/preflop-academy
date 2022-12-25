@@ -15,13 +15,15 @@ const Container = styled.div<{ position: Position }>`
 interface Props {
   onClick: () => void
   open: boolean
+  hide: boolean
   position: Position
 }
 
-const Close = ({ onClick, open, position }: Props) => (
-  <Container onClick={onClick} position={position}>
-    {(open || position === 'left') && (!open || position === 'right') ? '>' : '<'}
-  </Container>
-)
+const Close = ({ onClick, open, position, hide }: Props) =>
+  hide ? null : (
+    <Container onClick={onClick} position={position}>
+      {(open || position === 'left') && (!open || position === 'right') ? '>' : '<'}
+    </Container>
+  )
 
 export default Close

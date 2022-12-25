@@ -22,17 +22,18 @@ const Center = styled(Vertical)`
   align-items: center;
 `
 
-const Container = styled(Vertical)<{ open: boolean; position: 'left' | 'right'; openWidth: number }>`
+const Container = styled(Vertical)<{ open: boolean; position: Position; openWidth: number; pinned: boolean }>`
   display: flex;
-  position: fixed;
+  position: ${({ pinned }) => (pinned ? 'inherit' : 'fixed')};
   top: 0;
   left: ${({ position }) => (position === 'left' ? '0' : 'auto')};
   right: ${({ position }) => (position === 'right' ? '0' : 'auto')};
-  height: ${({ open }) => (open ? '100vh' : '55px')};
+  height: ${({ open, pinned }) => (open || pinned ? '100vh' : '55px')};
   overflow-y: auto;
-  width: ${({ openWidth }) => `${openWidth}px`};
-  transform: ${({ open, position, openWidth }) =>
-    open ? `none` : `translateX(${position === 'left' ? '-' : ''}${openWidth - 55}px)`};
+  max-width: ${({ openWidth }) => `${openWidth}px`};
+  min-width: ${({ openWidth }) => `${openWidth}px`};
+  transform: ${({ open, pinned, position, openWidth }) =>
+    open || pinned ? `none` : `translateX(${position === 'left' ? '-' : ''}${openWidth - 55}px)`};
   transition: transform linear 0.3s ${({ open }) => (open ? '' : ', height .3s .0s')};
   background-color: white;
   z-index: 10;
@@ -45,15 +46,16 @@ interface Props {
   position: Position
   width: number
   children: ReactNode
+  pinned?: boolean
 }
 
-const SideMenu = ({ title, position, children, width }: Props) => {
-  const [open, setOpen] = useState<boolean>(true)
+const SideMenu = ({ title, position, children, width, pinned = false }: Props) => {
+  const [open, setOpen] = useState<boolean>(false)
   return (
-    <Container open={open} position={position} openWidth={width}>
+    <Container open={open} position={position} openWidth={width} pinned={pinned}>
       <Header position={position}>
         {title && <Title>{title}</Title>}
-        <Close onClick={() => setOpen(prev => !prev)} open={open} position={position} />
+        <Close onClick={() => setOpen(prev => !prev)} open={open} position={position} hide={pinned} />
       </Header>
       <Center>{children}</Center>
     </Container>

@@ -1,4 +1,4 @@
-import { getRandomMoveType } from 'app/training/trainingMoveDistribution'
+import { getRandomMoveType } from 'app/training/trainingMovesDistribution'
 import Move from 'domain/move'
 import Hand from 'domain/hand'
 import randomHandInRange from 'utils/randomHandInRange'
@@ -27,26 +27,24 @@ const getRandomOpenActionForCallOr3Bet = (hero: Position): ReadonlyArray<Action>
 }
 
 const getRandomOpenActionForCall3BetOr4Bet = (hero: Position): ReadonlyArray<Action> => {
+  const heroOpenAction = new Action(hero, Move.OPEN)
   switch (hero) {
     case Position.UTG:
       return [
-        new Action(Position.UTG, Move.OPEN),
+        heroOpenAction,
         new Action(randomPosition([Position.MP, Position.CO, Position.B, Position.SB, Position.BB]), Move._3BET),
       ]
     case Position.MP:
       return [
-        new Action(Position.MP, Move.OPEN),
+        heroOpenAction,
         new Action(randomPosition([Position.CO, Position.B, Position.SB, Position.BB]), Move._3BET),
       ]
     case Position.CO:
-      return [
-        new Action(Position.CO, Move.OPEN),
-        new Action(randomPosition([Position.B, Position.SB, Position.BB]), Move._3BET),
-      ]
+      return [heroOpenAction, new Action(randomPosition([Position.B, Position.SB, Position.BB]), Move._3BET)]
     case Position.B:
-      return [new Action(Position.B, Move.OPEN), new Action(randomPosition([Position.SB, Position.BB]), Move._3BET)]
+      return [heroOpenAction, new Action(randomPosition([Position.SB, Position.BB]), Move._3BET)]
     case Position.SB:
-      return [new Action(Position.SB, Move.OPEN), new Action(Position.BB, Move._3BET)]
+      return [heroOpenAction, new Action(Position.BB, Move._3BET)]
     case Position.BB:
       throw Error('cannot be there - getRandomOpenActionForCall3Bet / Cannot call 3bet fromBB')
     default:

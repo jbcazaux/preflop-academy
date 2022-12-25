@@ -10,15 +10,11 @@ import Vertical from 'components/layout/Vertical'
 
 const Container = styled(Vertical)`
   flex: 0;
-  @media (min-width: 800px) {
-    margin: 0 10vw;
-  }
 `
 
 const Buttons = styled(Horizontal)`
   flex: 0;
-  justify-content: space-around;
-  margin: 10px 0;
+  justify-content: space-between;
 `
 
 interface IAnswerWrapper {
@@ -51,6 +47,11 @@ const AnswerButton = ({ move, chosenAnswer, goodAnswer, onClick, disabled, ...pr
     </Button>
   </AnswerWrapper>
 )
+
+const NextButton = styled(Button)`
+  border: 2px solid transparent;
+  margin: 20px auto;
+`
 
 interface Props {
   buttonPosition: ButtonPosition
@@ -118,18 +119,11 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
           chosenAnswer={myAnswer}
         />
       </Buttons>
-      <Buttons>
-        <Next active={!!myAnswer} disabled={!myAnswer} onClick={next} color="secondary">
-          NEXT
-        </Next>
-      </Buttons>
+      <NextButton active={!!myAnswer} disabled={!myAnswer} onClick={next} color="secondary">
+        NEXT
+      </NextButton>
     </Container>
   )
 }
-
-const Next = styled(Button)`
-  margin-left: 20px;
-  border: 2px solid transparent;
-`
 
 export default TrainingAnswers
