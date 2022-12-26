@@ -41,7 +41,7 @@ const isMoveTypeAllowed = (move: Move, hero: Position): boolean => {
 }
 
 interface Props {
-  heroPosition: Position
+  heroPosition: Position | null
   moveType: Move | null
   setMoveType: (m: Move | null) => void
 }
@@ -53,7 +53,7 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
   return (
     <SideMenu position="left" width={200} title="Training" pinned={width >= 1200}>
       <Positions>
-        <div>Choose your position : </div>
+        <div>Choose your position :</div>
         <HeroPosition onClick={() => navigate('../B')} active={heroPosition === Position.B}>
           Button
         </HeroPosition>
@@ -72,30 +72,30 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
         <HeroPosition onClick={() => navigate('../CO')} active={heroPosition === Position.CO}>
           Cut Off
         </HeroPosition>
-        <HeroPosition disabled onClick={() => navigate('../random')} active={heroPosition === null}>
+        <HeroPosition onClick={() => navigate('../random')} active={heroPosition === null}>
           Random
         </HeroPosition>
       </Positions>
       <Moves>
-        <div>Choose your move : </div>
+        <div>Choose your move :</div>
         <MoveButton
           onClick={() => setMoveType(Move.OPEN)}
           active={moveType === Move.OPEN}
-          disabled={!isMoveTypeAllowed(Move.OPEN, heroPosition)}
+          disabled={!heroPosition || !isMoveTypeAllowed(Move.OPEN, heroPosition)}
         >
           OPEN
         </MoveButton>
         <MoveButton
           onClick={() => setMoveType(Move.CALL)}
           active={moveType === Move.CALL}
-          disabled={!isMoveTypeAllowed(Move.CALL, heroPosition)}
+          disabled={!heroPosition || !isMoveTypeAllowed(Move.CALL, heroPosition)}
         >
           FOLD / CALL / 3BET
         </MoveButton>
         <MoveButton
           onClick={() => setMoveType(Move.CALL3BET)}
           active={moveType === Move.CALL3BET}
-          disabled={!isMoveTypeAllowed(Move.CALL3BET, heroPosition)}
+          disabled={!heroPosition || !isMoveTypeAllowed(Move.CALL3BET, heroPosition)}
         >
           FOLD/ CALL 3BET
         </MoveButton>

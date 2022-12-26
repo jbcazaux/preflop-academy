@@ -34,34 +34,38 @@ const Margin = styled.div`
 `
 
 interface Props {
-  heroPosition: Position
+  heroPosition: Position | null
   move: Move | null
 }
 
-const Training = ({ heroPosition, move }: Props) => {
+const Training = ({ heroPosition: heroPosition2, move }: Props) => {
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
   const [goodAnswer, setGoodAnswer] = useState<Move | null>(null)
   const [score, setScore] = useState<Score>(new Score())
+  const [heroPosition, setHeroPosition] = useState<Position | null>(heroPosition2)
 
   const windowSize = useWindowSize()
-  const buttonPosition = buttonPositionFromHeroPosition(heroPosition)
+  const buttonPosition = heroPosition ? buttonPositionFromHeroPosition(heroPosition) : 0
 
   const newRandomPlay = useCallback(() => {
     setGuess(null)
-    const play = setRandomPlay(move, heroPosition)
+    const play = setRandomPlay(move, heroPosition2)
     setHand(play.hand)
     setActions(play.actions)
-  }, [move, heroPosition])
+    setHeroPosition(play.heroPosition)
+  }, [move, heroPosition2])
 
   useEffect(() => {
+    // set good answer
     const actionPositions = actions.map(action => action.position)
-    const answerOK = gto(heroPosition, actionPositions, hand)
+    const answerOK = heroPosition ? gto(heroPosition, actionPositions, hand) : null
     setGoodAnswer(answerOK)
   }, [heroPosition, hand, actions])
 
   useEffect(() => {
+    // set score
     if (!guess || !goodAnswer) return
     guess === goodAnswer ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
   }, [guess, goodAnswer])

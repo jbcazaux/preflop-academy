@@ -2,7 +2,7 @@ import { getRandomMoveType } from 'app/training/trainingMovesDistribution'
 import Move from 'domain/move'
 import Hand from 'domain/hand'
 import randomHandInRange from 'utils/randomHandInRange'
-import Position from 'domain/position'
+import Position, { getRandomHeroPosition } from 'domain/position'
 import { Play } from 'app/training/types'
 import Action from 'domain/action'
 import { randomPosition } from 'utils/random'
@@ -52,37 +52,44 @@ const getRandomOpenActionForCall3BetOr4Bet = (hero: Position): ReadonlyArray<Act
   }
 }
 
-export const setRandomPlay = (move: Move | null, heroPosition: Position): Play => {
-  const newMove: Move = move || getRandomMoveType(heroPosition)
+export const setRandomPlay = (move: Move | null, heroPosition: Position | null): Play => {
+  const hero = heroPosition || getRandomHeroPosition()
+  const newMove = move || getRandomMoveType(hero)
+
   switch (newMove) {
     case Move.OPEN: {
       return {
         hand: Hand.random(),
         actions: [],
+        heroPosition: hero,
       }
     }
     case Move.CALL: {
       return {
         hand: Hand.random(),
-        actions: getRandomOpenActionForCallOr3Bet(heroPosition),
+        actions: getRandomOpenActionForCallOr3Bet(hero),
+        heroPosition: hero,
       }
     }
     case Move._3BET: {
       return {
         hand: Hand.random(),
-        actions: getRandomOpenActionForCallOr3Bet(heroPosition),
+        actions: getRandomOpenActionForCallOr3Bet(hero),
+        heroPosition: hero,
       }
     }
     case Move.CALL3BET: {
       return {
-        hand: randomHandInRange(Move.OPEN, heroPosition),
-        actions: getRandomOpenActionForCall3BetOr4Bet(heroPosition),
+        hand: randomHandInRange(Move.OPEN, hero),
+        actions: getRandomOpenActionForCall3BetOr4Bet(hero),
+        heroPosition: hero,
       }
     }
     case Move._4BET: {
       return {
-        hand: randomHandInRange(Move.OPEN, heroPosition),
-        actions: getRandomOpenActionForCall3BetOr4Bet(heroPosition),
+        hand: randomHandInRange(Move.OPEN, hero),
+        actions: getRandomOpenActionForCall3BetOr4Bet(hero),
+        heroPosition: hero,
       }
     }
     default:

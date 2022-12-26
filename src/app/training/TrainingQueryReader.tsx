@@ -6,19 +6,20 @@ import Position from 'domain/position'
 import Horizontal from 'components/layout/Horizontal'
 import TrainingMenu from 'app/training/TrainingMenu'
 
-const heroPositionFromQueryString = new Map<string, Position>([
+const heroPositionFromQueryString = new Map<string, Position | null>([
   ['B', Position.B],
   ['SB', Position.SB],
   ['BB', Position.BB],
   ['UTG', Position.UTG],
   ['MP', Position.MP],
   ['CO', Position.CO],
+  ['RANDOM', null],
 ])
 
 const TrainingQueryReader = () => {
   const [moveType, setMoveType] = useState<Move | null>(null)
   const { position = 'B' } = useParams()
-  const heroPosition: Position = heroPositionFromQueryString.get(position.toUpperCase()) ?? Position.BB
+  const heroPosition: Position | null = heroPositionFromQueryString.get(position.toUpperCase()) || null
 
   useEffect(() => setMoveType(null), [heroPosition])
   return (
