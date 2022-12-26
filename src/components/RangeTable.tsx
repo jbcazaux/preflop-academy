@@ -22,7 +22,7 @@ export const Square = styled.div<ISquare>`
   border: ${({ selected }) => (selected ? '3px solid red' : '1px solid black')};
   border-radius: 3px;
   box-sizing: border-box;
-  @media (max-width: 1400px) {
+  @media (max-width: 1200px) {
     width: 20px;
     height: 20px;
     font-size: 0.6em;
@@ -56,20 +56,28 @@ interface Props {
 const RangeTable = ({ hintsTable, hand }: Props) => {
   const xyInRangeTable = hand?.isComplete() ? hand?.xyInRangeTable() : null
   return (
-    <Vertical>
-      {cards.map((c1, i) => (
-        <Horizontal key={c1}>
-          {cards.map((c2, j) => {
-            const selected = xyInRangeTable?.[0] === i && xyInRangeTable?.[1] === j
-            return (
-              <Hand key={`${c1}${c2}`} active={!!hintsTable?.[i][j]} suited={i < j} pair={i === j} selected={selected}>
-                {i < j ? `${c1}${c2}` : `${c2}${c1}`}
-              </Hand>
-            )
-          })}
-        </Horizontal>
-      ))}
-    </Vertical>
+    <div>
+      <Vertical>
+        {cards.map((c1, i) => (
+          <Horizontal key={c1}>
+            {cards.map((c2, j) => {
+              const selected = xyInRangeTable?.[0] === i && xyInRangeTable?.[1] === j
+              return (
+                <Hand
+                  key={`${c1}${c2}`}
+                  active={!!hintsTable?.[i][j]}
+                  suited={i < j}
+                  pair={i === j}
+                  selected={selected}
+                >
+                  {i < j ? `${c1}${c2}` : `${c2}${c1}`}
+                </Hand>
+              )
+            })}
+          </Horizontal>
+        ))}
+      </Vertical>
+    </div>
   )
 }
 

@@ -1,12 +1,30 @@
 import { useMemo, useState } from 'react'
-import Position, { allPositions, positionsNamesMap } from 'domain/position'
+import Position, { positionsNamesMap } from 'domain/position'
 import Move from 'domain/move'
 import { getHintsTable } from 'data/gto'
 import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
 import RangeTable from 'components/RangeTable'
-import Moves from 'app/ranges/Moves'
 import Horizontal from 'components/layout/Horizontal'
-import Button from 'components/Button'
+import RangesMenu from 'app/ranges/RangesMenu'
+import styled from 'styled-components'
+import Vertical from 'components/layout/Vertical'
+
+const RangeContainer = styled(Vertical)`
+  display: flex;
+  margin-left: 20px;
+`
+
+interface TitleProps {
+  move: Move
+  hero: Position
+  vilain: Position
+}
+const Title = ({ move, hero, vilain }: TitleProps) => {
+  if (move === Move.OPEN) {
+    return <b>{`${move} @ ${positionsNamesMap.get(hero)} :`}</b>
+  }
+  return <b>{`${move} @ ${positionsNamesMap.get(hero)} vs. ${positionsNamesMap.get(vilain)} :`}</b>
+}
 
 const Ranges = () => {
   const [heroPosition, setHeroPosition] = useState<Position>(Position.B)
@@ -19,40 +37,21 @@ const Ranges = () => {
   )
 
   return (
-    <div>
-      <Horizontal>
-        {heroMove}&nbsp;:&nbsp;
+    <Horizontal>
+      <RangesMenu
+        heroMove={heroMove}
+        setHeroMove={setHeroMove}
+        heroPosition={heroPosition}
+        setHeroPosition={setHeroPosition}
+        vilainPosition={vilainPosition}
+        setVilainPosition={setVilainPosition}
+      />
+      <RangeContainer>
+        <Title move={heroMove} hero={heroPosition} vilain={vilainPosition} />
         <PercentageOfPlayedHands hintsTable={hintsTable} />
-      </Horizontal>
-      <RangeTable hintsTable={hintsTable} />
-      <Horizontal>
-        <Moves setHeroMove={setHeroMove} heroMove={heroMove} />
-      </Horizontal>
-      <Horizontal>
-        {allPositions.map(position => (
-          <Button
-            key={position}
-            disabled={!getHintsTable(heroMove, position, vilainPosition)}
-            onClick={() => setHeroPosition(position)}
-            active={heroPosition === position}
-          >
-            {positionsNamesMap.get(position) || ''}
-          </Button>
-        ))}
-      </Horizontal>
-      <Horizontal>
-        {allPositions.map(position => (
-          <Button
-            key={position}
-            disabled={heroMove === Move.OPEN || !getHintsTable(heroMove, heroPosition, position)}
-            onClick={() => setVilainPosition(position)}
-            active={vilainPosition === position}
-          >
-            {positionsNamesMap.get(position) || ''}
-          </Button>
-        ))}
-      </Horizontal>
-    </div>
+        <RangeTable hintsTable={hintsTable} />
+      </RangeContainer>
+    </Horizontal>
   )
 }
 

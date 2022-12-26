@@ -1,4 +1,5 @@
 import ButtonPosition from 'domain/buttonPosition'
+import { random } from 'utils/random'
 
 enum Position {
   B = 'B',
@@ -53,3 +54,5 @@ export const buttonPositionFromHeroPosition = (heroPosition: Position): ButtonPo
   if (hero === undefined) throw Error('Cannot get button position for Hero @' + heroPosition)
   return hero
 }
+
+export const getRandomHeroPosition = () => allPositions[random(0, 5)]
