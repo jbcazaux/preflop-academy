@@ -9,6 +9,7 @@ import useWindowSize from 'components/useWindowSize'
 
 const Positions = styled(Vertical)`
   flex: 0;
+  max-width: 150px;
   margin-top: 10px;
 `
 

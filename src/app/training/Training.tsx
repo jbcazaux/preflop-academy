@@ -30,7 +30,10 @@ const HandDisplay = styled(Horizontal)`
 `
 
 const Margin = styled.div`
-  margin: 0 10vw;
+  margin: 0 auto;
+  @media (${({ theme }) => theme.breakpoints.max.tablet}) {
+    margin: 0 10vw;
+  }
 `
 
 interface Props {
@@ -72,7 +75,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
 
   useEffect(newRandomPlay, [newRandomPlay])
 
-  const width = Math.min((windowSize.width - 200) / 1.1, 800)
+  const width = Math.min((windowSize.width - 50) / 1.1, 800)
 
   return (
     <>

@@ -61,7 +61,8 @@
     "react-router-dom": "6.6.1",
     "redux": "4.2.0",
     "redux-thunk": "2.4.2",
-    "styled-components": "5.3.6"
+    "styled-components": "5.3.6",
+    "tabler-icons-react": "1.56.0"
   },
   "scripts": {
     "start": "webpack serve --mode development",

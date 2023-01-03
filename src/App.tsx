@@ -15,6 +15,7 @@ import Menu from 'app/menu/Menu'
 const queryClient = new QueryClient()
 
 const StyledApp = styled(Horizontal)`
+  background-color: ${({ theme }) => theme.colors.background};
   * {
     box-sizing: border-box;
   }

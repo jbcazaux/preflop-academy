@@ -35,7 +35,7 @@ const Container = styled(Vertical)<{ open: boolean; position: Position; openWidt
   transform: ${({ open, pinned, position, openWidth }) =>
     open || pinned ? `none` : `translateX(${position === 'left' ? '-' : ''}${openWidth - 55}px)`};
   transition: transform linear 0.3s ${({ open }) => (open ? ', height .3s .0s' : ', height .3s .0s')};
-  background-color: white;
+  background-color: ${({ theme }) => theme.colors.background};
   z-index: 5;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
   clip-path: inset(0 -15px -15px -15px);
