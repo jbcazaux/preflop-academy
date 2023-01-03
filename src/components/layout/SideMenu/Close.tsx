@@ -3,13 +3,18 @@ import { Position } from 'components/layout/SideMenu/types'
 
 const Container = styled.div<{ position: Position }>`
   display: flex;
-  flex-direction: column;
-  font-size: 22px;
-  padding: 2px 10px 5px 10px;
+  font-size: 25px;
+  padding: 0 10px 5px 10px;
   font-weight: bold;
   align-self: ${({ position }) => (position === 'left' ? 'flex-end' : 'flex-start')};
   cursor: pointer;
   border: 1px solid black;
+`
+
+const Arrow = styled.div<{ open: boolean }>`
+  transform: ${({ open }) => (open ? 'rotate(90deg)' : '')};
+  transition: transform 0.3s linear;
+  transform-origin: 50% 60%;
 `
 
 interface Props {
@@ -22,7 +27,7 @@ interface Props {
 const Close = ({ onClick, open, position, hide }: Props) =>
   hide ? null : (
     <Container onClick={onClick} position={position}>
-      {(open || position === 'left') && (!open || position === 'right') ? '>' : '<'}
+      <Arrow open={open}>{position === 'left' ? '>' : '<'}</Arrow>
     </Container>
   )
 

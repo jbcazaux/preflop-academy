@@ -1,8 +1,9 @@
-import styled from 'styled-components'
+import styled, { ThemeContext } from 'styled-components'
 import Vertical from 'components/layout/Vertical'
 import Horizontal from 'components/layout/Horizontal'
 import HintTable from 'domain/hintTable'
 import PokerHand from 'domain/hand'
+import { useContext } from 'react'
 
 interface ISquare {
   bgColor: string
@@ -11,8 +12,9 @@ interface ISquare {
 }
 
 export const Square = styled.div<ISquare>`
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
+  font-size: 0.75em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -38,7 +40,8 @@ interface HandProps {
 }
 
 const Hand = ({ active, suited, pair, selected = false, children }: HandProps) => {
-  const color = active ? '#97DE5D' : suited || pair ? '#0CF9DF' : '#F9E00C'
+  const { colors } = useContext(ThemeContext)
+  const color = active ? colors.range.active : suited || pair ? colors.range.suited : colors.range.offsuit
   return (
     <Square bgColor={color} active={active} selected={selected}>
       {children}

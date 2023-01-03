@@ -25,20 +25,20 @@ const Center = styled(Vertical)`
 const Container = styled(Vertical)<{ open: boolean; position: Position; openWidth: number; pinned: boolean }>`
   display: flex;
   position: ${({ pinned }) => (pinned ? 'inherit' : 'fixed')};
-  top: 0;
-  left: ${({ position }) => (position === 'left' ? '0' : 'auto')};
+  // top: 0;
+  // left: ${({ position }) => (position === 'left' ? '0' : 'auto')};
   right: ${({ position }) => (position === 'right' ? '0' : 'auto')};
-  height: ${({ open, pinned }) => (open || pinned ? '100vh' : '55px')};
+  height: ${({ open, pinned }) => (open || pinned ? 'calc(100vh - 50px);' : '55px')};
   overflow-y: auto;
   max-width: ${({ openWidth }) => `${openWidth}px`};
   min-width: ${({ openWidth }) => `${openWidth}px`};
   transform: ${({ open, pinned, position, openWidth }) =>
     open || pinned ? `none` : `translateX(${position === 'left' ? '-' : ''}${openWidth - 55}px)`};
-  transition: transform linear 0.3s ${({ open }) => (open ? '' : ', height .3s .0s')};
+  transition: transform linear 0.3s ${({ open }) => (open ? ', height .3s .0s' : ', height .3s .0s')};
   background-color: white;
-  z-index: 10;
+  z-index: 5;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
-  clip-path: inset(-15px);
+  clip-path: inset(0 -15px -15px -15px);
 `
 
 interface Props {
