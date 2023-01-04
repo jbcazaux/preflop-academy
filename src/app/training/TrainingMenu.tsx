@@ -6,6 +6,7 @@ import Vertical from 'components/layout/Vertical'
 import ButtonComponent from 'components/Button'
 import { useNavigate } from 'react-router-dom'
 import useWindowSize from 'components/useWindowSize'
+import { useTranslation } from 'react-i18next'
 
 const Positions = styled(Vertical)`
   flex: 0;
@@ -50,11 +51,12 @@ interface Props {
 const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
   const navigate = useNavigate()
   const { width } = useWindowSize()
+  const { t } = useTranslation()
 
   return (
-    <SideMenu position="left" width={200} title="Training" pinned={width >= 1200}>
+    <SideMenu position="left" width={200} title={t('training.setup.title')} pinned={width >= 1200}>
       <Positions>
-        <div>Choose your position :</div>
+        <div>{t('training.setup.position')}</div>
         <HeroPosition onClick={() => navigate('../B')} active={heroPosition === Position.B}>
           Button
         </HeroPosition>
@@ -68,7 +70,7 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
           UTG
         </HeroPosition>
         <HeroPosition onClick={() => navigate('../MP')} active={heroPosition === Position.MP}>
-          Middle
+          HJ
         </HeroPosition>
         <HeroPosition onClick={() => navigate('../CO')} active={heroPosition === Position.CO}>
           Cut Off
@@ -78,7 +80,7 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
         </HeroPosition>
       </Positions>
       <Moves>
-        <div>Choose your move :</div>
+        <div>{t('training.setup.move')}</div>
         <MoveButton
           onClick={() => setMoveType(Move.OPEN)}
           active={moveType === Move.OPEN}

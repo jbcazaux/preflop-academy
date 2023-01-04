@@ -18,6 +18,7 @@ const style: AppTheme = {
     primary: '#2DDAEE',
     secondary: 'pink',
     background: '#F7F1F7',
+    black: '#222',
     buttons: {
       default: '#D5E2E3',
     },
@@ -45,7 +46,7 @@ const style: AppTheme = {
       board: '#58BD86',
       stroke: '#4C4949',
       button: '#E8F63C',
-      action: '#E34719',
+      action: '#de004e',
     },
   },
 }

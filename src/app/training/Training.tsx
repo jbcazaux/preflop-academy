@@ -75,7 +75,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
 
   useEffect(newRandomPlay, [newRandomPlay])
 
-  const width = Math.min((windowSize.width - 50) / 1.1, 800)
+  const width = Math.min((windowSize.width - 100) / 1.1, 800)
 
   return (
     <>

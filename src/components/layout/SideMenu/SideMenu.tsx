@@ -42,7 +42,7 @@ const Container = styled(Vertical)<{ open: boolean; position: Position; openWidt
 `
 
 interface Props {
-  title?: string
+  title?: string | null
   position: Position
   width: number
   children: ReactNode

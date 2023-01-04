@@ -8,7 +8,7 @@ const Container = styled.div<{ position: Position }>`
   font-weight: bold;
   align-self: ${({ position }) => (position === 'left' ? 'flex-end' : 'flex-start')};
   cursor: pointer;
-  border: 1px solid black;
+  border: 1px solid ${({ theme }) => theme.colors.black}; ;
 `
 
 const Arrow = styled.div<{ open: boolean }>`

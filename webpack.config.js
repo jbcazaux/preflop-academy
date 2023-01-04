@@ -31,9 +31,11 @@ module.exports = (env, argv = {}) => ({
     alias: {
       api: path.resolve(__dirname, 'src/api'),
       app: path.resolve(__dirname, 'src/app'),
+      assets: path.resolve(__dirname, 'src/assets'),
       components: path.resolve(__dirname, 'src/components'),
       data: path.resolve(__dirname, 'src/data'),
       domain: path.resolve(__dirname, 'src/domain'),
+      i18n: path.resolve(__dirname, 'src/i18n'),
       utils: path.resolve(__dirname, 'src/utils'),
     },
   },

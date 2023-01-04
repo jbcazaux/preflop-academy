@@ -1,5 +1,19 @@
 {
   "translation": {
+    "menu": {
+      "home": "Accueil",
+      "training": "Exercices",
+      "solver": "Calculs",
+      "ranges": "Ranges",
+      "ranges-editor": "Éditeur de ranges"
+    },
+    "training": {
+      "setup": {
+        "title": "Installation",
+        "position": "Position :",
+        "move": "Coup :"
+      }
+    },
     "home": {
       "welcome": "Bienvenue !"
     }

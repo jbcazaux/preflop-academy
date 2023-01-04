@@ -11,27 +11,17 @@ import Home from 'app/Home'
 import Vertical from 'components/layout/Vertical'
 import Horizontal from 'components/layout/Horizontal'
 import Menu from 'app/menu/Menu'
+import 'i18n/i18n'
+import Header from 'components/header/Header'
 
 const queryClient = new QueryClient()
 
 const StyledApp = styled(Horizontal)`
+  color: ${({ theme }) => theme.colors.black};
   background-color: ${({ theme }) => theme.colors.background};
   * {
     box-sizing: border-box;
   }
-`
-
-const Header = styled.header`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-  height: 50px;
-  color: black;
-  border-bottom: 1px solid black;
-  background-color: ${({ theme }) => theme.colors.primary};
-  box-shadow: 0 5px 5px rgb(0 0 0 / 20%);
-  clip-path: inset(-15px);
 `
 
 const App = () => (
@@ -42,7 +32,7 @@ const App = () => (
           <StyledApp>
             <Menu />
             <Vertical>
-              <Header>GTO Poker</Header>
+              <Header />
               <section>
                 <Routes>
                   <Route path="/" element={<Home />} />

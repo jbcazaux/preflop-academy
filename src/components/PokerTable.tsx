@@ -31,21 +31,21 @@ const drawPlayers = (
   centerX: number,
   centerY: number,
   tableWidth: number,
-  tableHeight: number
+  tableHeight: number,
+  theme: AppTheme
 ) => {
-  ctx.fillStyle = '#000000'
   ctx.font = `${tableWidth / 20}px serif`
   ctx.textAlign = 'center'
 
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 1.2
   const ratio = tableHeight / tableWidth
 
-  drawPlayer(ctx, radius, ratio, centerX, centerY, 0)
-  drawPlayer(ctx, radius, ratio, centerX, centerY, 1)
-  drawPlayer(ctx, radius, ratio, centerX, centerY, 2)
-  drawPlayer(ctx, radius, ratio, centerX, centerY, 3)
-  drawPlayer(ctx, radius, ratio, centerX, centerY, 4)
-  drawPlayer(ctx, radius, ratio, centerX, centerY, 5)
+  drawPlayer(ctx, radius, ratio, centerX, centerY, 0, theme)
+  drawPlayer(ctx, radius, ratio, centerX, centerY, 1, theme)
+  drawPlayer(ctx, radius, ratio, centerX, centerY, 2, theme)
+  drawPlayer(ctx, radius, ratio, centerX, centerY, 3, theme)
+  drawPlayer(ctx, radius, ratio, centerX, centerY, 4, theme)
+  drawPlayer(ctx, radius, ratio, centerX, centerY, 5, theme)
 }
 
 const drawPlayer = (
@@ -54,7 +54,8 @@ const drawPlayer = (
   ratio: number,
   centerX: number,
   centerY: number,
-  seatNumber: number
+  seatNumber: number,
+  theme: AppTheme
 ) => {
   const [x, y] = xyBySeatNumber(seatNumber, centerX, centerY, radius, ratio)
   const alignByPosition = ['center', 'right', 'right', 'center', 'left', 'left']
@@ -63,7 +64,7 @@ const drawPlayer = (
   ctx.font = `normal ${20}px serif`
   ctx.textAlign = alignByPosition[seatNumber % 6] as CanvasTextAlign
   ctx.textBaseline = 'middle'
-  ctx.fillStyle = '#000000'
+  ctx.fillStyle = theme.colors.black
   ctx.fillText(seatNumber === 0 ? 'Hero' : 'Vilain ' + seatNumber, x, y)
 }
 
@@ -149,7 +150,7 @@ const drawPositionName = (
   const [x, y] = xy
   ctx.beginPath()
 
-  ctx.fillStyle = '#000000'
+  ctx.fillStyle = theme.colors.black
   ctx.font = `${tableWidth / 30}px serif`
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
@@ -183,7 +184,7 @@ const drawButton = (
     ctx.font = `bold ${tableWidth / 25}px serif`
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillStyle = '#000000'
+    ctx.fillStyle = theme.colors.black
     ctx.fillText('D', x + 1, y + 2)
   }
 }
@@ -258,7 +259,14 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
         canvas.height / 2,
         theme
       )
-      drawPlayers(context, canvas.width / 2 + canvasMarge, canvas.height / 2 + canvasMarge, canvas.width, canvas.height)
+      drawPlayers(
+        context,
+        canvas.width / 2 + canvasMarge,
+        canvas.height / 2 + canvasMarge,
+        canvas.width,
+        canvas.height,
+        theme
+      )
     } else {
       const c = canvasRef.current
       if (!c) return

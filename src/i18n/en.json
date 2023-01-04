@@ -1,7 +1,18 @@
 {
   "translation": {
-    "home": {
-      "welcome": "Welcome  !"
+    "menu": {
+      "home": "Home",
+      "training": "Training",
+      "solver": "Solver",
+      "ranges": "Ranges",
+      "ranges-editor": "Ranges editor"
+    },
+    "training": {
+      "setup": {
+        "title": "Setup",
+        "position": "Choose your position:",
+        "move": "Choose your move:"
+      }
     }
   }
 }
