@@ -222,12 +222,18 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
 
   const onMouseClick = useCallback(
     (event: MouseEvent) => {
-      if (event.x < canvas.width / 3 + canvasMarge) {
-        onButtonChange(event.y < canvas.centerY ? 2 : 1)
-      } else if (event.x < (canvas.width * 2) / 3 + canvasMarge) {
-        onButtonChange(event.y < canvas.centerY ? 3 : 0)
+      if (!canvasRef.current) return
+
+      const boundingRect = canvasRef.current.getBoundingClientRect()
+      const eventX = event.x - boundingRect.left
+      const eventY = event.y - boundingRect.top
+
+      if (eventX < canvas.width / 3 + canvasMarge) {
+        onButtonChange(eventY < canvas.centerY ? 2 : 1)
+      } else if (eventX < (canvas.width * 2) / 3 + canvasMarge) {
+        onButtonChange(eventY < canvas.centerY ? 3 : 0)
       } else {
-        onButtonChange(event.y < canvas.centerY ? 4 : 5)
+        onButtonChange(eventY < canvas.centerY ? 4 : 5)
       }
     },
     [canvas, onButtonChange]
@@ -236,12 +242,18 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
   const onContextMenu = useCallback(
     (event: MouseEvent) => {
       event.preventDefault()
-      if (event.x < canvas.width / 3 + canvasMarge) {
-        addRaisePosition(event.y < canvas.centerY ? 2 : 1)
-      } else if (event.x < (canvas.width * 2) / 3 + canvasMarge) {
-        addRaisePosition(event.y < canvas.centerY ? 3 : 0)
+      if (!canvasRef.current) return
+
+      const boundingRect = canvasRef.current.getBoundingClientRect()
+      const eventX = event.x - boundingRect.left
+      const eventY = event.y - boundingRect.top
+
+      if (eventX < canvas.width / 3 + canvasMarge) {
+        addRaisePosition(eventY < canvas.centerY ? 2 : 1)
+      } else if (eventX < (canvas.width * 2) / 3 + canvasMarge) {
+        addRaisePosition(eventY < canvas.centerY ? 3 : 0)
       } else {
-        addRaisePosition(event.y < canvas.centerY ? 4 : 5)
+        addRaisePosition(eventY < canvas.centerY ? 4 : 5)
       }
     },
     [addRaisePosition, canvas]
