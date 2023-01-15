@@ -22,9 +22,6 @@ module.exports = (env, argv = {}) => ({
       filename: argv.mode === 'development' ? '[name].css' : '[name].[hash].css',
       chunkFilename: argv.mode === 'development' ? '[id].css' : '[id].[hash].css',
     }),
-    new CopyPlugin({
-      patterns: [{ from: 'public' }],
-    }),
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],

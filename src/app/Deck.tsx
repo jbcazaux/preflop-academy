@@ -1,5 +1,5 @@
 import { Card, deck } from 'domain/card'
-import CardComponent from 'components/Card'
+import CardComponent from 'components/Card2'
 
 import styled from 'styled-components'
 import Hand from 'domain/hand'

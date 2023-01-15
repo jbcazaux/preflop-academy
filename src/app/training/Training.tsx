@@ -12,11 +12,11 @@ import gto from 'data/gto'
 import Score from 'domain/Score'
 import Action from 'domain/action'
 import noop from 'utils/noop'
-import Card from 'components/Card'
 import Position, { buttonPositionFromHeroPosition } from 'domain/position'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Board from 'domain/board'
 import { setRandomPlay } from 'app/training/setPlay'
+import Card2 from 'components/Card2'
 
 const Text = styled.div`
   display: flex;
@@ -97,8 +97,8 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
           width={width}
         />
         <HandDisplay>
-          {hand.card1 && <Card card={hand.card1} />}
-          {hand.card2 && <Card card={hand.card2} />}
+          {hand.card1 && <Card2 card={hand.card1} />}
+          {hand.card2 && <Card2 card={hand.card2} />}
         </HandDisplay>
         <Margin>
           <Text>What's your move ?</Text>

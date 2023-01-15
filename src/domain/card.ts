@@ -36,7 +36,7 @@ export class Card {
 export const names = ['2', '3', '4', '5', '6', '7', '8', '9', 'TEN', 'JACK', 'QUEEN', 'KING', 'AS']
 export type CardId = number
 
-const cards: { [key: string]: number } = {
+const cards: Record<string, number> = {
   2: 1,
   3: 5,
   4: 9,
@@ -61,11 +61,12 @@ export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors.map((color, i) =>
     .map(value => new Card(value + i))
 )
 
-const values = ['2', '3', '4', '5', '6', '7', '8', '9', 'T', 'J', 'Q', 'K', 'A']
+const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 const colorsShort = ['s', 'h', 'd', 'c']
-const cardHeight = (c: number): number => Math.floor((c - 1) / 4)
-export const cardName = (id: number): string => {
+const cardHeight = (cardId: CardId): number => Math.floor((cardId - 1) / 4)
+export const cardTitle = (id: number): string => {
   const value = values[cardHeight(id)]
   const color = colorsShort[(id - 1) % 4]
   return `${value}${color}`
 }
+export const cardValue = (cardId: CardId): string => values[cardHeight(cardId)]

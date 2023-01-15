@@ -3,7 +3,7 @@ import Vertical from 'components/layout/Vertical'
 import Horizontal from 'components/layout/Horizontal'
 import { Card } from 'domain/card'
 import Board from 'domain/board'
-import CardComponent from 'components/Card'
+import CardComponent from 'components/Card2'
 
 const Vertical0 = styled.div`
   display: flex;
