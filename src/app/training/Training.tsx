@@ -75,8 +75,6 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
 
   useEffect(newRandomPlay, [newRandomPlay])
 
-  const width = Math.min((windowSize.width - 100) / 1.1, 800)
-
   return (
     <>
       <SideMenu position="right" width={400} title="Ranges">
@@ -94,7 +92,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
           onButtonChange={noop}
           actions={actions}
           addRaisePosition={noop}
-          width={width}
+          width={windowSize.width}
         />
         <HandDisplay>
           {hand.card1 && <Card2 card={hand.card1} />}

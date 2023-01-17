@@ -14,7 +14,8 @@ const Container = styled(Vertical)`
 
 const Buttons = styled(Horizontal)`
   flex: 0;
-  justify-content: space-between;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
 `
 
 interface IAnswerWrapper {

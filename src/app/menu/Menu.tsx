@@ -9,7 +9,7 @@ const StyledMenu = styled.nav`
   display: flex;
   flex-direction: column;
   min-width: 170px;
-  height: 100vh;
+  height: 100%;
   background-color: ${({ theme }) => theme.colors.secondary};
   z-index: 10;
   a {

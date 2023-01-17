@@ -76,7 +76,6 @@ const drawActions = (
   tableHeight: number,
   actions: ReadonlyArray<Action>,
   buttonPosition: ButtonPosition,
-  clear = false,
   theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.6
@@ -98,15 +97,7 @@ const drawActions = (
       ctx.font = `bold ${tableWidth / 30}px serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'
-
-      if (clear) {
-        ctx.fillStyle = theme.colors.table.board
-        const { width: size } = ctx.measureText(text)
-        const height = parseInt(ctx.font.replaceAll(/[a-zA-Z]/g, ''), 10)
-        ctx.fillRect(x - size / 2, y - height / 2, size, height)
-      } else {
-        ctx.fillText(text, x, y)
-      }
+      ctx.fillText(text, x, y)
     }
   )
 }
@@ -118,25 +109,17 @@ const drawPositions = (
   tableWidth: number,
   tableHeight: number,
   seatNumber: number,
-  clear = false,
   theme: AppTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.8
   const ratio = tableHeight / tableWidth
 
-  drawButton(ctx, xyBySeatNumber(seatNumber, centerX, centerY, radius, ratio), tableWidth, clear, theme)
-  drawPositionName(ctx, xyBySeatNumber(seatNumber + 1, centerX, centerY, radius, ratio), tableWidth, 'SB', clear, theme)
-  drawPositionName(ctx, xyBySeatNumber(seatNumber + 2, centerX, centerY, radius, ratio), tableWidth, 'BB', clear, theme)
-  drawPositionName(
-    ctx,
-    xyBySeatNumber(seatNumber + 3, centerX, centerY, radius, ratio),
-    tableWidth,
-    'UTG',
-    clear,
-    theme
-  )
-  drawPositionName(ctx, xyBySeatNumber(seatNumber + 4, centerX, centerY, radius, ratio), tableWidth, 'MP', clear, theme)
-  drawPositionName(ctx, xyBySeatNumber(seatNumber + 5, centerX, centerY, radius, ratio), tableWidth, 'CO', clear, theme)
+  drawButton(ctx, xyBySeatNumber(seatNumber, centerX, centerY, radius, ratio), tableWidth, theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 1, centerX, centerY, radius, ratio), tableWidth, 'SB', theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 2, centerX, centerY, radius, ratio), tableWidth, 'BB', theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 3, centerX, centerY, radius, ratio), tableWidth, 'UTG', theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 4, centerX, centerY, radius, ratio), tableWidth, 'MP', theme)
+  drawPositionName(ctx, xyBySeatNumber(seatNumber + 5, centerX, centerY, radius, ratio), tableWidth, 'CO', theme)
 }
 
 const drawPositionName = (
@@ -144,7 +127,6 @@ const drawPositionName = (
   xy: number[],
   tableWidth: number,
   text: string,
-  clear = false,
   theme: AppTheme
 ) => {
   const [x, y] = xy
@@ -155,38 +137,20 @@ const drawPositionName = (
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillText(text, x, y)
-
-  if (clear) {
-    ctx.fillStyle = theme.colors.table.board
-    const { width: size } = ctx.measureText(text)
-    const height = parseInt(ctx.font, 10)
-    ctx.fillRect(x - size / 2, y - height / 2, size, height)
-  }
 }
 
-const drawButton = (
-  ctx: CanvasRenderingContext2D,
-  xy: number[],
-  tableWidth: number,
-  clear = false,
-  theme: AppTheme
-) => {
+const drawButton = (ctx: CanvasRenderingContext2D, xy: number[], tableWidth: number, theme: AppTheme) => {
   const [x, y] = xy
   ctx.beginPath()
-  ctx.arc(x, y, tableWidth / 35 + (clear ? 1 : 0), 0, 2 * Math.PI)
+  ctx.arc(x, y, tableWidth / 35, 0, 2 * Math.PI)
   ctx.fillStyle = theme.colors.table.button
-  if (clear) {
-    ctx.fillStyle = theme.colors.table.board
-  }
   ctx.fill()
 
-  if (!clear) {
-    ctx.font = `bold ${tableWidth / 25}px serif`
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'middle'
-    ctx.fillStyle = theme.colors.black
-    ctx.fillText('D', x + 1, y + 2)
-  }
+  ctx.font = `bold ${tableWidth / 25}px serif`
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  ctx.fillStyle = theme.colors.black
+  ctx.fillText('D', x + 1, y + 2)
 }
 
 interface Dimensions {
@@ -195,16 +159,29 @@ interface Dimensions {
   marge: number
   centerX: number
   centerY: number
+  isMobile: boolean
+  isTablet: boolean
 }
 
-const canvasMarge = 50
-const dimensions = (width: number): Dimensions => ({
-  width: width - 2 * canvasMarge,
-  height: (width - 2 * canvasMarge) / 2,
-  marge: canvasMarge,
-  centerX: (width - 2 * canvasMarge) / 2 + canvasMarge,
-  centerY: (width - 2 * canvasMarge) / 4 + canvasMarge,
-})
+const dimensions = (widthWindow: number, theme: AppTheme): Dimensions => {
+  const breakpointMobile = Number(theme.breakpoints.max.mobile.match(/\d+/)?.[0])
+  const breakpointTablet = Number(theme.breakpoints.max.tablet.match(/\d+/)?.[0])
+  // const canvasMarge = widthWindow < breakpoint ? 20 : 50
+  const canvasMarge = widthWindow < breakpointMobile ? 20 : widthWindow < breakpointTablet ? 40 : 70
+  const width = Math.min(
+    widthWindow - 2 * canvasMarge,
+    widthWindow < breakpointMobile ? breakpointMobile : breakpointTablet
+  )
+  return {
+    width: width - 2 * canvasMarge,
+    height: (width - 2 * canvasMarge) / 2,
+    marge: canvasMarge,
+    centerX: (width - 2 * canvasMarge) / 2 + canvasMarge,
+    centerY: (width - 2 * canvasMarge) / 4 + canvasMarge,
+    isMobile: widthWindow < breakpointMobile,
+    isTablet: widthWindow < breakpointTablet,
+  }
+}
 
 interface Props {
   buttonPosition: ButtonPosition
@@ -215,10 +192,10 @@ interface Props {
 }
 
 const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition, width }: Props) => {
+  const theme = useContext(ThemeContext)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  const canvas = useMemo(() => dimensions(width), [width])
-  const theme = useContext(ThemeContext)
+  const canvas = useMemo(() => dimensions(width, theme), [width, theme])
 
   const onMouseClick = useCallback(
     (event: MouseEvent) => {
@@ -228,9 +205,9 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
       const eventX = event.x - boundingRect.left
       const eventY = event.y - boundingRect.top
 
-      if (eventX < canvas.width / 3 + canvasMarge) {
+      if (eventX < canvas.width / 3 + canvas.marge) {
         onButtonChange(eventY < canvas.centerY ? 2 : 1)
-      } else if (eventX < (canvas.width * 2) / 3 + canvasMarge) {
+      } else if (eventX < (canvas.width * 2) / 3 + canvas.marge) {
         onButtonChange(eventY < canvas.centerY ? 3 : 0)
       } else {
         onButtonChange(eventY < canvas.centerY ? 4 : 5)
@@ -248,9 +225,9 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
       const eventX = event.x - boundingRect.left
       const eventY = event.y - boundingRect.top
 
-      if (eventX < canvas.width / 3 + canvasMarge) {
+      if (eventX < canvas.width / 3 + canvas.marge) {
         addRaisePosition(eventY < canvas.centerY ? 2 : 1)
-      } else if (eventX < (canvas.width * 2) / 3 + canvasMarge) {
+      } else if (eventX < (canvas.width * 2) / 3 + canvas.marge) {
         addRaisePosition(eventY < canvas.centerY ? 3 : 0)
       } else {
         addRaisePosition(eventY < canvas.centerY ? 4 : 5)
@@ -260,31 +237,47 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
   )
 
   useEffect(() => {
-    if (context) {
-      context.fillStyle = theme.colors.background
-      context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
-      drawTable(
-        context,
-        canvas.width / 2 + canvasMarge,
-        canvas.height + (canvasMarge * canvas.width) / canvas.height,
-        canvas.width / 2,
-        canvas.height / 2,
-        theme
-      )
+    if (!context) {
+      const c = canvasRef.current
+      if (!c) return
+      setContext(c.getContext('2d'))
+      return
+    }
+    context.fillStyle = theme.colors.background
+    context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
+    drawTable(
+      context,
+      canvas.width / 2 + canvas.marge,
+      canvas.height + (canvas.marge * canvas.width) / canvas.height,
+      canvas.width / 2,
+      canvas.height / 2,
+      theme
+    )
+    drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, buttonPosition, theme)
+    drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, theme)
+    !canvas.isMobile &&
+      !canvas.isTablet &&
       drawPlayers(
         context,
-        canvas.width / 2 + canvasMarge,
-        canvas.height / 2 + canvasMarge,
+        canvas.width / 2 + canvas.marge,
+        canvas.height / 2 + canvas.marge,
         canvas.width,
         canvas.height,
         theme
       )
-    } else {
-      const c = canvasRef.current
-      if (!c) return
-      setContext(c.getContext('2d'))
-    }
-  }, [canvas, context, theme])
+  }, [
+    actions,
+    buttonPosition,
+    canvas.centerX,
+    canvas.centerY,
+    canvas.height,
+    canvas.isMobile,
+    canvas.isTablet,
+    canvas.marge,
+    canvas.width,
+    context,
+    theme,
+  ])
 
   useEffect(() => {
     const c = canvasRef.current
@@ -297,46 +290,6 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
       c.removeEventListener('contextmenu', onContextMenu)
     }
   }, [context, onContextMenu, onMouseClick])
-
-  useEffect(() => {
-    if (!context) {
-      return
-    }
-    drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, false, theme)
-    return () => {
-      drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, true, theme)
-    }
-  }, [context, buttonPosition, canvas, theme])
-
-  useEffect(() => {
-    if (!context) {
-      return
-    }
-    drawActions(
-      context,
-      canvas.centerX,
-      canvas.centerY,
-      canvas.width,
-      canvas.height,
-      actions,
-      buttonPosition,
-      false,
-      theme
-    )
-    return () => {
-      drawActions(
-        context,
-        canvas.centerX,
-        canvas.centerY,
-        canvas.width,
-        canvas.height,
-        actions,
-        buttonPosition,
-        true,
-        theme
-      )
-    }
-  }, [canvas, context, actions, theme, buttonPosition])
 
   return (
     <canvas
