@@ -12,7 +12,9 @@
         "title": "Installation",
         "position": "Position :",
         "move": "Coup :"
-      }
+      },
+      "ask-move": "Que faire ?",
+      "score": "Score"
     },
     "home": {
       "welcome": "Bienvenue !"

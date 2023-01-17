@@ -17,6 +17,7 @@ import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Board from 'domain/board'
 import { setRandomPlay } from 'app/training/setPlay'
 import Card2 from 'components/Card2'
+import { useTranslation } from 'react-i18next'
 
 const Text = styled.div`
   display: flex;
@@ -48,6 +49,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
   const [goodAnswer, setGoodAnswer] = useState<Move | null>(null)
   const [score, setScore] = useState<Score>(new Score())
   const [heroPosition, setHeroPosition] = useState<Position | null>(heroPosition2)
+  const { t } = useTranslation()
 
   const windowSize = useWindowSize()
   const buttonPosition = heroPosition ? buttonPositionFromHeroPosition(heroPosition) : 0
@@ -99,7 +101,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
           {hand.card2 && <Card2 card={hand.card2} />}
         </HandDisplay>
         <Margin>
-          <Text>What's your move ?</Text>
+          <Text>{t('training.ask-move')}</Text>
           <TrainingAnswers
             buttonPosition={buttonPosition}
             actions={actions}
@@ -107,7 +109,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
             setAnswer={setGuess}
             next={newRandomPlay}
           />
-          <Text>Score : {`${score.score} / ${score.total}`}</Text>
+          <Text>{`${t('training.score')} ${score.score} / ${score.total}`}</Text>
         </Margin>
       </Vertical>
     </>

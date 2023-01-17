@@ -38,9 +38,10 @@ const style: AppTheme = {
       menu5: '#f6019d',
     },
     range: {
-      active: '#97DE5D',
-      suited: '#0CF9DF',
-      offsuit: '#F9E00C',
+      active: '#A8F597',
+      suited: '#2DDAEE',
+      offsuit: 'pink',
+      selected: '#d40078',
     },
     table: {
       board: '#58BD86',

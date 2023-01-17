@@ -21,10 +21,11 @@ export const Square = styled.div<ISquare>`
   background-color: ${({ bgColor }) => bgColor};
   opacity: ${({ active }) => (active ? 1 : 0.6)};
   margin: 1px;
-  border: ${({ selected, theme }) => (selected ? '3px solid red' : `1px solid ${theme.colors.black}`)};
+  border: ${({ selected, theme }) =>
+    selected ? `3px solid ${theme.colors.range.selected}` : `1px solid ${theme.colors.black}`};
   border-radius: 3px;
   box-sizing: border-box;
-  @media (max-width: 1200px) {
+  @media (${({ theme }) => theme.breakpoints.max.tablet}) {
     width: 20px;
     height: 20px;
     font-size: 0.6em;

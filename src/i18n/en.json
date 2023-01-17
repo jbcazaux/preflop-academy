@@ -12,7 +12,9 @@
         "title": "Setup",
         "position": "Choose your position:",
         "move": "Choose your move:"
-      }
+      },
+      "ask-move": "What's your move ?",
+      "score": "Score"
     }
   }
 }

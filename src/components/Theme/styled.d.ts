@@ -42,6 +42,7 @@ declare module 'styled-components' {
         active: string
         suited: string
         offsuit: string
+        selected: string
       }
       table: {
         board: string

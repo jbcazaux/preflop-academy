@@ -21,7 +21,11 @@ const drawTable = (ctx: CanvasRenderingContext2D, x: number, y: number, rw: numb
   ctx.restore()
   ctx.lineWidth = 4
   ctx.strokeStyle = theme.colors.table.stroke
-  ctx.fillStyle = theme.colors.table.board
+
+  const gradient = ctx.createRadialGradient(x, y - 1.5 * rh, 0, x, y - 1.5 * rh, 1.25 * rw)
+  gradient.addColorStop(0, theme.colors.secondary)
+  gradient.addColorStop(1, theme.colors.primary)
+  ctx.fillStyle = gradient
   ctx.fill()
   ctx.stroke()
 }
@@ -243,6 +247,7 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
       setContext(c.getContext('2d'))
       return
     }
+
     context.fillStyle = theme.colors.background
     context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
     drawTable(

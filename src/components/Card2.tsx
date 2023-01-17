@@ -16,6 +16,7 @@ const CardContainer = styled.div`
   align-items: center;
   margin: 2px;
   padding: 1px;
+  cursor: pointer;
 `
 
 const CardValue = styled.div<{ color: string }>`
