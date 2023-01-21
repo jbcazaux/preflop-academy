@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components'
-import PokerTable from 'components/PokerTable'
+import PokerTable from 'components/PokerTable/PokerTable'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
 import Horizontal from 'components/layout/Horizontal'

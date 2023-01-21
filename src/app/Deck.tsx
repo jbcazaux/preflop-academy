@@ -9,6 +9,7 @@ import Board from 'domain/board'
 const DeckContainer = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
 `
 
 interface Props {

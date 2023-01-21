@@ -15,6 +15,9 @@
       },
       "ask-move": "What's your move ?",
       "score": "Score"
+    },
+    "solver": {
+      "moreThan20bb": "More than 20BB"
     }
   }
 }

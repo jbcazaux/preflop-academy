@@ -16,6 +16,9 @@
       "ask-move": "Que faire ?",
       "score": "Score"
     },
+    "solver": {
+      "moreThan20bb": "Plus de 20BB"
+    },
     "home": {
       "welcome": "Bienvenue !"
     }
