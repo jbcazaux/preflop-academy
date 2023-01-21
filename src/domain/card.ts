@@ -33,7 +33,7 @@ export class Card {
   }
 }
 
-export const names = ['2', '3', '4', '5', '6', '7', '8', '9', 'TEN', 'JACK', 'QUEEN', 'KING', 'AS']
+export const names = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'JACK', 'QUEEN', 'KING', 'AS']
 export type CardId = number
 
 const cards: Record<string, number> = {
@@ -70,3 +70,4 @@ export const cardTitle = (id: number): string => {
   return `${value}${color}`
 }
 export const cardValue = (cardId: CardId): string => values[cardHeight(cardId)]
+export const cardColor = (cardId: CardId): Color => colors[(cardId - 1) % 4]

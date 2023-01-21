@@ -25,8 +25,6 @@ const Center = styled(Vertical)`
 const Container = styled(Vertical)<{ open: boolean; position: Position; openWidth: number; pinned: boolean }>`
   display: flex;
   position: ${({ pinned }) => (pinned ? 'inherit' : 'fixed')};
-  // top: 0;
-  // left: ${({ position }) => (position === 'left' ? '0' : 'auto')};
   right: ${({ position }) => (position === 'right' ? '0' : 'auto')};
   height: ${({ open, pinned }) => (open || pinned ? 'calc(100vh - 50px);' : '55px')};
   overflow-y: auto;

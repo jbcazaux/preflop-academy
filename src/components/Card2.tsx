@@ -1,10 +1,10 @@
 import styled from 'styled-components'
 import { Clubs, Diamonds, Heart, Spade } from 'tabler-icons-react'
-import { Card as CardObject, cardValue, colors, names } from 'domain/card'
+import { Card as CardObject, cardValue, Color, colors, names } from 'domain/card'
 import noop from 'utils/noop'
 import { MouseEventHandler } from 'react'
 
-const CardContainer = styled.div`
+const CardContainer = styled.div<{ inHand: boolean; onBoard: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,6 +17,8 @@ const CardContainer = styled.div`
   margin: 2px;
   padding: 1px;
   cursor: pointer;
+  ${({ inHand, onBoard }) => (inHand || onBoard) && 'transform: scale(1.5);'}
+  ${({ onBoard }) => onBoard && 'background-color: green;'}
 `
 
 const CardValue = styled.div<{ color: string }>`
@@ -28,20 +30,20 @@ const CardValue = styled.div<{ color: string }>`
 
 interface CardProps {
   title: string
-  colorId: number
+  color: Color
   value: string
   inHand?: boolean
-  isOnBoard?: boolean
+  onBoard?: boolean
   onClick: MouseEventHandler<HTMLDivElement>
 }
 
-const Card = ({ title, colorId: colorIndex, value, onClick }: CardProps) => (
-  <CardContainer title={title} onClick={onClick}>
-    <CardValue color={colorIndex === 0 || colorIndex === 3 ? 'black' : 'red'}>{value}</CardValue>
-    {colorIndex === 0 && <Spade fill="black" />}
-    {colorIndex === 1 && <Heart fill="red" stroke="red" />}
-    {colorIndex === 2 && <Diamonds fill="red" stroke="red" />}
-    {colorIndex === 3 && <Clubs fill="black" />}
+const Card = ({ title, color: colorIndex, value, onClick, inHand = false, onBoard = false }: CardProps) => (
+  <CardContainer title={title} onClick={onClick} inHand={inHand} onBoard={onBoard}>
+    <CardValue color={colorIndex === 'SPADE' || colorIndex === 'CLUB' ? 'black' : 'red'}>{value}</CardValue>
+    {colorIndex === 'SPADE' && <Spade fill="black" />}
+    {colorIndex === 'HEART' && <Heart fill="red" stroke="red" />}
+    {colorIndex === 'DIAMOND' && <Diamonds fill="red" stroke="red" />}
+    {colorIndex === 'CLUB' && <Clubs fill="black" />}
   </CardContainer>
 )
 
@@ -53,16 +55,16 @@ interface Props {
 }
 
 const CardComponent = ({ card, onClick = noop, inHand = false, isOnBoard = false }: Props) => {
-  const color = (card.id - 1) % 4
+  const color = colors[(card.id - 1) % 4]
   const title = `${colors[(card.id - 1) % 4]}-${names[Math.floor((card.id - 1) / 4)]}`
   return (
     <Card
-      colorId={color}
+      color={color}
       value={cardValue(card.id)}
       title={title}
       onClick={() => onClick(card)}
       inHand={inHand}
-      isOnBoard={isOnBoard}
+      onBoard={isOnBoard}
     />
   )
 }

@@ -11,8 +11,8 @@ const Container = styled.div<{ position: Position }>`
   border: 1px solid ${({ theme }) => theme.colors.black}; ;
 `
 
-const Arrow = styled.div<{ open: boolean }>`
-  transform: ${({ open }) => (open ? 'rotate(90deg)' : '')};
+const Arrow = styled.div<{ open: boolean; position: Position }>`
+  transform: ${({ open, position }) => (open ? (position === 'left' ? 'rotate(90deg)' : 'rotate(-90deg)') : '')};
   transition: transform 0.3s linear;
   transform-origin: 50% 60%;
 `
@@ -27,7 +27,9 @@ interface Props {
 const Close = ({ onClick, open, position, hide }: Props) =>
   hide ? null : (
     <Container onClick={onClick} position={position}>
-      <Arrow open={open}>{position === 'left' ? '>' : '<'}</Arrow>
+      <Arrow open={open} position={position}>
+        {position === 'left' ? '>' : '<'}
+      </Arrow>
     </Container>
   )
 

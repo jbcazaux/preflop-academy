@@ -4,6 +4,9 @@ declare module 'styled-components' {
   export interface AppTheme {
     borderRadius: string
     breakpoints: {
+      mobile: number
+      tablet: number
+      desktop: number
       min: {
         mobile: string
         tablet: string
@@ -20,12 +23,17 @@ declare module 'styled-components' {
       secondary: string
       background: string
       black: string
+      white: string
       buttons: {
         default: string
       }
       deck: {
         inHand: string
         onBoard: string
+        diamond: string
+        heart: string
+        club: string
+        spade: string
       }
       loader: {
         background: string
@@ -46,7 +54,7 @@ declare module 'styled-components' {
       }
       table: {
         board: string
-        stroke: string
+        border: string
         button: string
         action: string
       }

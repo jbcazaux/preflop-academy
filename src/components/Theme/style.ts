@@ -3,6 +3,9 @@ import { AppTheme } from 'styled-components'
 const style: AppTheme = {
   borderRadius: '5px',
   breakpoints: {
+    mobile: 420,
+    tablet: 768,
+    desktop: 1200,
     min: {
       mobile: 'min-width: 420px',
       tablet: 'min-width: 768px',
@@ -19,12 +22,17 @@ const style: AppTheme = {
     secondary: 'pink',
     background: '#F7F1F7',
     black: '#222',
+    white: '#D5E2E3',
     buttons: {
       default: '#D5E2E3',
     },
     deck: {
       inHand: 'green',
       onBoard: 'red',
+      diamond: 'red',
+      heart: 'red',
+      club: 'black',
+      spade: 'black',
     },
     loader: {
       background: '#D5E2E3',
@@ -45,7 +53,7 @@ const style: AppTheme = {
     },
     table: {
       board: '#58BD86',
-      stroke: '#4C4949',
+      border: '#4C4949',
       button: '#E8F63C',
       action: '#de004e',
     },

@@ -52,8 +52,6 @@ const Solver = () => {
     setActions([])
   }, [buttonPosition])
 
-  const width = Math.min(500, Math.max(250, (windowSize.width * 2) / 3))
-
   return (
     <Horizontal>
       <Vertical>
@@ -62,7 +60,8 @@ const Solver = () => {
           onButtonChange={setButtonPosition}
           actions={actions}
           addRaisePosition={onAction}
-          width={width}
+          board={board}
+          width={windowSize.width - 380}
         />
         <Deck onClick={onCardClick} hand={hand} board={board} />
       </Vertical>

@@ -3,6 +3,8 @@ import { AppTheme, ThemeContext } from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import { seatNumberByPositionAndButtonPosition } from 'domain/position'
+import { Card, cardColor, cardValue } from 'domain/card'
+import Board from 'domain/board'
 
 const xyBySeatNumber = (seatNumber: number, centerX: number, centerY: number, radius: number, ratio: number) => {
   const coefByPosition = [6, 5, 3, 2, 1, -1]
@@ -13,21 +15,40 @@ const xyBySeatNumber = (seatNumber: number, centerX: number, centerY: number, ra
   return [x, y]
 }
 
-const drawTable = (ctx: CanvasRenderingContext2D, x: number, y: number, rw: number, rh: number, theme: AppTheme) => {
-  ctx.save()
-  ctx.scale(1, rh / rw)
-  ctx.beginPath()
-  ctx.arc(x, y, rw, 0, 2 * Math.PI)
-  ctx.restore()
-  ctx.lineWidth = 4
-  ctx.strokeStyle = theme.colors.table.stroke
+const diamondPath = new Path2D(
+  'M10.831 20.413l-5.375 -6.91c-.608 -.783 -.608 -2.223 0 -3.005l5.375 -6.911a1.457 1.457 0 0 1 2.338 0l5.375 6.91c.608 .783 .608 2.223 0 3.005l-5.375 6.911a1.457 1.457 0 0 1 -2.338 0z'
+)
+const spadePath = new Path2D(
+  'M12 3l4.919 4.5c.61 .587 1.177 1.177 1.703 1.771a5.527 5.527 0 0 1 .264 6.979c-1.18 1.56 -3.338 1.92 -4.886 .75v1l1 3h-6l1 -3v-1c-1.54 1.07 -3.735 .772 -4.886 -.75a5.527 5.527 0 0 1 .264 -6.979a30.883 30.883 0 0 1 1.703 -1.771a1541.72 1541.72 0 0 1 4.919 -4.5z'
+)
+const clubPath = new Path2D(
+  'M12 3a4 4 0 0 1 3.164 6.447a4 4 0 1 1 -1.164 6.198v1.355l1 4h-6l1 -4l.001 -1.355a4 4 0 1 1 -1.164 -6.199a4 4 0 0 1 3.163 -6.446z'
+)
+const heartPath = new Path2D('M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572')
 
-  const gradient = ctx.createRadialGradient(x, y - 1.5 * rh, 0, x, y - 1.5 * rh, 1.25 * rw)
-  gradient.addColorStop(0, theme.colors.secondary)
-  gradient.addColorStop(1, theme.colors.primary)
-  ctx.fillStyle = gradient
-  ctx.fill()
+const drawTable = (ctx: CanvasRenderingContext2D, dimensions: Dimensions, theme: AppTheme) => {
+  const x = dimensions.width / 2 + dimensions.marge
+  const y = dimensions.height + (dimensions.marge * dimensions.width) / dimensions.height
+  const rw = dimensions.width / 2
+  const rh = dimensions.height / 2
+  ctx.save()
+  const gradientBorder = ctx.createLinearGradient(dimensions.marge, y, dimensions.width + dimensions.marge, y)
+  gradientBorder.addColorStop(0, 'black')
+  gradientBorder.addColorStop(0.3, 'white')
+  gradientBorder.addColorStop(0.5, 'black')
+  gradientBorder.addColorStop(0.7, 'white')
+  gradientBorder.addColorStop(1, 'black')
+  ctx.strokeStyle = gradientBorder
+  ctx.ellipse(x, y / 2, rw, rh, 0, 0, 2 * Math.PI)
+  ctx.lineWidth = 14
   ctx.stroke()
+  ctx.restore()
+
+  const gradientFill = ctx.createRadialGradient(x, y - 1.5 * rh, 0, x, y - 1.5 * rh, 1.25 * rw)
+  gradientFill.addColorStop(0, theme.colors.secondary)
+  gradientFill.addColorStop(1, theme.colors.primary)
+  ctx.fillStyle = gradientFill
+  ctx.fill()
 }
 
 const drawPlayers = (
@@ -96,7 +117,6 @@ const drawActions = (
         ratio
       )
       ctx.beginPath()
-
       ctx.fillStyle = theme.colors.table.action
       ctx.font = `bold ${tableWidth / 30}px serif`
       ctx.textAlign = 'center'
@@ -135,7 +155,6 @@ const drawPositionName = (
 ) => {
   const [x, y] = xy
   ctx.beginPath()
-
   ctx.fillStyle = theme.colors.black
   ctx.font = `${tableWidth / 30}px serif`
   ctx.textAlign = 'center'
@@ -157,6 +176,63 @@ const drawButton = (ctx: CanvasRenderingContext2D, xy: number[], tableWidth: num
   ctx.fillText('D', x + 1, y + 2)
 }
 
+export const drawCard = (
+  ctx: CanvasRenderingContext2D,
+  cardIndex: number,
+  shownCards: number,
+  dimensions: Dimensions,
+  card: Card,
+  theme: AppTheme
+) => {
+  const cardWidth = 30
+  const cardHeight = 45
+  const cardMargin = 5
+  const startX = dimensions.centerX - (shownCards * cardWidth + (shownCards - 1) * cardMargin) / 2
+  const x = startX + (cardIndex - 1) * (cardWidth + cardMargin)
+  const y = dimensions.centerY - cardHeight / 2
+
+  const value = cardValue(card.id)
+  const color = cardColor(card.id)
+
+  ctx.save()
+  ctx.beginPath()
+  ctx.strokeStyle = 'black'
+  ctx.lineWidth = 1
+  ctx.fillStyle = 'white'
+  ctx.roundRect(x, y, cardWidth, cardHeight, 5)
+  ctx.stroke()
+  ctx.closePath()
+  ctx.fill()
+  ctx.font = 'bold 22px Calibri,Helvetica Neue,Arial,sans-serif'
+  ctx.textAlign = 'center'
+  ctx.textBaseline = 'middle'
+  if (color === 'SPADE') {
+    ctx.fillStyle = theme.colors.deck.spade
+  }
+  if (color === 'HEART') {
+    ctx.fillStyle = theme.colors.deck.heart
+  }
+  if (color === 'DIAMOND') {
+    ctx.fillStyle = theme.colors.deck.diamond
+  }
+  if (color === 'CLUB') {
+    ctx.fillStyle = theme.colors.deck.club
+  }
+  ctx.fillText(value, x + cardWidth / 2, y + cardHeight / 3 - 3)
+
+  ctx.translate(x + 3, y + cardHeight / 3 + 5)
+  if (color === 'DIAMOND') {
+    ctx.fill(diamondPath)
+  } else if (color === 'SPADE') {
+    ctx.fill(spadePath)
+  } else if (color === 'HEART') {
+    ctx.fill(heartPath)
+  } else if (color === 'CLUB') {
+    ctx.fill(clubPath)
+  }
+  ctx.restore()
+}
+
 interface Dimensions {
   width: number
   height: number
@@ -168,9 +244,8 @@ interface Dimensions {
 }
 
 const dimensions = (widthWindow: number, theme: AppTheme): Dimensions => {
-  const breakpointMobile = Number(theme.breakpoints.max.mobile.match(/\d+/)?.[0])
-  const breakpointTablet = Number(theme.breakpoints.max.tablet.match(/\d+/)?.[0])
-  // const canvasMarge = widthWindow < breakpoint ? 20 : 50
+  const breakpointMobile = theme.breakpoints.mobile
+  const breakpointTablet = theme.breakpoints.tablet
   const canvasMarge = widthWindow < breakpointMobile ? 20 : widthWindow < breakpointTablet ? 40 : 70
   const width = Math.min(
     widthWindow - 2 * canvasMarge,
@@ -192,10 +267,18 @@ interface Props {
   onButtonChange: (p: ButtonPosition) => void
   actions: ReadonlyArray<Action>
   addRaisePosition: (seatNumber: number) => void
+  board?: Board
   width: number
 }
 
-const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition, width }: Props) => {
+const PokerTable = ({
+  buttonPosition,
+  onButtonChange,
+  actions,
+  addRaisePosition,
+  board = Board.newBoard,
+  width,
+}: Props) => {
   const theme = useContext(ThemeContext)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
@@ -250,14 +333,17 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
 
     context.fillStyle = theme.colors.background
     context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
-    drawTable(
-      context,
-      canvas.width / 2 + canvas.marge,
-      canvas.height + (canvas.marge * canvas.width) / canvas.height,
-      canvas.width / 2,
-      canvas.height / 2,
-      theme
-    )
+    drawTable(context, canvas, theme)
+
+    board?.cards.forEach((card, index) => drawCard(context, index + 1, board?.cards.length, canvas, card, theme))
+
+    /*context.strokeStyle = 'yellow'
+    context.save();
+    context.setTransform(1, 0, 0, 1, 0, 0);
+    context.scale(1, 1);
+    context.stroke(new Path2D('M 10 0 H 90 Q 100 0 100 10 V 90 Q 100 100 90 100 H 10 Q 0 100 0 90 V 10 Q 0 0 10 0 Z'))
+    context.restore()*/
+
     drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, buttonPosition, theme)
     drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, theme)
     !canvas.isMobile &&
@@ -270,19 +356,7 @@ const PokerTable = ({ buttonPosition, onButtonChange, actions, addRaisePosition,
         canvas.height,
         theme
       )
-  }, [
-    actions,
-    buttonPosition,
-    canvas.centerX,
-    canvas.centerY,
-    canvas.height,
-    canvas.isMobile,
-    canvas.isTablet,
-    canvas.marge,
-    canvas.width,
-    context,
-    theme,
-  ])
+  }, [actions, board, buttonPosition, canvas, context, theme])
 
   useEffect(() => {
     const c = canvasRef.current
