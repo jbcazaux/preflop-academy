@@ -18,8 +18,8 @@ const style: AppTheme = {
     },
   },
   colors: {
-    primary: '#2DDAEE',
-    secondary: 'pink',
+    primary: '#93B7BE',
+    secondary: '#F7D488',
     background: '#F7F1F7',
     black: '#222',
     white: '#D5E2E3',
@@ -46,7 +46,7 @@ const style: AppTheme = {
       menu5: '#f6019d',
     },
     range: {
-      active: '#A8F597',
+      active: '#FE5F55',
       suited: '#2DDAEE',
       offsuit: 'pink',
       selected: '#d40078',

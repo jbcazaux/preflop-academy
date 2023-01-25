@@ -18,7 +18,13 @@ const CardContainer = styled.div<{ inHand: boolean; onBoard: boolean }>`
   padding: 1px;
   cursor: pointer;
   ${({ inHand, onBoard }) => (inHand || onBoard) && 'transform: scale(1.5);'}
-  ${({ onBoard }) => onBoard && 'background-color: green;'}
+  ${({ inHand, theme }) => inHand && `background-color: ${theme.colors.secondary};`}
+  ${({ onBoard, theme }) => onBoard && `background-color: ${theme.colors.primary};`}
+  @media (${({ theme }) => theme.breakpoints.max.tablet}) {
+    height: 35px;
+    width: 20px;
+    margin: 2px;
+  }
 `
 
 const CardValue = styled.div<{ color: string }>`
@@ -26,6 +32,10 @@ const CardValue = styled.div<{ color: string }>`
   color: ${({ color }) => color};
   font-size: 25px;
   line-height: 20px;
+  @media (${({ theme }) => theme.breakpoints.max.tablet}) {
+    font-size: 18px;
+    line-height: 15px;
+  }
 `
 
 interface CardProps {

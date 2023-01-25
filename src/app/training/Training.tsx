@@ -1,9 +1,8 @@
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useRef, useState } from 'react'
 import styled, { ThemeContext } from 'styled-components'
 import PokerTable from 'components/PokerTable/PokerTable'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
-import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import TrainingAnswers from 'app/training/TrainingAnswers'
 import Move from 'domain/move'
@@ -16,18 +15,13 @@ import Position, { buttonPositionFromHeroPosition } from 'domain/position'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Board from 'domain/board'
 import { setRandomPlay } from 'app/training/setPlay'
-import Card2 from 'components/Card2'
 import { useTranslation } from 'react-i18next'
+import HandDisplay from 'components/HandDisplay'
 
 const Text = styled.div`
   display: flex;
   font-weight: bolder;
   margin: 10px 0;
-`
-
-const HandDisplay = styled(Horizontal)`
-  flex: 0;
-  justify-content: center;
 `
 
 const Margin = styled.div`
@@ -43,6 +37,7 @@ interface Props {
 }
 
 const Training = ({ heroPosition: heroPosition2, move }: Props) => {
+  const trainingContainerRef = useRef<HTMLDivElement>(null)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
@@ -76,6 +71,14 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
     guess === goodAnswer ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
   }, [guess, goodAnswer])
 
+  const getPokerTableWidth = () => {
+    if (trainingContainerRef.current) {
+      const boundingRect = trainingContainerRef.current.getBoundingClientRect()
+      return boundingRect.width
+    }
+    return windowSize.width
+  }
+
   useEffect(newRandomPlay, [newRandomPlay])
 
   const sideMenuWidth = windowSize.width <= theme.breakpoints.tablet ? 300 : 375
@@ -90,18 +93,15 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
           displayStats={false}
         />
       </SideMenu>
-      <Vertical>
+      <Vertical ref={trainingContainerRef}>
         <PokerTable
           buttonPosition={buttonPosition}
           onButtonChange={noop}
           actions={actions}
           addRaisePosition={noop}
-          width={windowSize.width}
+          width={getPokerTableWidth()}
         />
-        <HandDisplay>
-          {hand.card1 && <Card2 card={hand.card1} />}
-          {hand.card2 && <Card2 card={hand.card2} />}
-        </HandDisplay>
+        <HandDisplay hand={hand} />
         <Margin>
           <Text>{t('training.ask-move')}</Text>
           <TrainingAnswers

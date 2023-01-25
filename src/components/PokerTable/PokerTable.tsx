@@ -10,13 +10,13 @@ import { drawPlayers } from 'components/PokerTable/drawPlayers'
 import { drawPositions } from 'components/PokerTable/drawPositions'
 import { drawActions } from 'components/PokerTable/drawActions'
 
-const dimensions = (widthWindow: number, theme: AppTheme): Dimensions => {
+const dimensions = (canvasWidth: number, theme: AppTheme): Dimensions => {
   const breakpointMobile = theme.breakpoints.mobile
   const breakpointTablet = theme.breakpoints.tablet
-  const canvasMarge = widthWindow < breakpointMobile ? 20 : widthWindow < breakpointTablet ? 40 : 70
+  const canvasMarge = canvasWidth < 400 ? 10 : canvasWidth < 600 ? 20 : 50
   const width = Math.min(
-    widthWindow - 2 * canvasMarge,
-    widthWindow < breakpointMobile ? breakpointMobile : breakpointTablet
+    canvasWidth - 2 * canvasMarge,
+    canvasWidth < breakpointMobile ? breakpointMobile : breakpointTablet
   )
   return {
     width: width - 2 * canvasMarge,
@@ -24,8 +24,8 @@ const dimensions = (widthWindow: number, theme: AppTheme): Dimensions => {
     marge: canvasMarge,
     centerX: (width - 2 * canvasMarge) / 2 + canvasMarge,
     centerY: (width - 2 * canvasMarge) / 4 + canvasMarge,
-    isMobile: widthWindow < breakpointMobile,
-    isTablet: widthWindow < breakpointTablet,
+    isMobile: canvasWidth < breakpointMobile,
+    isTablet: canvasWidth < breakpointTablet,
   }
 }
 

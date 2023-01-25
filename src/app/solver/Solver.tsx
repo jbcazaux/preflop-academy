@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Card as CardObject } from 'domain/card'
 import PokerTable from 'components/PokerTable/PokerTable'
 import Hand from 'domain/hand'
@@ -16,15 +16,35 @@ import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
 import { positionBySeatNumberAndButtonPosition } from 'domain/position'
 import { useTranslation } from 'react-i18next'
+import styled from 'styled-components'
+import HandDisplay from 'components/HandDisplay'
+
+const Content = styled(Horizontal)`
+  flex-wrap: wrap;
+`
+
+const Tables = styled(Horizontal)`
+  width: 380px;
+  margin: 10px;
+`
 
 const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [board, setBoard] = useState<Board>(Board.newBoard)
+  const solverContainerRef = useRef<HTMLDivElement>(null)
 
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const windowSize = useWindowSize()
   const { t } = useTranslation()
+
+  const getPokerTableWidth = () => {
+    if (solverContainerRef.current) {
+      const boundingRect = solverContainerRef.current.getBoundingClientRect()
+      return boundingRect.width
+    }
+    return windowSize.width
+  }
 
   const onCardClick = useCallback(
     (card: CardObject) => {
@@ -55,19 +75,20 @@ const Solver = () => {
   }, [buttonPosition])
 
   return (
-    <Horizontal>
-      <Vertical>
+    <Content>
+      <Vertical ref={solverContainerRef}>
         <PokerTable
           buttonPosition={buttonPosition}
           onButtonChange={setButtonPosition}
           actions={actions}
           addRaisePosition={onAction}
           board={board}
-          width={windowSize.width - 380 - 150}
+          width={getPokerTableWidth()}
         />
+        <HandDisplay hand={hand} />
         <Deck onClick={onCardClick} hand={hand} board={board} />
       </Vertical>
-      <Horizontal style={{ flex: 2 }}>
+      <Tables>
         <Tabs>
           <Tab title={t('solver.moreThan20bb').toUpperCase()}>
             <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={board} />
@@ -76,8 +97,8 @@ const Solver = () => {
             <PushFoldSolver hand={hand} buttonPosition={buttonPosition} />
           </Tab>
         </Tabs>
-      </Horizontal>
-    </Horizontal>
+      </Tables>
+    </Content>
   )
 }
 

@@ -42,7 +42,7 @@ interface HandProps {
 
 const Hand = ({ active, suited, pair, selected = false, children }: HandProps) => {
   const { colors } = useContext(ThemeContext)
-  const color = active ? colors.range.active : suited || pair ? colors.range.suited : colors.range.offsuit
+  const color = active ? colors.range.active : suited || pair ? colors.primary : colors.secondary
   return (
     <Square bgColor={color} active={active} selected={selected}>
       {children}

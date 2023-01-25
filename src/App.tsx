@@ -18,10 +18,12 @@ const queryClient = new QueryClient()
 
 const StyledApp = styled(Horizontal)`
   color: ${({ theme }) => theme.colors.black};
-  background-color: ${({ theme }) => theme.colors.background};
   * {
     box-sizing: border-box;
   }
+`
+const Content = styled(Vertical)`
+  background-color: ${({ theme }) => theme.colors.background};
 `
 
 const App = () => (
@@ -31,7 +33,7 @@ const App = () => (
         <Router>
           <StyledApp>
             <Menu />
-            <Vertical>
+            <Content>
               <Header />
               <section>
                 <Routes>
@@ -43,7 +45,7 @@ const App = () => (
                   <Route path="*" element={<NotFound />} />
                 </Routes>
               </section>
-            </Vertical>
+            </Content>
           </StyledApp>
         </Router>
       </QueryClientProvider>
