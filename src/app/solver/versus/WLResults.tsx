@@ -26,12 +26,12 @@ const WLResultLose = styled(WLResult)`
   background: lightcoral;
 `
 const WLResultTie = styled(WLResult)`
-  background: aliceblue;
+  background: ${({ theme }) => theme.colors.secondary};
   font-size: 14px;
   height: 20px;
 `
 const WLResultTotal = styled(WLResult)`
-  background: aliceblue;
+  background: ${({ theme }) => theme.colors.secondary};
   font-size: 10px;
   height: 16px;
 `

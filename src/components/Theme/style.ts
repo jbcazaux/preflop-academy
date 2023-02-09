@@ -27,8 +27,6 @@ const style: AppTheme = {
       default: '#D5E2E3',
     },
     deck: {
-      inHand: 'green',
-      onBoard: 'red',
       diamond: 'red',
       heart: 'red',
       club: 'black',

@@ -28,8 +28,6 @@ declare module 'styled-components' {
         default: string
       }
       deck: {
-        inHand: string
-        onBoard: string
         diamond: string
         heart: string
         club: string

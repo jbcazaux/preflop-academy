@@ -30,10 +30,7 @@ const Title = ({ move, hero, vilain }: TitleProps) => {
   return <b>{`${move} @ ${positionsNamesMap.get(hero)} vs. ${positionsNamesMap.get(vilain)} :`}</b>
 }
 
-const hasVilainOpen = (hero: Position, vilain: Position, heroMove: Move) => {
-  if (heroMove === Move.OPEN) return false
-  return true
-}
+const hasVilainOpen = (hero: Position, vilain: Position, heroMove: Move) => heroMove !== Move.OPEN
 const getVilainMove = (heroMove: Move) => {
   if (heroMove === Move.CALL) return Move.OPEN
   if (heroMove === Move._3BET) return Move.OPEN

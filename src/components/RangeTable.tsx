@@ -37,14 +37,15 @@ interface HandProps {
   pair: boolean
   suited: boolean
   selected?: boolean
+  onClick?: () => void
   children: string
 }
 
-const Hand = ({ active, suited, pair, selected = false, children }: HandProps) => {
+const Hand = ({ active, suited, pair, selected = false, onClick, children }: HandProps) => {
   const { colors } = useContext(ThemeContext)
   const color = active ? colors.range.active : suited || pair ? colors.primary : colors.secondary
   return (
-    <Square bgColor={color} active={active} selected={selected}>
+    <Square bgColor={color} active={active} selected={selected} onClick={onClick}>
       {children}
       {pair ? '' : suited ? 's' : 'o'}
     </Square>
@@ -55,9 +56,10 @@ const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6
 interface Props {
   hintsTable: HintTable | null
   hand?: PokerHand
+  onClick?: (i: number, j: number) => void
 }
 
-const RangeTable = ({ hintsTable, hand }: Props) => {
+const RangeTable = ({ hintsTable, hand, onClick }: Props) => {
   const xyInRangeTable = hand?.isComplete() ? hand?.xyInRangeTable() : null
   return (
     <div>
@@ -69,6 +71,7 @@ const RangeTable = ({ hintsTable, hand }: Props) => {
               return (
                 <Hand
                   key={`${c1}${c2}`}
+                  onClick={() => onClick && onClick(i, j)}
                   active={!!hintsTable?.[i][j]}
                   suited={i < j}
                   pair={i === j}

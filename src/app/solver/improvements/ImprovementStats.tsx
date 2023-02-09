@@ -23,14 +23,15 @@ const Stats = styled.div`
   margin: 1px;
 `
 const Outs = styled(Stats)`
-  background: lightcyan;
+  background: ${({ theme }) => theme.colors.primary};
 `
 const OutsPercentage = styled(Stats)`
-  background: lightcyan;
+  background: ${({ theme }) => theme.colors.primary};
 `
 const BetVsPot = styled(Stats)`
-  background: aliceblue;
+  background: ${({ theme }) => theme.colors.secondary};
   font-size: 14px;
+  font-weight: bolder;
   height: 20px;
 `
 const WLResultTotal = styled.div`

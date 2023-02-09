@@ -1,7 +1,10 @@
-import { useContext, useEffect, useState } from 'react'
-import styled, { ThemeContext } from 'styled-components'
-import { Square } from 'components/RangeTable'
+import { useEffect, useState } from 'react'
+import styled from 'styled-components'
+import RangeTable from 'components/RangeTable'
 import HintTable from 'domain/hintTable'
+import openRank from 'data/rank/open.json'
+import Combo from 'domain/combo'
+import RangeSelector from 'app/ranges/editor/RangeSelector'
 import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
 
 const Horizontal = styled.div`
@@ -9,34 +12,18 @@ const Horizontal = styled.div`
   flex-direction: row;
 `
 
-interface HandProps {
-  active: boolean
-  pair: boolean
-  suited: boolean
-  onClick: () => void
-  children: string
-}
-
-const Hand = ({ onClick, active, suited, pair, children }: HandProps) => {
-  const { colors } = useContext(ThemeContext)
-  const color = active ? colors.range.active : suited || pair ? colors.range.suited : colors.range.offsuit
-  return (
-    <Square bgColor={color} active={active} onClick={onClick}>
-      {children}
-      {pair ? '' : suited ? 's' : 'o'}
-    </Square>
-  )
-}
-
 const Vertical = styled.div`
   display: flex;
   flex-direction: column;
 `
 const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
-const defaultTable = new Array(13).fill('').map(() => new Array(13).fill(false))
+const combosToHint = (combos: ReadonlyArray<string>) => combos.map(combo => new Combo(combo).xyInHintTable())
+
+const defaultTable: HintTable = new Array(13).fill('').map(() => new Array(13).fill(false))
 
 const RangesEditor = () => {
+  const [numberOfHands, setNumberOfHands] = useState<number>(0)
   const [hints, setHints] = useState<HintTable>(defaultTable)
   const [json, setJson] = useState<string>('')
 
@@ -56,6 +43,18 @@ const RangesEditor = () => {
 
   useEffect(generateTable, [hints])
 
+  useEffect(() => {
+    const combos = openRank.slice(0, numberOfHands)
+    const hintCombos = combosToHint(combos)
+
+    setHints(
+      defaultTable.map((row, rowId) => {
+        const hintCombosForRowId = hintCombos.filter(hintCombo => hintCombo[0] === rowId)
+        return row.map((_, cellId) => hintCombosForRowId.some(hintCombo => hintCombo[1] === cellId))
+      })
+    )
+  }, [numberOfHands])
+
   const handleClick = (i: number, j: number) => {
     setHints(prev =>
       prev.map((row, rowId) => {
@@ -70,21 +69,8 @@ const RangesEditor = () => {
     <Horizontal>
       <Vertical>
         <PercentageOfPlayedHands hintsTable={hints} />
-        {cards.map((c1, i) => (
-          <Horizontal key={c1}>
-            {cards.map((c2, j) => (
-              <Hand
-                key={`${c1}${c2}`}
-                onClick={() => handleClick(i, j)}
-                active={hints[i][j]}
-                suited={i < j}
-                pair={i === j}
-              >
-                {i < j ? `${c1}${c2}` : `${c2}${c1}`}
-              </Hand>
-            ))}
-          </Horizontal>
-        ))}
+        <RangeTable hintsTable={hints} onClick={handleClick} />
+        <RangeSelector numberOfHands={numberOfHands} setNumberOfHands={setNumberOfHands} />
       </Vertical>
       <textarea value={json} cols={100} />
     </Horizontal>
