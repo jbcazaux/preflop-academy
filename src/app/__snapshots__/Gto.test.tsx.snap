@@ -11,6 +11,12 @@ exports[`Gto displays whatever gto says 1`] = `
   font-size: 2em;
 }
 
+@media (max-width:1200px) {
+  .c0 {
+    font-size: 1em;
+  }
+}
+
 <div>
   <div
     class="c0"

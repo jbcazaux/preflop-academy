@@ -1,12 +1,12 @@
 import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
-import { AppTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components'
 
 const drawPositionName = (
   ctx: CanvasRenderingContext2D,
   xy: number[],
   tableWidth: number,
   text: string,
-  theme: AppTheme
+  theme: DefaultTheme
 ) => {
   const [x, y] = xy
   ctx.beginPath()
@@ -17,7 +17,7 @@ const drawPositionName = (
   ctx.fillText(text, x, y)
 }
 
-const drawButton = (ctx: CanvasRenderingContext2D, xy: number[], tableWidth: number, theme: AppTheme) => {
+const drawButton = (ctx: CanvasRenderingContext2D, xy: number[], tableWidth: number, theme: DefaultTheme) => {
   const [x, y] = xy
   ctx.beginPath()
   ctx.arc(x, y, tableWidth / 35, 0, 2 * Math.PI)
@@ -38,7 +38,7 @@ export const drawPositions = (
   tableWidth: number,
   tableHeight: number,
   seatNumber: number,
-  theme: AppTheme
+  theme: DefaultTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.8
   const ratio = tableHeight / tableWidth

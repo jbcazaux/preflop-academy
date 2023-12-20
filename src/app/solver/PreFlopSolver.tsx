@@ -21,6 +21,11 @@ const Hv = styled.div`
   flex-wrap: wrap;
 `
 
+const HorizontalOrVertical = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+`
+
 interface Props {
   hand: Hand
   board: Board
@@ -96,8 +101,13 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = tr
   return (
     <Hv>
       <Vertical>
-        <Gto hero={hero} hand={hand} actions={actions} />
-        {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} hintsTableName={hintsTableName} />}
+        <HorizontalOrVertical>
+          <Vertical>
+            <Gto hero={hero} hand={hand} actions={actions} />
+            {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} hintsTableName={hintsTableName} mini />}
+          </Vertical>
+          <VilainPreFlopRange actions={actions} buttonPosition={buttonPosition} />
+        </HorizontalOrVertical>
       </Vertical>
       {displayStats && (
         <Vertical>
@@ -105,7 +115,6 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = tr
           <ImprovementCards hand={hand} board={board} />
         </Vertical>
       )}
-      <VilainPreFlopRange actions={actions} buttonPosition={buttonPosition} />
     </Hv>
   )
 }

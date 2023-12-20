@@ -4,7 +4,7 @@ import { Card as CardObject, cardValue, Color, colors, names } from 'domain/card
 import noop from 'utils/noop'
 import { MouseEventHandler } from 'react'
 
-const CardContainer = styled.div<{ inHand: boolean; onBoard: boolean }>`
+const CardContainer = styled.div<{ inHand: boolean; inBoard: boolean }>`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,9 +17,9 @@ const CardContainer = styled.div<{ inHand: boolean; onBoard: boolean }>`
   margin: 2px;
   padding: 1px;
   cursor: pointer;
-  ${({ inHand, onBoard }) => (inHand || onBoard) && 'transform: scale(1.5);'}
+  ${({ inHand, inBoard }) => (inHand || inBoard) && 'transform: scale(1.5);'}
   ${({ inHand, theme }) => inHand && `background-color: ${theme.colors.secondary};`}
-  ${({ onBoard, theme }) => onBoard && `background-color: ${theme.colors.primary};`}
+  ${({ inBoard, theme }) => inBoard && `background-color: ${theme.colors.primary};`}
   @media (${({ theme }) => theme.breakpoints.max.tablet}) {
     height: 35px;
     width: 20px;
@@ -43,12 +43,12 @@ interface CardProps {
   color: Color
   value: string
   inHand?: boolean
-  onBoard?: boolean
+  inBoard?: boolean
   onClick: MouseEventHandler<HTMLDivElement>
 }
 
-const Card = ({ title, color: colorIndex, value, onClick, inHand = false, onBoard = false }: CardProps) => (
-  <CardContainer title={title} onClick={onClick} inHand={inHand} onBoard={onBoard}>
+const Card = ({ title, color: colorIndex, value, onClick, inHand = false, inBoard = false }: CardProps) => (
+  <CardContainer title={title} onClick={onClick} inHand={inHand} inBoard={inBoard}>
     <CardValue color={colorIndex === 'SPADE' || colorIndex === 'CLUB' ? 'black' : 'red'}>{value}</CardValue>
     {colorIndex === 'SPADE' && <Spade fill="black" />}
     {colorIndex === 'HEART' && <Heart fill="red" stroke="red" />}
@@ -74,7 +74,7 @@ const CardComponent = ({ card, onClick = noop, inHand = false, isOnBoard = false
       title={title}
       onClick={() => onClick(card)}
       inHand={inHand}
-      onBoard={isOnBoard}
+      inBoard={isOnBoard}
     />
   )
 }

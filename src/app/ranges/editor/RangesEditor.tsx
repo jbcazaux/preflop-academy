@@ -2,20 +2,22 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import RangeTable from 'components/RangeTable'
 import HintTable from 'domain/hintTable'
-import openRank from 'data/rank/open.json'
+import { open as openRank } from 'data/rank'
 import Combo from 'domain/combo'
 import RangeSelector from 'app/ranges/editor/RangeSelector'
 import PercentageOfPlayedHands from 'app/ranges/PercentageOfPlayedHands'
+import Horizontal from 'components/layout/Horizontal'
+import Vertical from 'components/layout/Vertical'
 
-const Horizontal = styled.div`
-  display: flex;
-  flex-direction: row;
+const Container = styled(Horizontal)`
+  margin: 10px;
 `
 
-const Vertical = styled.div`
-  display: flex;
-  flex-direction: column;
+const VerticalContainer = styled(Vertical)`
+  flex: 0;
+  margin: 0 10px;
 `
+
 const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
 const combosToHint = (combos: ReadonlyArray<string>) => combos.map(combo => new Combo(combo).xyInHintTable())
@@ -66,14 +68,14 @@ const RangesEditor = () => {
     )
   }
   return (
-    <Horizontal>
-      <Vertical>
+    <Container>
+      <VerticalContainer>
         <PercentageOfPlayedHands hintsTable={hints} />
         <RangeTable hintsTable={hints} onClick={handleClick} />
         <RangeSelector numberOfHands={numberOfHands} setNumberOfHands={setNumberOfHands} />
-      </Vertical>
+      </VerticalContainer>
       <textarea value={json} cols={100} />
-    </Horizontal>
+    </Container>
   )
 }
 

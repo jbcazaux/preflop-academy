@@ -14,7 +14,13 @@ import Menu from 'app/menu/Menu'
 import 'i18n/i18n'
 import Header from 'components/header/Header'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 const StyledApp = styled(Horizontal)`
   color: ${({ theme }) => theme.colors.black};

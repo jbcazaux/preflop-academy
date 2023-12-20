@@ -1,7 +1,7 @@
 import { Dimensions } from 'components/PokerTable/types'
-import { AppTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components'
 
-export const drawTable = (ctx: CanvasRenderingContext2D, dimensions: Dimensions, theme: AppTheme) => {
+export const drawTable = (ctx: CanvasRenderingContext2D, dimensions: Dimensions, theme: DefaultTheme) => {
   const x = dimensions.width / 2 + dimensions.marge
   const y = dimensions.height + (dimensions.marge * dimensions.width) / dimensions.height
   const rw = dimensions.width / 2

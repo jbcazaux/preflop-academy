@@ -15,7 +15,7 @@ const Action = styled.div<IAction>`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ active, theme, color }) => (active ? theme.colors[color] : theme.colors.buttons.default)};
+  background-color: ${({ active, theme, color }) => (active ? color : theme.colors.buttons.default)};
   opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
   cursor: pointer;
 

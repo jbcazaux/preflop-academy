@@ -1,6 +1,5 @@
-import styled, { ThemeContext } from 'styled-components'
+import styled, { useTheme } from 'styled-components'
 import { Book, Calculator, Cards, Home2, Table, TableImport } from 'tabler-icons-react'
-import { useContext } from 'react'
 import NavLink from 'app/menu/NavLink'
 import { useTranslation } from 'react-i18next'
 import LS from 'components/i18n/LanguageSelector'
@@ -63,7 +62,7 @@ const LanguageSelector = styled(LS)`
 
 const Menu = () => {
   const { t } = useTranslation()
-  const { colors } = useContext(ThemeContext)
+  const { colors } = useTheme()
   return (
     <StyledMenu>
       <Title>

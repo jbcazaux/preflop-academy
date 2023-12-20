@@ -1,5 +1,5 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
-import { AppTheme, ThemeContext } from 'styled-components'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { DefaultTheme, useTheme } from 'styled-components'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import Board from 'domain/board'
@@ -10,7 +10,7 @@ import { drawPlayers } from 'components/PokerTable/drawPlayers'
 import { drawPositions } from 'components/PokerTable/drawPositions'
 import { drawActions } from 'components/PokerTable/drawActions'
 
-const dimensions = (canvasWidth: number, theme: AppTheme): Dimensions => {
+const dimensions = (canvasWidth: number, theme: DefaultTheme): Dimensions => {
   const breakpointMobile = theme.breakpoints.mobile
   const breakpointTablet = theme.breakpoints.tablet
   const canvasMarge = canvasWidth < 400 ? 10 : canvasWidth < 600 ? 20 : 50
@@ -46,7 +46,7 @@ const PokerTable = ({
   board = Board.newBoard,
   width,
 }: Props) => {
-  const theme = useContext(ThemeContext)
+  const theme = useTheme()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
   const canvas = useMemo(() => dimensions(width, theme), [width, theme])

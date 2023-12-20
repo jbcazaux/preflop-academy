@@ -8,15 +8,16 @@ interface Props {
   hintsTable: HintTable
   hintsTableName?: string
   hand?: Hand
+  mini?: boolean
 }
 
-const Ranges = ({ hintsTable, hand, hintsTableName }: Props) => (
+const Ranges = ({ hintsTable, hand, hintsTableName, mini = false }: Props) => (
   <div>
     <Horizontal>
       {hintsTableName && <>{hintsTableName}&nbsp;:&nbsp;</>}
       <PercentageOfPlayedHands hintsTable={hintsTable} />
     </Horizontal>
-    <RangeTable hintsTable={hintsTable} hand={hand} />
+    <RangeTable hintsTable={hintsTable} hand={hand} mini={mini} />
   </div>
 )
 

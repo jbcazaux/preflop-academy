@@ -17,7 +17,7 @@ const Card = styled.div.attrs<CardsProps>(({ alt }) => ({
   transform: ${({ inHand, isOnBoard }) => (inHand || isOnBoard ? `scale(1.2)` : `scale(.75)`)};
   z-index: ${({ inHand, isOnBoard }) => (inHand || isOnBoard ? 2 : 1)};
   background-color: ${({ inHand, isOnBoard, theme }) =>
-    inHand ? theme.colors.deck.inHand : isOnBoard ? theme.colors.deck.onBoard : 'none'};
+    inHand ? theme.colors.inHand : isOnBoard ? theme.colors.onBoard : 'none'};
   @media (max-width: 768px) {
     transform: ${({ inHand, isOnBoard }) => (inHand || isOnBoard ? `scale(.9)` : `scale(.5)`)};
     margin: -15px -12px;

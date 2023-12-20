@@ -1,6 +1,6 @@
-import { AppTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components'
 
-const style: AppTheme = {
+const style: DefaultTheme = {
   borderRadius: '5px',
   breakpoints: {
     mobile: 420,
@@ -23,6 +23,8 @@ const style: AppTheme = {
     background: '#F7F1F7',
     black: '#222',
     white: '#D5E2E3',
+    inHand: 'red',
+    onBoard: 'red',
     buttons: {
       default: '#D5E2E3',
     },

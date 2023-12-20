@@ -1,5 +1,5 @@
-import { useCallback, useContext, useEffect, useRef, useState } from 'react'
-import styled, { ThemeContext } from 'styled-components'
+import { useCallback, useEffect, useRef, useState } from 'react'
+import styled, { useTheme } from 'styled-components'
 import PokerTable from 'components/PokerTable/PokerTable'
 import Hand from 'domain/hand'
 import useWindowSize from 'components/useWindowSize'
@@ -45,7 +45,7 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
   const [score, setScore] = useState<Score>(new Score())
   const [heroPosition, setHeroPosition] = useState<Position | null>(heroPosition2)
   const { t } = useTranslation()
-  const theme = useContext(ThemeContext)
+  const theme = useTheme()
 
   const windowSize = useWindowSize()
   const buttonPosition = heroPosition ? buttonPositionFromHeroPosition(heroPosition) : 0

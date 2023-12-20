@@ -1,7 +1,7 @@
 import 'styled-components'
 
 declare module 'styled-components' {
-  export interface AppTheme {
+  export interface DefaultTheme {
     borderRadius: string
     breakpoints: {
       mobile: number
@@ -24,6 +24,8 @@ declare module 'styled-components' {
       background: string
       black: string
       white: string
+      inHand: string
+      onBoard: string
       buttons: {
         default: string
       }

@@ -1,6 +1,6 @@
 import { Dimensions } from 'components/PokerTable/types'
 import { Card, cardColor, cardValue } from 'domain/card'
-import { AppTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components'
 
 const diamondPath = new Path2D(
   'M10.831 20.413l-5.375 -6.91c-.608 -.783 -.608 -2.223 0 -3.005l5.375 -6.911a1.457 1.457 0 0 1 2.338 0l5.375 6.91c.608 .783 .608 2.223 0 3.005l-5.375 6.911a1.457 1.457 0 0 1 -2.338 0z'
@@ -19,7 +19,7 @@ export const drawCard = (
   shownCards: number,
   dimensions: Dimensions,
   card: Card,
-  theme: AppTheme
+  theme: DefaultTheme
 ) => {
   const cardWidth = 30
   const cardHeight = 45

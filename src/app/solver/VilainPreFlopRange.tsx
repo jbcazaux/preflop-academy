@@ -42,7 +42,7 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
           </>
         )}
       </ActionComponent>
-      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction?.move || ''} />}
+      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction?.move || ''} mini />}
     </Vertical>
   )
 }

@@ -7,12 +7,12 @@ import sb from './sb'
 import utg from './utg'
 
 const open = new Map<Position, HintTable | null>([
-  [Position.B, button],
-  [Position.SB, sb],
+  [Position.B, localStorage.open?.button || button],
+  [Position.SB, localStorage.open?.sb || sb],
   [Position.BB, null],
-  [Position.UTG, utg],
-  [Position.CO, cutoff],
-  [Position.MP, mp],
+  [Position.UTG, localStorage.open?.utg || utg],
+  [Position.CO, localStorage.open?.cutoff || cutoff],
+  [Position.MP, localStorage.open?.mp || mp],
 ])
 
 export default open

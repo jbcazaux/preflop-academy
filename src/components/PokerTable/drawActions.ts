@@ -1,7 +1,7 @@
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import { seatNumberByPositionAndButtonPosition } from 'domain/position'
-import { AppTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components'
 import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
 
 export const drawActions = (
@@ -12,7 +12,7 @@ export const drawActions = (
   tableHeight: number,
   actions: ReadonlyArray<Action>,
   buttonPosition: ButtonPosition,
-  theme: AppTheme
+  theme: DefaultTheme
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.6
   const ratio = tableHeight / tableWidth

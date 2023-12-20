@@ -1,4 +1,4 @@
-import { AppTheme } from 'styled-components'
+import { DefaultTheme } from 'styled-components'
 import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
 
 export const drawPlayers = (
@@ -7,7 +7,7 @@ export const drawPlayers = (
   centerY: number,
   tableWidth: number,
   tableHeight: number,
-  theme: AppTheme
+  theme: DefaultTheme
 ) => {
   ctx.font = `${tableWidth / 20}px serif`
   ctx.textAlign = 'center'
@@ -30,7 +30,7 @@ const drawPlayer = (
   centerX: number,
   centerY: number,
   seatNumber: number,
-  theme: AppTheme
+  theme: DefaultTheme
 ) => {
   const [x, y] = xyBySeatNumber(seatNumber, centerX, centerY, radius, ratio)
   const alignByPosition = ['center', 'right', 'right', 'center', 'left', 'left']
