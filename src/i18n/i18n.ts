@@ -1,17 +1,14 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import * as en from './en.json'
-import * as fr from './fr.json'
+import { getRequestConfig } from 'next-intl/server'
+import { notFound } from 'next/navigation'
+import { Locale } from './types'
 
-i18n.use(initReactI18next).init({
-  resources: {
-    fr,
-    en,
-  },
-  lng: 'en',
-  interpolation: {
-    escapeValue: false,
-  },
+const locales = ['en', 'fr']
+
+export default getRequestConfig(async ({ locale }: { locale: string }) => {
+  // Validate that the incoming `locale` parameter is valid
+  if (!locales.includes(locale as Locale)) notFound()
+
+  return {
+    messages: (await import(`./${locale}.json`)).default,
+  }
 })
-
-export default i18n

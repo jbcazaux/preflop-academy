@@ -1,0 +1,33 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.vertical0 {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+}
+
+.stats {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  height: 30px;
+  align-items: center;
+  margin: 1px;
+  background: $primary;
+}
+
+.betvspot {
+  background: $secondary;
+  font-size: 14px;
+  font-weight: bolder;
+  height: 20px;
+}
+
+.wrap {
+  display: flex;
+  flex-wrap: wrap;
+}

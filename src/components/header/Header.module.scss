@@ -1,0 +1,29 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  height: 50px;
+  color: $deck-diamond;
+  border-bottom: 1px solid $black;
+  background-color: $primary;
+  box-shadow: 0 5px 5px rgb(0 0 0 / 20%);
+  clip-path: inset(-15px);
+}
+
+.title {
+  font-weight: bold;
+  justify-content: center;
+  color: $black;
+}
+
+.locale-selector {
+  position: absolute;
+  right: 0;
+  @media (min-width: $breakpoints-min-tablet) {
+    display: none;
+  }
+}

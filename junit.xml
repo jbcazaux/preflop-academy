@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="29" failures="0" errors="0" time="0.63">
+  <testsuite name="combo" errors="0" failures="0" skipped="0" timestamp="2023-12-28T18:49:57" time="0.276" tests="1">
+    <testcase classname="combo gets xy in hintsTable" name="combo gets xy in hintsTable" time="0.003">
+    </testcase>
+  </testsuite>
+  <testsuite name="actions flow" errors="0" failures="0" skipped="0" timestamp="2023-12-28T18:49:57" time="0.282" tests="9">
+    <testcase classname="actions flow opens" name="actions flow opens" time="0.003">
+    </testcase>
+    <testcase classname="actions flow does not allow 3 way" name="actions flow does not allow 3 way" time="0">
+    </testcase>
+    <testcase classname="actions flow 3 bets" name="actions flow 3 bets" time="0.001">
+    </testcase>
+    <testcase classname="actions flow 4 bets" name="actions flow 4 bets" time="0">
+    </testcase>
+    <testcase classname="actions flow cancels open" name="actions flow cancels open" time="0">
+    </testcase>
+    <testcase classname="actions flow cancels 3bet" name="actions flow cancels 3bet" time="0.001">
+    </testcase>
+    <testcase classname="actions flow cancels 4bet" name="actions flow cancels 4bet" time="0">
+    </testcase>
+    <testcase classname="actions flow calls" name="actions flow calls" time="0">
+    </testcase>
+    <testcase classname="actions flow calls 3 bet" name="actions flow calls 3 bet" time="0">
+    </testcase>
+  </testsuite>
+  <testsuite name="Hand" errors="0" failures="0" skipped="0" timestamp="2023-12-28T18:49:57" time="0.28" tests="6">
+    <testcase classname="Hand finds Aces in table" name="Hand finds Aces in table" time="0.002">
+    </testcase>
+    <testcase classname="Hand finds AKs in table" name="Hand finds AKs in table" time="0">
+    </testcase>
+    <testcase classname="Hand finds AKo in table" name="Hand finds AKo in table" time="0.001">
+    </testcase>
+    <testcase classname="Hand finds T9s in table" name="Hand finds T9s in table" time="0">
+    </testcase>
+    <testcase classname="Hand finds T9o in table" name="Hand finds T9o in table" time="0">
+    </testcase>
+    <testcase classname="Hand find if hand is suited" name="Hand find if hand is suited" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="position" errors="0" failures="0" skipped="0" timestamp="2023-12-28T18:49:57" time="0.285" tests="12">
+    <testcase classname="position should get hero position" name="position should get hero position" time="0.003">
+    </testcase>
+    <testcase classname="position should get vilain position @ seat 1" name="position should get vilain position @ seat 1" time="0.001">
+    </testcase>
+    <testcase classname="position should get vilain position @ seat 2" name="position should get vilain position @ seat 2" time="0">
+    </testcase>
+    <testcase classname="position should get vilain position @ seat 3" name="position should get vilain position @ seat 3" time="0.001">
+    </testcase>
+    <testcase classname="position should get vilain position @ seat 4" name="position should get vilain position @ seat 4" time="0">
+    </testcase>
+    <testcase classname="position should get vilain position @ seat 5" name="position should get vilain position @ seat 5" time="0">
+    </testcase>
+    <testcase classname="position should get seat number of B" name="position should get seat number of B" time="0.001">
+    </testcase>
+    <testcase classname="position should get seat number of SB" name="position should get seat number of SB" time="0">
+    </testcase>
+    <testcase classname="position should get seat number of BB" name="position should get seat number of BB" time="0">
+    </testcase>
+    <testcase classname="position should get seat number of UTG" name="position should get seat number of UTG" time="0.001">
+    </testcase>
+    <testcase classname="position should get seat number of MP" name="position should get seat number of MP" time="0.001">
+    </testcase>
+    <testcase classname="position should get seat number of CO" name="position should get seat number of CO" time="0.001">
+    </testcase>
+  </testsuite>
+  <testsuite name="Gto" errors="0" failures="0" skipped="0" timestamp="2023-12-28T18:49:57" time="0.347" tests="1">
+    <testcase classname="Gto displays whatever gto says" name="Gto displays whatever gto says" time="0.013">
+    </testcase>
+  </testsuite>
+</testsuites>

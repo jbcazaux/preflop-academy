@@ -5,3 +5,5 @@ coverage/
 test-report.xml
 /build/
 /dist/
+.next/
+test-report.xml

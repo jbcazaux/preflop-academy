@@ -1,0 +1,80 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  height: 45px;
+  width: 30px;
+  border: 1px solid black;
+  border-radius: 5px;
+  align-items: center;
+  margin: 2px;
+  cursor: pointer;
+
+  &.inHand,
+  &.inBoard {
+    transform: scale(1.5);
+  }
+  &.inHand {
+    background-color: $secondary;
+  }
+  &.inBoard {
+    background-color: $primary;
+  }
+
+  @media (max-width: $breakpoints-max-tablet) {
+    height: 35px;
+    width: 20px;
+    margin: 2px;
+  }
+
+  .card-value {
+    font-weight: bolder;
+    font-size: 25px;
+    line-height: 20px;
+    @media (max-width: $breakpoints-max-tablet) {
+      font-size: 18px;
+      line-height: 15px;
+    }
+
+    &.spade {
+      color: $deck-spade;
+    }
+    &.club {
+      color: $deck-club;
+    }
+    &.diamond {
+      color: $deck-diamond;
+    }
+    &.heart {
+      color: $deck-heart;
+    }
+  }
+
+  .icon {
+    &.spade {
+      svg {
+        fill: $deck-spade;
+      }
+    }
+    &.club {
+      svg {
+        fill: $deck-club;
+      }
+    }
+    &.diamond {
+      svg {
+        fill: $deck-diamond;
+        stroke: $deck-diamond;
+      }
+    }
+    &.heart {
+      svg {
+        fill: $deck-heart;
+        stroke: $deck-heart;
+      }
+    }
+  }
+}

@@ -1,5 +1,3 @@
-import { DefaultTheme } from 'styled-components'
-
 const style: DefaultTheme = {
   borderRadius: '5px',
   breakpoints: {
@@ -55,7 +53,7 @@ const style: DefaultTheme = {
       board: '#58BD86',
       border: '#4C4949',
       button: '#E8F63C',
-      action: '#de004e',
+      action: '#DE004E',
     },
   },
 }

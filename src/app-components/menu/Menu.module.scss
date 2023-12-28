@@ -1,0 +1,99 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  min-width: 170px;
+  height: 100%;
+  background-color: $secondary;
+  z-index: 10;
+  a {
+    text-decoration: none;
+    color: $black;
+    display: block;
+  }
+  @media (max-width: $breakpoints-max-tablet) {
+    min-width: 50px;
+  }
+
+  ul {
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    align-items: center;
+    padding: 5px;
+    height: 40px;
+    color: $black;
+    font-size: 1.2em;
+    padding-left: 0;
+    margin: 50px 5px;
+
+    span {
+      @media (max-width: $breakpoints-max-tablet) {
+        display: none;
+      }
+    }
+
+    li {
+      display: flex;
+      margin: 25px 0 15px 0;
+      @media (max-width: $breakpoints-max-tablet) {
+        margin: 20px 0 10px 0;
+      }
+
+      .link {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      &:nth-child(1) {
+        svg {
+          stroke: $menu1;
+        }
+      }
+
+      &:nth-child(2) {
+        svg {
+          stroke: $menu2;
+        }
+      }
+
+      &:nth-child(3) {
+        svg {
+          stroke: $menu3;
+        }
+      }
+
+      &:nth-child(4) {
+        svg {
+          stroke: $menu4;
+        }
+      }
+
+      &:nth-child(5) {
+        svg {
+          stroke: $menu5;
+        }
+      }
+    }
+  }
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  height: 40px;
+  color: $black;
+  font-weight: bold;
+  font-size: 1.2em;
+  span {
+    @media (max-width: $breakpoints-max-tablet) {
+      display: none;
+    }
+  }
+}

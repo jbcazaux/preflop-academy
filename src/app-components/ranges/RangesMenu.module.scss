@@ -1,0 +1,19 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.menu {
+  @media (max-width: $breakpoints-max-tablet) {
+    min-height: calc(100vh - 50px);
+    height: 100%;
+  }
+}
+
+.group {
+  flex: 0;
+  margin-top: 10px;
+}
+
+.button {
+  width: 175px;
+  margin: 5px 0;
+}

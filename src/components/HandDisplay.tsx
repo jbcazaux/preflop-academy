@@ -1,23 +1,16 @@
-import Card2 from 'components/Card2'
+import Card from 'components/Card'
 import Hand from 'domain/hand'
-import styled from 'styled-components'
-
-const HandDisplayContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  height: 50px;
-  margin: 10px 0;
-`
+import style from './HandDisplay.module.scss'
 
 interface Props {
   hand: Hand
 }
 
 const HandDisplay = ({ hand }: Props) => (
-  <HandDisplayContainer>
-    {hand.card1 && <Card2 card={hand.card1} />}
-    {hand.card2 && <Card2 card={hand.card2} />}
-  </HandDisplayContainer>
+  <div className={style.container}>
+    {hand.card1 && <Card card={hand.card1} />}
+    {hand.card2 && <Card card={hand.card2} />}
+  </div>
 )
 
 export default HandDisplay

@@ -1,0 +1,40 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.vertical0 {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+}
+
+.result {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  height: 30px;
+  align-items: center;
+  margin: 1px;
+
+  &.win {
+    background: aquamarine;
+  }
+
+  &.lose {
+    background: lightcoral;
+  }
+
+  .tie {
+    background: $secondary;
+    font-size: 14px;
+    height: 20px;
+  }
+
+  .total {
+    background: $secondary;
+    font-size: 10px;
+    height: 16px;
+  }
+}

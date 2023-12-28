@@ -1,0 +1,12 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.action {
+  display: flex;
+  margin: 10px 0;
+  font-weight: bold;
+  font-size: 2em;
+  @media (max-width: $breakpoints-max-desktop) {
+    font-size: 1em;
+  }
+}

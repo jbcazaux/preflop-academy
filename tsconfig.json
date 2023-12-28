@@ -3,7 +3,6 @@
     "module": "commonjs",
     "types": ["jest", "node"],
     "sourceMap": true,
-    "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "api/*": ["src/api/*"],
@@ -13,6 +12,7 @@
       "data/*": ["src/data/*"],
       "domain/*": ["src/domain/*"],
       "i18n/*": ["src/i18n/*"],
+      "style/*": ["src/style/*"],
       "utils/*": ["src/utils/*"]
     },
     "target": "es5",
@@ -28,6 +28,16 @@
     "noUnusedLocals": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "react-jsx"
-  }
+    "jsx": "preserve",
+    "noEmit": true,
+    "incremental": true,
+    "moduleResolution": "node",
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
+  },
+  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["node_modules"]
 }

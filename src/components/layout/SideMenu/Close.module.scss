@@ -1,0 +1,38 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.container {
+  display: flex;
+  font-size: 25px;
+  padding: 0 10px 5px 10px;
+  font-weight: bold;
+
+  &.position-left {
+    align-self: flex-end;
+  }
+
+  &.position-right {
+    align-self: flex-start;
+  }
+
+  cursor: pointer;
+  border: 1px solid $black;
+
+  @media (min-width: $breakpoints-min-desktop) {
+    display: none;
+  }
+}
+
+.arrow {
+  transition: transform 0.3s linear;
+  transform-origin: 50% 60%;
+  &.open {
+    &.position-left {
+      transform: rotate(90deg);
+    }
+
+    &.position-right {
+      transform: rotate(-90deg);
+    }
+  }
+}

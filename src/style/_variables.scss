@@ -1,0 +1,45 @@
+$primary: #93b7be;
+$secondary: #f7d488;
+$background: #f7f1f7;
+$black: #222;
+$white: #d5e2e3;
+$inHand: red;
+$onBoard: red;
+$button-default: #d5e2e3;
+
+$deck-diamond: red;
+$deck-heart: red;
+$deck-club: black;
+$deck-spade: black;
+
+$loader-background: #d5e2e3;
+$loader-color: #3498db;
+
+$menu1: #de004e;
+$menu2: #860029;
+$menu3: #321450;
+$menu4: #d40078;
+$menu5: #f6019d;
+
+$range-active: #fe5f55;
+$range-suited: #2ddaee;
+$range-offsuit: pink;
+$range-selected: #d40078;
+
+$table-board: #58bd86;
+$table-border: #4c4949;
+$table-button: #e8f63c;
+$table-action: #de004e;
+
+:export {
+  menu1: #de004e;
+  menu2: $menu2;
+  menu3: $menu3;
+  menu4: $menu4;
+  menu5: $menu5;
+  background: $background;
+  deckHeart: $deck-heart;
+  deckDiamond: $deck-diamond;
+  deckClub: $deck-club;
+  deckSpade: $deck-spade;
+}

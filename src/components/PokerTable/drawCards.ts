@@ -1,6 +1,8 @@
+'use client'
+
 import { Dimensions } from 'components/PokerTable/types'
 import { Card, cardColor, cardValue } from 'domain/card'
-import { DefaultTheme } from 'styled-components'
+import style from 'components/Theme/style'
 
 const diamondPath = new Path2D(
   'M10.831 20.413l-5.375 -6.91c-.608 -.783 -.608 -2.223 0 -3.005l5.375 -6.911a1.457 1.457 0 0 1 2.338 0l5.375 6.91c.608 .783 .608 2.223 0 3.005l-5.375 6.911a1.457 1.457 0 0 1 -2.338 0z'
@@ -18,8 +20,7 @@ export const drawCard = (
   cardIndex: number,
   shownCards: number,
   dimensions: Dimensions,
-  card: Card,
-  theme: DefaultTheme
+  card: Card
 ) => {
   const cardWidth = 30
   const cardHeight = 45
@@ -33,9 +34,9 @@ export const drawCard = (
 
   ctx.save()
   ctx.beginPath()
-  ctx.strokeStyle = 'black'
+  ctx.strokeStyle = style.colors.black
   ctx.lineWidth = 1
-  ctx.fillStyle = 'white'
+  ctx.fillStyle = style.colors.white
   ctx.roundRect(x, y, cardWidth, cardHeight, 5)
   ctx.stroke()
   ctx.closePath()
@@ -44,16 +45,16 @@ export const drawCard = (
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   if (color === 'SPADE') {
-    ctx.fillStyle = theme.colors.deck.spade
+    ctx.fillStyle = style.colors.deck.spade
   }
   if (color === 'HEART') {
-    ctx.fillStyle = theme.colors.deck.heart
+    ctx.fillStyle = style.colors.deck.heart
   }
   if (color === 'DIAMOND') {
-    ctx.fillStyle = theme.colors.deck.diamond
+    ctx.fillStyle = style.colors.deck.diamond
   }
   if (color === 'CLUB') {
-    ctx.fillStyle = theme.colors.deck.club
+    ctx.fillStyle = style.colors.deck.club
   }
   ctx.fillText(value, x + cardWidth / 2, y + cardHeight / 3 - 3)
 

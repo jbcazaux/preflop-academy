@@ -1,0 +1,29 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.container {
+  flex: 0;
+}
+.buttons {
+  flex: 0;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+
+.answer-wrapper {
+  border: 2px solid transparent;
+  &.notAnswered {
+    border-color: transparent;
+  }
+  &.correct {
+    border-color: green;
+  }
+  &.wrong {
+    border-color: red;
+  }
+}
+
+.next {
+  border: 2px solid transparent;
+  margin: 20px auto;
+}

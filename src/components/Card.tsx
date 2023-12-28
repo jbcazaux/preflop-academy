@@ -1,36 +1,53 @@
-import styled from 'styled-components'
-import { Card as CardObject, CardId, colors, names } from 'domain/card'
-
+import style from './Card.module.scss'
+import { Clubs, Diamonds, Heart, Spade } from 'tabler-icons-react'
+import { Card as CardObject, cardValue, Color, colors, names } from 'domain/card'
 import noop from 'utils/noop'
+import { MouseEventHandler } from 'react'
+import classNames from 'classnames'
 
-const Card = styled.div.attrs<CardsProps>(({ alt }) => ({
-  alt,
-}))<CardsProps>`
-  box-sizing: border-box;
-  // background-image: url('/images/deck.svg');
-  background-repeat: no-repeat;
-  background-position: ${({ colorIndex, valueIndex }) =>
-    `-${5 + 50 * (valueIndex - 1)}px -${5 + 70 * (colorIndex - 1)}px`};
-  width: 50px;
-  height: 70px;
-  margin: -10px -5px;
-  transform: ${({ inHand, isOnBoard }) => (inHand || isOnBoard ? `scale(1.2)` : `scale(.75)`)};
-  z-index: ${({ inHand, isOnBoard }) => (inHand || isOnBoard ? 2 : 1)};
-  background-color: ${({ inHand, isOnBoard, theme }) =>
-    inHand ? theme.colors.inHand : isOnBoard ? theme.colors.onBoard : 'none'};
-  @media (max-width: 768px) {
-    transform: ${({ inHand, isOnBoard }) => (inHand || isOnBoard ? `scale(.9)` : `scale(.5)`)};
-    margin: -15px -12px;
-  }
-`
-
-interface CardsProps {
-  alt: string
-  colorIndex: number
-  valueIndex: number
-  inHand: boolean
-  isOnBoard: boolean
+interface CardProps {
+  title: string
+  color: Color
+  value: string
+  inHand?: boolean
+  inBoard?: boolean
+  onClick: MouseEventHandler<HTMLDivElement>
 }
+
+const Card = ({ title, color: colorIndex, value, onClick, inHand = false, inBoard = false }: CardProps) => (
+  <div
+    className={classNames(style.container, {
+      [style.inHand]: inHand,
+      [style.inBoard]: inBoard,
+    })}
+    title={title}
+    onClick={onClick}
+  >
+    <div
+      className={classNames(style['card-value'], {
+        [style.spade]: colorIndex === 'SPADE',
+        [style.heart]: colorIndex === 'HEART',
+        [style.diamond]: colorIndex === 'DIAMOND',
+        [style.club]: colorIndex === 'CLUB',
+      })}
+    >
+      {value}
+    </div>
+    <div
+      className={classNames(style.icon, {
+        [style.spade]: colorIndex === 'SPADE',
+        [style.heart]: colorIndex === 'HEART',
+        [style.diamond]: colorIndex === 'DIAMOND',
+        [style.club]: colorIndex === 'CLUB',
+      })}
+    >
+      {colorIndex === 'SPADE' && <Spade />}
+      {colorIndex === 'HEART' && <Heart />}
+      {colorIndex === 'DIAMOND' && <Diamonds />}
+      {colorIndex === 'CLUB' && <Clubs />}
+    </div>
+  </div>
+)
 
 interface Props {
   card: CardObject
@@ -39,22 +56,19 @@ interface Props {
   onClick?: (card: CardObject) => void
 }
 
-const colorIndex = [3, 2, 1, 4]
-const valueIndex = (value: CardId) => (Math.floor((value - 1) / 4) + 2) % 14 || 1
-
-// deprecated , use Card2
-export const CardComponentDeprecated = ({ card, onClick = noop, inHand = false, isOnBoard = false }: Props) => {
-  const cIndex = colorIndex[(card.id - 1) % 4]
-  const vIndex = valueIndex(card.id)
-  const cardName = `${colors[(card.id - 1) % 4]}-${names[Math.floor((card.id - 1) / 4)]}`
+const CardComponent = ({ card, onClick = noop, inHand = false, isOnBoard = false }: Props) => {
+  const color = colors[(card.id - 1) % 4]
+  const title = `${colors[(card.id - 1) % 4]}-${names[Math.floor((card.id - 1) / 4)]}`
   return (
     <Card
-      colorIndex={cIndex}
-      valueIndex={vIndex}
+      color={color}
+      value={cardValue(card.id)}
+      title={title}
       onClick={() => onClick(card)}
       inHand={inHand}
-      isOnBoard={isOnBoard}
-      alt={cardName}
+      inBoard={isOnBoard}
     />
   )
 }
+
+export default CardComponent

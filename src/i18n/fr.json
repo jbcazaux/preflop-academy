@@ -1,26 +1,25 @@
 {
-  "translation": {
-    "menu": {
-      "home": "Accueil",
-      "training": "Exercices",
-      "solver": "Calculs",
-      "ranges": "Ranges",
-      "ranges-editor": "Éditeur de ranges"
+  "menu": {
+    "home": "Accueil",
+    "training": "Exercices",
+    "solver": "Calculs",
+    "ranges": "Ranges",
+    "ranges-editor": "Éditeur de ranges"
+  },
+  "training": {
+    "setup": {
+      "title": "Installation",
+      "position": "Position :",
+      "move": "Coup :"
     },
-    "training": {
-      "setup": {
-        "title": "Installation",
-        "position": "Position :",
-        "move": "Coup :"
-      },
-      "ask-move": "Que faire ?",
-      "score": "Score"
-    },
-    "solver": {
-      "moreThan20bb": "Plus de 20BB"
-    },
-    "home": {
-      "welcome": "Bienvenue !"
-    }
-  }
+    "ask-move": "Que faire ?",
+    "score": "Score"
+  },
+  "solver": {
+    "moreThan20bb": "Plus de 20BB"
+  },
+  "home": {
+    "welcome": "Bienvenue !"
+  },
+  "title": "mon titre"
 }
