@@ -15,11 +15,10 @@ import ButtonPosition from 'domain/buttonPosition'
 import { positionBySeatNumberAndButtonPosition } from 'domain/position'
 import style from './Solver.module.scss'
 import HandDisplay from 'components/HandDisplay'
-import { useTranslations } from 'next-intl'
 import actionsFlow from './actionsFlow'
-import Deck from '../Deck'
 import PreFlopSolver from './PreFlopSolver'
 import PushFoldSolver from './PushFoldSolver'
+import Deck from 'src/app2/Deck'
 
 const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
@@ -29,7 +28,7 @@ const Solver = () => {
 
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const windowSize = useWindowSize()
-  const t = useTranslations()
+  // const t = useTranslations()
 
   const getPokerTableWidth = () => {
     if (solverContainerRef.current) {
@@ -83,7 +82,7 @@ const Solver = () => {
       </Vertical>
       <Horizontal className={style.tables}>
         <Tabs>
-          <Tab title={t('solver.moreThan20bb').toUpperCase()}>
+          <Tab title={'solver.moreThan20bb'.toUpperCase()}>
             <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={board} />
           </Tab>
           <Tab title="PUSH OR FOLD">

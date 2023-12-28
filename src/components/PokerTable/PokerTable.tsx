@@ -103,7 +103,7 @@ const PokerTable = ({
     context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
     drawTable(context, canvas)
 
-    //board?.cards.forEach((card, index) => drawCard(context, index + 1, board?.cards.length, canvas, card))
+    board?.cards.forEach((card, index) => drawCard(context, index + 1, board?.cards.length, canvas, card))
 
     drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, buttonPosition)
     drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition)

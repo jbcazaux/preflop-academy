@@ -11,11 +11,11 @@ import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
 import style from './PreflopSolver.module.scss'
-import Gto from '../Gto'
 import Ranges from 'src/app-components/ranges/Ranges'
 import VilainPreflopRange from './VilainPreFlopRange'
 import Versus from './versus/Versus'
 import ImprovementCards from './improvements/ImprovementCards'
+import Gto from 'src/app2/Gto'
 
 interface Props {
   hand: Hand
