@@ -1,8 +1,8 @@
-import Horizontal from 'components/layout/Horizontal'
 import FlagFr from 'assets/icons/FlagFr'
 import FlagUs from 'assets/icons/FlagUs'
-
 import Link from 'next/link'
+
+import Horizontal from 'components/layout/Horizontal'
 
 interface Props {
   className?: string

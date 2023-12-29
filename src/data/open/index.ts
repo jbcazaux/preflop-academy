@@ -1,5 +1,6 @@
-import Position from 'domain/position'
 import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
+
 import button from './button'
 import cutoff from './cutoff'
 import mp from './mp'

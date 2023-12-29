@@ -1,5 +1,5 @@
-import style from 'components/Theme/style'
 import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
+import style from 'components/Theme/style'
 
 export const drawPlayers = (
   ctx: CanvasRenderingContext2D,

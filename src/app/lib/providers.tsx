@@ -1,22 +1,13 @@
-'use client'
-
+import React, { ReactNode } from 'react'
 import { Locale } from 'i18n/types'
-import React from 'react'
-import { QueryClient, QueryClientProvider } from 'react-query'
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-})
+import ClientProviders from './clientProviders'
 
 interface Props {
-  children: React.ReactNode
+  children: ReactNode
   locale: Locale
 }
 
-const Providers = ({ children }: Props) => <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+const Providers = ({ children }: Props) => <ClientProviders>{children}</ClientProviders>
 
 export default Providers

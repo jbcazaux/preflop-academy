@@ -1,6 +1,7 @@
 import React from 'react'
-import styles from './Horizontal.module.scss'
 import cn from 'classnames'
+
+import styles from './Horizontal.module.scss'
 
 interface Props {
   children: React.ReactNode

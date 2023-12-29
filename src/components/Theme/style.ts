@@ -1,4 +1,4 @@
-const style: DefaultTheme = {
+const style = {
   borderRadius: '5px',
   breakpoints: {
     mobile: 420,

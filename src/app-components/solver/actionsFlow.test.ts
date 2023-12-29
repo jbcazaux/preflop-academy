@@ -1,6 +1,7 @@
 import Action from 'domain/action'
-import position from 'domain/position'
 import Move from 'domain/move'
+import position from 'domain/position'
+
 import actionsFlow from './actionsFlow'
 
 describe('actions flow', () => {

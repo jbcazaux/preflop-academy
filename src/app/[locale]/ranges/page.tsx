@@ -1,3 +1,5 @@
+import 'server-only'
+
 import Ranges from 'src/app-components/ranges/PreflopRanges'
 
 const Test = () => <Ranges />

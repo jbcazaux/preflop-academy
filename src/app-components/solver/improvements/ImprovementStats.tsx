@@ -1,11 +1,13 @@
-import style from './ImprovementStats.module.scss'
-import Vertical from 'components/layout/Vertical'
-import Horizontal from 'components/layout/Horizontal'
-import { Card } from 'domain/card'
-import Board from 'domain/board'
-import CardComponent from 'components/Card'
-import cn from 'classnames'
 import { ReactNode } from 'react'
+import cn from 'classnames'
+import Board from 'domain/board'
+import { Card } from 'domain/card'
+
+import CardComponent from 'components/Card'
+import Horizontal from 'components/layout/Horizontal'
+import Vertical from 'components/layout/Vertical'
+
+import style from './ImprovementStats.module.scss'
 
 const Stats = ({ className, children }: { className?: string; children: ReactNode }) => (
   <div className={cn(className, style.stats)}>{children}</div>

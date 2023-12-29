@@ -1,10 +1,13 @@
-import { Book, Calculator, Cards, Home2, Table, TableImport } from 'tabler-icons-react'
-import Link from 'next/link'
-import style from './Menu.module.scss'
-import { useTranslations } from 'next-intl'
+import 'server-only'
 
-const Menu = () => {
-  const t = useTranslations('menu')
+import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
+import { Book, Calculator, Cards, Home2, Table, TableImport } from 'tabler-icons-react'
+
+import style from './Menu.module.scss'
+
+const Menu = async () => {
+  const t = await getTranslations('menu')
   return (
     <nav className={style.menu}>
       <div className={style.title}>
@@ -30,7 +33,7 @@ const Menu = () => {
           </Link>
         </li>
         <li>
-          <Link href="/ranges" className={style}>
+          <Link href="/ranges" className={style.link}>
             <Table size={36} />
             <span>{t('ranges')}</span>
           </Link>

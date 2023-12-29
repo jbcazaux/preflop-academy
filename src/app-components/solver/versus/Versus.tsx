@@ -1,18 +1,21 @@
 'use client'
 
-import Hand from 'domain/hand'
-import Board from 'domain/board'
-import Action from 'domain/action'
-import { getHintsTable } from 'data/gto'
-import Position from 'domain/position'
 import { useMemo } from 'react'
-import { getRange } from 'domain/hintTable'
 import { useQuery } from 'react-query'
 import versusApi, { VsResult } from 'api/versus'
-import Loader from 'components/Loader/Loader'
-import style from './Versus.module.scss'
+import { getHintsTable } from 'data/gto'
+import Action from 'domain/action'
+import Board from 'domain/board'
+import Hand from 'domain/hand'
+import { getRange } from 'domain/hintTable'
+import Position from 'domain/position'
+
 import Vertical from 'components/layout/Vertical'
+import Loader from 'components/Loader/Loader'
+
 import WLResults from './WLResults'
+
+import style from './Versus.module.scss'
 
 interface Props {
   hero: Position

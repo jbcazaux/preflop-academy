@@ -1,14 +1,15 @@
 'use client'
 
-import Vertical from 'components/layout/Vertical'
 import { useEffect, useMemo, useState } from 'react'
 import { getHintsTable } from 'data/gto'
-import Position, { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
-import HintTable from 'domain/hintTable'
-import ActionComponent from 'components/Action'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
+import HintTable from 'domain/hintTable'
+import Position, { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
+
+import ActionComponent from 'components/Action'
+import Vertical from 'components/layout/Vertical'
 
 interface Props {
   buttonPosition: ButtonPosition

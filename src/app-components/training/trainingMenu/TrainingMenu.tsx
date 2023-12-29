@@ -1,12 +1,14 @@
 'use client'
 
-import Position from 'domain/position'
 import Move from 'domain/move'
-import SideMenu from 'components/layout/SideMenu/SideMenu'
-import style from './TrainingMenu.module.scss'
-import Vertical from 'components/layout/Vertical'
-import Button from 'components/button/Button'
+import Position from 'domain/position'
 import { useRouter } from 'next/navigation'
+
+import Button from 'components/button/Button'
+import SideMenu from 'components/layout/SideMenu/SideMenu'
+import Vertical from 'components/layout/Vertical'
+
+import style from './TrainingMenu.module.scss'
 
 const isMoveTypeAllowed = (move: Move, hero: Position): boolean => {
   switch (move) {

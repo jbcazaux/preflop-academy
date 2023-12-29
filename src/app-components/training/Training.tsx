@@ -1,23 +1,26 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import style from './Training.module.scss'
-import PokerTable from 'components/PokerTable/PokerTable'
-import Hand from 'domain/hand'
-import useWindowSize from 'components/useWindowSize'
-import Vertical from 'components/layout/Vertical'
-import Move from 'domain/move'
+import PreFlopSolver from 'app-components/solver/PreFlopSolver'
 import gto from 'data/gto'
-import Score from 'domain/Score'
 import Action from 'domain/action'
-import noop from 'utils/noop'
-import Position, { buttonPositionFromHeroPosition } from 'domain/position'
-import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Board from 'domain/board'
+import Hand from 'domain/hand'
+import Move from 'domain/move'
+import Position, { buttonPositionFromHeroPosition } from 'domain/position'
+import Score from 'domain/Score'
+import noop from 'utils/noop'
+
 import HandDisplay from 'components/HandDisplay'
-import PreFlopSolver from 'src/app2/solver/PreFlopSolver'
+import SideMenu from 'components/layout/SideMenu/SideMenu'
+import Vertical from 'components/layout/Vertical'
+import PokerTable from 'components/PokerTable/PokerTable'
+import useWindowSize from 'components/useWindowSize'
+
 import { setRandomPlay } from './setPlay'
 import TrainingAnswers from './TrainingAnswers'
+
+import style from './Training.module.scss'
 
 interface Props {
   heroPosition: Position | null

@@ -1,5 +1,7 @@
-import Card from 'components/Card'
 import Hand from 'domain/hand'
+
+import Card from 'components/Card'
+
 import style from './HandDisplay.module.scss'
 
 interface Props {

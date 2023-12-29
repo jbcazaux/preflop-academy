@@ -1,6 +1,7 @@
-import Horizontal from 'components/layout/Horizontal'
 import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
+
+import Horizontal from 'components/layout/Horizontal'
 
 const List = styled.ul`
   display: flex;

@@ -1,6 +1,6 @@
-import Move from 'domain/move'
-import Hand from 'domain/hand'
 import { getHintsTable } from 'data/gto'
+import Hand from 'domain/hand'
+import Move from 'domain/move'
 import Position from 'domain/position'
 
 const randomHandInRange = (move: Move, hero: Position): Hand => {

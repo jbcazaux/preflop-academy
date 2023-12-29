@@ -1,8 +1,10 @@
 import { render } from '@testing-library/react'
 import Hand from 'domain/hand'
-import 'jest-styled-components'
-import Position from 'domain/position'
 import Move from 'domain/move'
+import Position from 'domain/position'
+
+import 'jest-styled-components'
+
 import Gto from './Gto'
 
 jest.mock('data/gto', () => () => Move.OPEN)

@@ -1,14 +1,16 @@
 'use client'
 
-import Vertical from 'components/layout/Vertical'
-import Hand from 'domain/hand'
 import { useMemo, useState } from 'react'
 import { gtoPushFold } from 'data/gto'
 import pushfoldHintsTable from 'data/pushfold'
-import style from './PushFoldSolver.module.scss'
-import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import ButtonPosition from 'domain/buttonPosition'
+import Hand from 'domain/hand'
+import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
+
+import Vertical from 'components/layout/Vertical'
+
+import style from './PushFoldSolver.module.scss'
 
 interface Props {
   hand: Hand

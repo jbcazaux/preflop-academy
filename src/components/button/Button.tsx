@@ -1,5 +1,6 @@
-import style from './Button.module.scss'
 import cn from 'classnames'
+
+import style from './Button.module.scss'
 
 interface Props {
   active?: boolean

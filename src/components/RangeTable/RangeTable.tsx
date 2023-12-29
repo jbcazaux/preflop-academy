@@ -1,9 +1,12 @@
-import style from './RangeTable.module.scss'
-import Vertical from 'components/layout/Vertical'
-import Horizontal from 'components/layout/Horizontal'
-import HintTable from 'domain/hintTable'
 import PokerHand from 'domain/hand'
+import HintTable from 'domain/hintTable'
+
+import Horizontal from 'components/layout/Horizontal'
+import Vertical from 'components/layout/Vertical'
+
 import Combo from './Combo'
+
+import style from './RangeTable.module.scss'
 
 const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 

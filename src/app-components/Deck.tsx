@@ -1,10 +1,11 @@
+import Board from 'domain/board'
 import { Card, deck } from 'domain/card'
+import Hand from 'domain/hand'
+
 import CardComponent from 'components/Card'
+import Horizontal from 'components/layout/Horizontal'
 
 import style from './Deck.module.scss'
-import Hand from 'domain/hand'
-import Horizontal from 'components/layout/Horizontal'
-import Board from 'domain/board'
 
 interface Props {
   onClick: (card: Card) => void

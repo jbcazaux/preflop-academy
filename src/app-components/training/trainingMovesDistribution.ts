@@ -1,7 +1,8 @@
 import Move from 'domain/move'
-import { random } from 'utils/random'
 import Position from 'domain/position'
-import { Distribution } from 'app/training/types'
+import { random } from 'utils/random'
+
+import { Distribution } from './types'
 
 export const getRandomMoveDistribution = (heroPosition: Position): Distribution => {
   switch (heroPosition) {

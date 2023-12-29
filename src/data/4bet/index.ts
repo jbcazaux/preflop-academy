@@ -1,3 +1,7 @@
+import sb4betsBb from 'data/4bet/sb4betsBb'
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
+
 import b4betsBb from './b4betsBb'
 import b4betsSb from './b4betsSb'
 import co4betsB from './co4betsB'
@@ -12,9 +16,6 @@ import utg4betsBb from './utg4betsBb'
 import utg4betsCo from './utg4betsCo'
 import utg4betsMp from './utg4betsMp'
 import utg4betsSb from './utg4betsSb'
-import Position from 'domain/position'
-import HintTable from 'domain/hintTable'
-import sb4betsBb from 'data/4bet/sb4betsBb'
 
 const _4bet: Map<Position, Map<Position, HintTable>> = new Map([
   [

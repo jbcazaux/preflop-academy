@@ -1,8 +1,9 @@
-import Hand from 'domain/hand'
 import gto from 'data/gto'
-import Position from 'domain/position'
-import ActionComponent from 'components/Action'
 import Action from 'domain/action'
+import Hand from 'domain/hand'
+import Position from 'domain/position'
+
+import ActionComponent from 'components/Action'
 
 interface Props {
   hero: Position

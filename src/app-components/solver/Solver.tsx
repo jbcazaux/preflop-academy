@@ -1,24 +1,27 @@
 'use client'
 
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Card as CardObject } from 'domain/card'
-import PokerTable from 'components/PokerTable/PokerTable'
-import Hand from 'domain/hand'
-import Vertical from 'components/layout/Vertical'
-import Horizontal from 'components/layout/Horizontal'
-import useWindowSize from 'components/useWindowSize'
-import Tabs from 'components/Tabs/Tabs'
-import Tab from 'components/Tabs/Tab'
+import Deck from 'app-components/Deck'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
+import { Card as CardObject } from 'domain/card'
+import Hand from 'domain/hand'
 import { positionBySeatNumberAndButtonPosition } from 'domain/position'
-import style from './Solver.module.scss'
+
 import HandDisplay from 'components/HandDisplay'
+import Horizontal from 'components/layout/Horizontal'
+import Vertical from 'components/layout/Vertical'
+import PokerTable from 'components/PokerTable/PokerTable'
+import Tab from 'components/Tabs/Tab'
+import Tabs from 'components/Tabs/Tabs'
+import useWindowSize from 'components/useWindowSize'
+
 import actionsFlow from './actionsFlow'
 import PreFlopSolver from './PreFlopSolver'
 import PushFoldSolver from './PushFoldSolver'
-import Deck from 'src/app2/Deck'
+
+import style from './Solver.module.scss'
 
 const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)

@@ -1,13 +1,14 @@
-import Hand from 'domain/hand'
-import Position from 'domain/position'
-import open from './open'
-import call from './call'
-import _3bet from './3bet'
-import call3bet from './call3bet'
-import _4bet from './4bet'
-import Move from 'domain/move'
-import HintTable from 'domain/hintTable'
 import pushfoldHintsTable from 'data/pushfold'
+import Hand from 'domain/hand'
+import HintTable from 'domain/hintTable'
+import Move from 'domain/move'
+import Position from 'domain/position'
+
+import _3bet from './3bet'
+import _4bet from './4bet'
+import call from './call'
+import call3bet from './call3bet'
+import open from './open'
 
 export const getHintsTable = (move: Move, heroPosition: Position, vilainPosition: Position): HintTable | null => {
   if (move === Move.OPEN) {
@@ -107,5 +108,3 @@ export const gtoPushFold = (hero: Position, hand: Hand, stack: number): Move | n
 
   return pushFoldHintsTable[x][y] ? Move.ALL_IN : Move.FOLD
 }
-
-

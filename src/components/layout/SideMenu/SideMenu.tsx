@@ -1,8 +1,10 @@
-import Vertical from 'components/layout/Vertical'
 import { ReactNode, useState } from 'react'
-import Close from 'components/layout/SideMenu/Close'
-import Horizontal from 'components/layout/Horizontal'
 import cn from 'classnames'
+
+import Horizontal from 'components/layout/Horizontal'
+import Close from 'components/layout/SideMenu/Close'
+import Vertical from 'components/layout/Vertical'
+
 import style from './SideMenu.module.scss'
 
 export type SideMenuPosition = 'left' | 'right'

@@ -1,21 +1,24 @@
 'use client'
 
-import Vertical from 'components/layout/Vertical'
-import Hand from 'domain/hand'
 import { useEffect, useMemo, useState } from 'react'
+import Gto from 'app-components/Gto'
 import { getHintsTable } from 'data/gto'
-import Position, { heroPositionFromButtonPosition } from 'domain/position'
-import Move from 'domain/move'
-import HintTable from 'domain/hintTable'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
-import style from './PreflopSolver.module.scss'
+import Hand from 'domain/hand'
+import HintTable from 'domain/hintTable'
+import Move from 'domain/move'
+import Position, { heroPositionFromButtonPosition } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
-import VilainPreflopRange from './VilainPreFlopRange'
-import Versus from './versus/Versus'
+
+import Vertical from 'components/layout/Vertical'
+
 import ImprovementCards from './improvements/ImprovementCards'
-import Gto from 'src/app2/Gto'
+import Versus from './versus/Versus'
+import VilainPreflopRange from './VilainPreFlopRange'
+
+import style from './PreflopSolver.module.scss'
 
 interface Props {
   hand: Hand

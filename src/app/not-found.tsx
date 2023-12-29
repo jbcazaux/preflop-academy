@@ -1,14 +1,7 @@
-'use client'
+const NotFound = () => (
+  <html lang="en">
+    <body>Page not found</body>
+  </html>
+)
 
-import Error from 'next/error'
-
-export default function NotFound() {
-  return (
-    <html lang="en">
-      <body>
-        Error :/
-        <Error statusCode={404} />
-      </body>
-    </html>
-  )
-}
+export default NotFound

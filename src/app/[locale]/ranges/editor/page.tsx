@@ -1,4 +1,4 @@
-import RangesEditor from '@/app-components/ranges/editor/RangesEditor'
+import RangesEditor from 'app-components/ranges/editor/RangesEditor'
 
 const Page = () => <RangesEditor />
 

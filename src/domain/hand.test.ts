@@ -1,5 +1,5 @@
-import Hand from 'domain/hand'
 import { Card } from 'domain/card'
+import Hand from 'domain/hand'
 
 describe('Hand', () => {
   it('finds Aces in table', () => {

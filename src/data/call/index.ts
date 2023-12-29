@@ -1,3 +1,6 @@
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
+
 import bbCallsB from './bbCallsB'
 import bbCallsCo from './bbCallsCo'
 import bbCallsMp from './bbCallsMp'
@@ -13,8 +16,6 @@ import sbCallsB from './sbCallsB'
 import sbCallsCo from './sbCallsCo'
 import sbCallsMp from './sbCallsMp'
 import sbCallsUtg from './sbCallsUtg'
-import HintTable from 'domain/hintTable'
-import Position from 'domain/position'
 
 const call: Map<Position, Map<Position, HintTable>> = new Map([
   [

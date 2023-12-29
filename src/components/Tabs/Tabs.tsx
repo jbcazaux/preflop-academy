@@ -1,9 +1,11 @@
 'use client'
 
 import React, { PropsWithChildren, useState } from 'react'
-import style from './Tabs.module.scss'
-import TabTitle from 'components/Tabs/TabTitle'
+
 import Tab from 'components/Tabs/Tab'
+import TabTitle from 'components/Tabs/TabTitle'
+
+import style from './Tabs.module.scss'
 
 interface TabProps extends PropsWithChildren<React.ReactElement> {
   title: string

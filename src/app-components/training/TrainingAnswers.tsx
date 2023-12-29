@@ -1,13 +1,15 @@
-import Button from 'components/button/Button'
-import Move from 'domain/move'
 import { useEffect, useMemo, useState } from 'react'
-import Position, { heroPositionFromButtonPosition } from 'domain/position'
-import style from './TrainingAnswers.module.scss'
+import classNames from 'classnames'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
+import Move from 'domain/move'
+import Position, { heroPositionFromButtonPosition } from 'domain/position'
+
+import Button from 'components/button/Button'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
-import classNames from 'classnames'
+
+import style from './TrainingAnswers.module.scss'
 
 interface AnswerButtonProps {
   active?: boolean

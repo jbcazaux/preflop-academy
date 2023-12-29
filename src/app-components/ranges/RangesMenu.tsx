@@ -1,12 +1,14 @@
 'use client'
 
-import Position, { allPositions, positionsNamesMap } from 'domain/position'
 import { getHintsTable } from 'data/gto'
 import Move from 'domain/move'
-import SideMenu from 'components/layout/SideMenu/SideMenu'
-import style from './RangesMenu.module.scss'
+import Position, { allPositions, positionsNamesMap } from 'domain/position'
+
 import Button from 'components/button/Button'
+import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
+
+import style from './RangesMenu.module.scss'
 
 interface MovesProps {
   setHeroMove: (m: Move) => void

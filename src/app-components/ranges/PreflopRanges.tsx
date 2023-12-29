@@ -1,15 +1,18 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import Position, { positionsNamesMap } from 'domain/position'
-import Move from 'domain/move'
 import { getHintsTable } from 'data/gto'
-import PercentageOfPlayedHands from './PercentageOfPlayedHands'
-import RangeTable from 'components/RangeTable/RangeTable'
+import Move from 'domain/move'
+import Position, { positionsNamesMap } from 'domain/position'
+
 import Horizontal from 'components/layout/Horizontal'
-import RangesMenu from './RangesMenu'
-import style from './PreflopRanges.module.scss'
 import Vertical from 'components/layout/Vertical'
+import RangeTable from 'components/RangeTable/RangeTable'
+
+import PercentageOfPlayedHands from './PercentageOfPlayedHands'
+import RangesMenu from './RangesMenu'
+
+import style from './PreflopRanges.module.scss'
 
 interface TitleProps {
   move: Move

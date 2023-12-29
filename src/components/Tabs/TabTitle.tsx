@@ -1,4 +1,5 @@
 import classNames from 'classnames'
+
 import style from './TabTitle.module.scss'
 
 interface Props {

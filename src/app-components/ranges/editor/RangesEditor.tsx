@@ -1,15 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import style from './RangesEditor.module.scss'
-import RangeTable from 'components/RangeTable/RangeTable'
-import HintTable from 'domain/hintTable'
 import { open as openRank } from 'data/rank'
 import Combo from 'domain/combo'
+import HintTable from 'domain/hintTable'
+
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
+import RangeTable from 'components/RangeTable/RangeTable'
+
 import PercentageOfPlayedHand from '../PercentageOfPlayedHands'
+
 import RangeSelector from './RangeSelector'
+
+import style from './RangesEditor.module.scss'
 
 const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 

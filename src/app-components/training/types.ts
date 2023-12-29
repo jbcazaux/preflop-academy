@@ -1,5 +1,5 @@
-import Hand from 'domain/hand'
 import Action from 'domain/action'
+import Hand from 'domain/hand'
 import Position from 'domain/position'
 
 export type Play = {

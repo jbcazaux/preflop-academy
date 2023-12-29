@@ -1,7 +1,10 @@
 'use client'
 
-import { Dimensions } from 'components/PokerTable/types'
+import 'client-only'
+
 import { Card, cardColor, cardValue } from 'domain/card'
+
+import { Dimensions } from 'components/PokerTable/types'
 import style from 'components/Theme/style'
 
 const onBrowser = typeof window !== 'undefined'

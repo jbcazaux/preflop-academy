@@ -1,29 +1,40 @@
-import Horizontal from 'components/layout/Horizontal'
+import TestI18N from 'app-components/TestI18N'
 import Link from 'next/link'
+import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
+
+import Horizontal from 'components/layout/Horizontal'
+
 import styles from './page.module.scss'
 
-const Home = () => (
-  <nav>
-    <Horizontal>
-      <ul className={styles.list}>
-        <li className={styles.item}>
-          <Link href="/">Home</Link>
-        </li>
-        <li className={styles.item}>
-          <Link href="/solver">Solver</Link>
-        </li>
-        <li className={styles.item}>
-          <Link href="/training">Training</Link>
-        </li>
-        <li className={styles.item}>
-          <Link href="/ranges">Ranges</Link>
-        </li>
-        <li className={styles.item}>
-          <Link href="/ranges/editor">Range Editor</Link>
-        </li>
-      </ul>
-    </Horizontal>
-  </nav>
-)
+const Home = () => {
+  const messages = useMessages()
+  const t = useTranslations('menu')
+  return (
+    <nav>
+      <Horizontal>
+        <ul className={styles.list}>
+          <li className={styles.item}>
+            <Link href="/">{t('home')}</Link>
+          </li>
+          <li className={styles.item}>
+            <Link href="/solver">{t('solver')}</Link>
+          </li>
+          <li className={styles.item}>
+            <Link href="/training">{t('training')}</Link>
+          </li>
+          <li className={styles.item}>
+            <Link href="/ranges">{t('ranges')}</Link>
+          </li>
+          <li className={styles.item}>
+            <Link href="/ranges/editor">{t('ranges-editor')}</Link>
+          </li>
+        </ul>
+      </Horizontal>
+      <NextIntlClientProvider locale="fr" messages={messages}>
+        <TestI18N />
+      </NextIntlClientProvider>
+    </nav>
+  )
+}
 
 export default Home

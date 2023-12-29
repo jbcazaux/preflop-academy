@@ -1,5 +1,6 @@
-import cn from 'classnames'
 import { MouseEventHandler, ReactNode } from 'react'
+import cn from 'classnames'
+
 import style from './Square.module.scss'
 
 interface Props {
