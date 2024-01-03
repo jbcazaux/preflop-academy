@@ -1,4 +1,6 @@
-const sb4betsBb: ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const sb4betsBb: HintTable = [
   [
     /*AA */ true,
     /*AKs*/ true,

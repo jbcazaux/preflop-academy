@@ -7,9 +7,9 @@ import actionsFlow from './actionsFlow'
 describe('actions flow', () => {
   it('opens', () => {
     const noAction: ReadonlyArray<Action> = []
-    const flow = actionsFlow(noAction, position.ANY)
+    const flow = actionsFlow(noAction, position.B)
 
-    expect(flow).toEqual([new Action(position.ANY, Move.OPEN)])
+    expect(flow).toEqual([new Action(position.B, Move.OPEN)])
   })
   it('does not allow 3 way', () => {
     const actions: ReadonlyArray<Action> = [new Action(position.B, Move.OPEN), new Action(position.SB, Move.CALL)]

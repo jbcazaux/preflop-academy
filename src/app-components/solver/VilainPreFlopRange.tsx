@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
-import { getHintsTable } from 'data/gto'
+import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import HintTable from 'domain/hintTable'
@@ -23,17 +23,20 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
   const hero = useMemo<Position>(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
-    if (actions.length === 0 || actions.every(a => a.position === hero)) {
-      setVilainHintsTable(null)
-      setVilainAction(null)
-      return
+    const effect = async () => {
+      if (actions.length === 0 || actions.every(a => a.position === hero)) {
+        setVilainHintsTable(null)
+        setVilainAction(null)
+        return
+      }
+
+      const vilainLastAction = actions.reduce((acc: Action | null, cur) => (cur.position !== hero ? cur : acc), null)
+      if (!vilainLastAction) throw new Error('can not happen')
+
+      setVilainHintsTable(await getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
+      setVilainAction(vilainLastAction)
     }
-
-    const vilainLastAction = actions.reduce((acc: Action | null, cur) => (cur.position !== hero ? cur : acc), null)
-    if (!vilainLastAction) throw new Error('can not happen')
-
-    setVilainHintsTable(getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
-    setVilainAction(vilainLastAction)
+    effect()
   }, [actions, hero])
 
   return (
@@ -45,7 +48,7 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
           </>
         )}
       </ActionComponent>
-      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction?.move || ''} mini />}
+      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction?.move || ''} />}
     </Vertical>
   )
 }

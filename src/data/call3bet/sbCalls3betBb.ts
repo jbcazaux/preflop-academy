@@ -1,6 +1,8 @@
-  const sbgCalls3betBb : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const sbgCalls3betBb: HintTable = [
   [
-    /*AA*/  false,
+    /*AA*/ false,
     /*AKs*/ false,
     /*AQs*/ false,
     /*AJs*/ true,
@@ -16,7 +18,7 @@
   ],
   [
     /*AKo*/ false,
-    /*KK*/  false,
+    /*KK*/ false,
     /*KQs*/ true,
     /*KJs*/ true,
     /*KTs*/ true,
@@ -32,7 +34,7 @@
   [
     /*AQo*/ false,
     /*KQo*/ true,
-    /*QQ*/  false,
+    /*QQ*/ false,
     /*QJs*/ true,
     /*QTs*/ true,
     /*Q9s*/ true,
@@ -48,7 +50,7 @@
     /*AJo*/ false,
     /*KJo*/ true,
     /*QJo*/ false,
-    /*JJ*/  false,
+    /*JJ*/ false,
     /*JTs*/ true,
     /*J9s*/ true,
     /*J8s*/ true,
@@ -64,7 +66,7 @@
     /*KTo*/ false,
     /*QTo*/ false,
     /*JTo*/ false,
-    /*TT*/  false,
+    /*TT*/ false,
     /*T9s*/ true,
     /*T8s*/ true,
     /*T7s*/ false,
@@ -80,7 +82,7 @@
     /*Q9o*/ false,
     /*J9o*/ false,
     /*T9o*/ false,
-    /*99*/  true,
+    /*99*/ true,
     /*98s*/ true,
     /*97s*/ false,
     /*96s*/ false,
@@ -96,7 +98,7 @@
     /*J8o*/ false,
     /*T8o*/ false,
     /*98o*/ false,
-    /*88*/  true,
+    /*88*/ true,
     /*87s*/ true,
     /*86s*/ false,
     /*85s*/ false,
@@ -112,7 +114,7 @@
     /*T7o*/ false,
     /*97o*/ false,
     /*87o*/ false,
-    /*77*/  true,
+    /*77*/ true,
     /*76s*/ true,
     /*75s*/ false,
     /*74s*/ false,
@@ -128,7 +130,7 @@
     /*96o*/ false,
     /*86o*/ false,
     /*76o*/ false,
-    /*66*/  true,
+    /*66*/ true,
     /*65s*/ true,
     /*64s*/ false,
     /*63s*/ false,
@@ -144,7 +146,7 @@
     /*85o*/ false,
     /*75o*/ false,
     /*65o*/ false,
-    /*55*/  true,
+    /*55*/ true,
     /*54s*/ true,
     /*53s*/ false,
     /*52s*/ false,
@@ -160,7 +162,7 @@
     /*74o*/ false,
     /*64o*/ false,
     /*54o*/ false,
-    /*44*/  true,
+    /*44*/ true,
     /*43s*/ false,
     /*42s*/ false,
   ],
@@ -176,7 +178,7 @@
     /*63o*/ false,
     /*53o*/ false,
     /*43o*/ false,
-    /*33*/  true,
+    /*33*/ true,
     /*32s*/ false,
   ],
   [
@@ -192,7 +194,7 @@
     /*52o*/ false,
     /*42o*/ false,
     /*32s*/ false,
-    /*22*/  true,
+    /*22*/ true,
   ],
 ]
 

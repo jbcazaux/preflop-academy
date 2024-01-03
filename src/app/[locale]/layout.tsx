@@ -23,7 +23,7 @@ const RootLayout = ({ children, params: { locale } }: { children: ReactNode; par
           <Menu />
           <div className={styles.content}>
             <Header />
-            <section>{children}</section>
+            <section className={styles.section}>{children}</section>
           </div>
         </div>
       </Providers>

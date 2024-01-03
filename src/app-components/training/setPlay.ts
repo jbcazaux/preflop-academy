@@ -47,13 +47,13 @@ const getRandomOpenActionForCall3BetOr4Bet = (hero: Position): ReadonlyArray<Act
     case Position.SB:
       return [heroOpenAction, new Action(Position.BB, Move._3BET)]
     case Position.BB:
-      throw Error('cannot be there - getRandomOpenActionForCall3Bet / Cannot call 3bet fromBB')
+      throw Error('cannot be there - getRandomOpenActionForCall3Bet / Cannot call 3bet from BB')
     default:
       throw Error('cannot be there - getRandomOpenActionForCall / ' + hero)
   }
 }
 
-export const setRandomPlay = (move: Move | null, heroPosition: Position | null): Play => {
+export const setRandomPlay = async (move: Move | null, heroPosition: Position | null): Promise<Play> => {
   const hero = heroPosition || getRandomHeroPosition()
   const newMove = move || getRandomMoveType(hero)
 
@@ -81,14 +81,14 @@ export const setRandomPlay = (move: Move | null, heroPosition: Position | null):
     }
     case Move.CALL3BET: {
       return {
-        hand: randomHandInRange(Move.OPEN, hero),
+        hand: await randomHandInRange(Move.OPEN, hero),
         actions: getRandomOpenActionForCall3BetOr4Bet(hero),
         heroPosition: hero,
       }
     }
     case Move._4BET: {
       return {
-        hand: randomHandInRange(Move.OPEN, hero),
+        hand: await randomHandInRange(Move.OPEN, hero),
         actions: getRandomOpenActionForCall3BetOr4Bet(hero),
         heroPosition: hero,
       }

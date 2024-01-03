@@ -1,21 +1,29 @@
-import { MouseEventHandler } from 'react'
+import cn from 'classnames'
 
-import Square from './Square'
+import style from './Combo.module.scss'
 
 interface Props {
   active: boolean
   pair: boolean
   suited: boolean
   selected?: boolean
-  onClick?: MouseEventHandler<HTMLDivElement>
   children: string
+  xy: [number, number]
 }
 
-const Combo = ({ active, suited, pair, selected = false, onClick, children }: Props) => (
-  <Square active={active} selected={selected} suited={suited} pair={pair} onClick={onClick}>
+const Combo = ({ active, suited, pair, selected = false, xy, children }: Props) => (
+  <div
+    className={cn('combo', style.combo, {
+      [style.suited]: suited,
+      [style.pair]: pair,
+      [style.active]: active,
+      [style.selected]: selected,
+    })}
+    data-xy={xy}
+  >
     {children}
     {pair ? '' : suited ? 's' : 'o'}
-  </Square>
+  </div>
 )
 
 export default Combo

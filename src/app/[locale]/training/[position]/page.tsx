@@ -1,8 +1,16 @@
+'use client'
+
+import Move from 'domain/move'
 import Position from 'domain/position'
-import TrainingQueryReader from 'src/app-components/training/TrainingQueryReader'
+import { usePathname, useRouter } from 'next/navigation'
 
-const Page = ({ params: { position } }: { params: { position: Position } }) => (
-  <TrainingQueryReader heroPosition={position} />
-)
+const Training = () => {
+  const router = useRouter()
+  const pathname = usePathname()
 
-export default Page
+  router.push(`${pathname}/${Position.B}/${Move.OPEN}`)
+
+  return null
+}
+
+export default Training

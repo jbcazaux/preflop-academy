@@ -18,7 +18,7 @@ const TrainingQueryReader = ({ heroPosition }: Props) => {
   useEffect(() => setMoveType(null), [heroPosition])
   return (
     <Horizontal>
-      <TrainingMenu heroPosition={heroPosition} moveType={moveType} setMoveType={setMoveType} />
+      <TrainingMenu heroPosition={heroPosition} moveType={moveType} />
       <Training heroPosition={heroPosition} move={moveType} />
     </Horizontal>
   )

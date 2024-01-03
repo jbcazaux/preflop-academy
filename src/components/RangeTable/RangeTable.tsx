@@ -13,11 +13,9 @@ const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6
 interface Props {
   hintsTable: HintTable | null
   hand?: PokerHand
-  onClick?: (i: number, j: number) => void
-  mini?: boolean
 }
 
-const RangeTable = ({ hintsTable, hand, onClick }: Props) => {
+const RangeTable = ({ hintsTable, hand }: Props) => {
   const xyInRangeTable = hand?.isComplete() ? hand?.xyInRangeTable() : null
   return (
     <Vertical className={style.container}>
@@ -28,11 +26,11 @@ const RangeTable = ({ hintsTable, hand, onClick }: Props) => {
             return (
               <Combo
                 key={`${c1}${c2}`}
-                onClick={() => onClick && onClick(i, j)}
                 active={!!hintsTable?.[i][j]}
                 suited={i < j}
                 pair={i === j}
                 selected={selected}
+                xy={[i, j]}
               >
                 {i < j ? `${c1}${c2}` : `${c2}${c1}`}
               </Combo>

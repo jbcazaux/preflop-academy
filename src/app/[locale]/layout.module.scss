@@ -9,6 +9,11 @@
   flex: 1;
 }
 
+.section {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .content {
   display: flex;
   flex-direction: column;

@@ -27,37 +27,41 @@ interface Props {
   move: Move | null
 }
 
-const Training = ({ heroPosition: heroPosition2, move }: Props) => {
+const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
   const trainingContainerRef = useRef<HTMLDivElement>(null)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const [guess, setGuess] = useState<Move | null>(null)
   const [goodAnswer, setGoodAnswer] = useState<Move | null>(null)
   const [score, setScore] = useState<Score>(new Score())
-  const [heroPosition, setHeroPosition] = useState<Position | null>(heroPosition2)
+  const [heroPosition, setHeroPosition] = useState<Position | null>(heroPositionDefault)
   //const { t } = useTranslations()
 
   const windowSize = useWindowSize()
   const buttonPosition = heroPosition ? buttonPositionFromHeroPosition(heroPosition) : 0
 
-  const newRandomPlay = useCallback(() => {
+  const newRandomPlay = useCallback(async () => {
     setGuess(null)
-    const play = setRandomPlay(move, heroPosition2)
+    const play = await setRandomPlay(move, heroPositionDefault)
     setHand(play.hand)
     setActions(play.actions)
     setHeroPosition(play.heroPosition)
-  }, [move, heroPosition2])
+  }, [move, heroPositionDefault])
 
   useEffect(() => {
     // set good answer
-    const actionPositions = actions.map(action => action.position)
-    const answerOK = heroPosition ? gto(heroPosition, actionPositions, hand) : null
-    setGoodAnswer(answerOK)
+    const effect = async () => {
+      const actionPositions = actions.map(action => action.position)
+      const answerOK = heroPosition ? await gto(heroPosition, actionPositions, hand) : null
+      setGoodAnswer(answerOK)
+    }
+    effect()
   }, [heroPosition, hand, actions])
 
   useEffect(() => {
+    const playerHasNotYetAnwsered = !guess || !goodAnswer
     // set score
-    if (!guess || !goodAnswer) return
+    if (playerHasNotYetAnwsered) return
     guess === goodAnswer ? setScore(prev => prev.goodAnswer()) : setScore(prev => prev.badAnswer())
   }, [guess, goodAnswer])
 
@@ -69,7 +73,9 @@ const Training = ({ heroPosition: heroPosition2, move }: Props) => {
     return windowSize.width
   }
 
-  useEffect(newRandomPlay, [newRandomPlay])
+  useEffect(() => {
+    newRandomPlay()
+  }, [newRandomPlay])
 
   return (
     <>

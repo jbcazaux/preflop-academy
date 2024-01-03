@@ -26,15 +26,13 @@ const isMoveTypeAllowed = (move: Move, hero: Position): boolean => {
 interface Props {
   heroPosition: Position | null
   moveType: Move | null
-  setMoveType: (m: Move | null) => void
 }
 
-const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
+const TrainingMenu = ({ heroPosition, moveType }: Props) => {
   const router = useRouter()
-  // const t = useTranslations('training')
 
   return (
-    <SideMenu position="left" title="training.setup.title">
+    <SideMenu position="left" title="'training.setup.title'">
       <Vertical className={style.positions}>
         <div>'training.setup.position'</div>
         <Button onClick={() => router.push('./B')} active={heroPosition === Position.B} className={style.heroPosition}>
@@ -42,10 +40,13 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
         </Button>
         <Button
           className={style.heroPosition}
-          onClick={() => router.push('./SB')}
+          onClick={() => {
+            console.log('will route to SB')
+            return router.push('./SB')
+          }}
           active={heroPosition === Position.SB}
         >
-          Small Blind
+          Small Blind2
         </Button>
         <Button
           className={style.heroPosition}
@@ -83,7 +84,7 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
         <div>'setup.move'</div>
         <Button
           className={style.move}
-          onClick={() => setMoveType(Move.OPEN)}
+          onClick={() => router.push(`./${Move.OPEN}`)}
           active={moveType === Move.OPEN}
           disabled={!heroPosition || !isMoveTypeAllowed(Move.OPEN, heroPosition)}
         >
@@ -91,7 +92,7 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
         </Button>
         <Button
           className={style.move}
-          onClick={() => setMoveType(Move.CALL)}
+          onClick={() => router.push(`./${Move.CALL}`)}
           active={moveType === Move.CALL}
           disabled={!heroPosition || !isMoveTypeAllowed(Move.CALL, heroPosition)}
         >
@@ -99,13 +100,13 @@ const TrainingMenu = ({ heroPosition, moveType, setMoveType }: Props) => {
         </Button>
         <Button
           className={style.move}
-          onClick={() => setMoveType(Move.CALL3BET)}
+          onClick={() => router.push(`./${Move.CALL3BET}`)}
           active={moveType === Move.CALL3BET}
           disabled={!heroPosition || !isMoveTypeAllowed(Move.CALL3BET, heroPosition)}
         >
           FOLD/ CALL 3BET
         </Button>
-        <Button className={style.move} onClick={() => setMoveType(null)} active={moveType === null}>
+        <Button className={style.move} onClick={() => router.push(`./${Move.OPEN}`)} active={moveType === null}>
           RANDOM
         </Button>
       </Vertical>

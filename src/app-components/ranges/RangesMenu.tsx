@@ -1,77 +1,103 @@
-'use client'
+import 'server-only'
 
 import { getHintsTable } from 'data/gto'
-import Move from 'domain/move'
+import Move, { moveToUrlParam } from 'domain/move'
 import Position, { allPositions, positionsNamesMap } from 'domain/position'
 
-import Button from 'components/button/Button'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
+import LinkButton from 'components/LinkButton/LinkButton'
 
 import style from './RangesMenu.module.scss'
 
 interface MovesProps {
-  setHeroMove: (m: Move) => void
   heroMove: Move
 }
-const Moves = ({ setHeroMove, heroMove }: MovesProps) => (
+const Moves = ({ heroMove }: MovesProps) => (
   <>
-    {[Move.OPEN, Move.CALL, Move._3BET, Move.CALL3BET, Move._4BET].map(move => (
-      <Button key={move} onClick={() => setHeroMove(move)} active={heroMove === move} className={style.button}>
-        {move}
-      </Button>
-    ))}
+    <LinkButton
+      href={`/ranges/${moveToUrlParam(Move.OPEN)}/${Position.B}`}
+      active={heroMove === Move.OPEN}
+      className={style.button}
+    >
+      {Move.OPEN}
+    </LinkButton>
+    <LinkButton
+      href={`/ranges/${moveToUrlParam(Move.CALL)}/${Position.B}/vs/${Position.UTG}`}
+      active={heroMove === Move.CALL}
+      className={style.button}
+    >
+      {Move.CALL}
+    </LinkButton>
+    <LinkButton
+      href={`/ranges/${moveToUrlParam(Move._3BET)}/${Position.B}/vs/${Position.UTG}`}
+      active={heroMove === Move._3BET}
+      className={style.button}
+    >
+      {Move._3BET}
+    </LinkButton>
+    <LinkButton
+      href={`/ranges/${moveToUrlParam(Move.CALL3BET)}/${Position.UTG}/vs/${Position.B}`}
+      active={heroMove === Move.CALL3BET}
+      className={style.button}
+    >
+      {Move.CALL3BET}
+    </LinkButton>
+    <LinkButton
+      href={`/ranges/${moveToUrlParam(Move._4BET)}/${Position.UTG}/vs/${Position.B}`}
+      active={heroMove === Move._4BET}
+      className={style.button}
+    >
+      {Move._4BET}
+    </LinkButton>
   </>
 )
 
 interface Props {
   heroMove: Move
-  setHeroMove: (move: Move) => void
   heroPosition: Position
-  setHeroPosition: (p: Position) => void
-  vilainPosition: Position
-  setVilainPosition: (p: Position) => void
+  vilainPosition?: Position
 }
 
-const RangesMenu = ({
-  heroMove,
-  setHeroMove,
-  heroPosition,
-  setHeroPosition,
-  vilainPosition,
-  setVilainPosition,
-}: Props) => (
+const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => (
   <SideMenu position="left" title="Ranges" className={style.menu}>
     <Vertical className={style.group}>
       <div>Choose your move :</div>
-      <Moves setHeroMove={setHeroMove} heroMove={heroMove} />
+      <Moves heroMove={heroMove} />
     </Vertical>
     <Vertical className={style.group}>
       <div>Choose your position :</div>
-      {allPositions.map(position => (
-        <Button
-          className={style.button}
-          key={position}
-          disabled={!getHintsTable(heroMove, position, vilainPosition)}
-          onClick={() => setHeroPosition(position)}
-          active={heroPosition === position}
-        >
-          {positionsNamesMap.get(position) || ''}
-        </Button>
-      ))}
+      {allPositions.map(position => {
+        const link =
+          Move.OPEN === heroMove
+            ? `/ranges/${moveToUrlParam(heroMove)}/${position}`
+            : `/ranges/${moveToUrlParam(heroMove)}/${position}/vs/${vilainPosition}`
+
+        return (
+          <LinkButton
+            className={style.button}
+            key={position}
+            disabled={!getHintsTable(heroMove, position, vilainPosition)}
+            href={link}
+            active={heroPosition === position}
+          >
+            {positionsNamesMap.get(position) || ''}
+          </LinkButton>
+        )
+      })}
     </Vertical>
     <Vertical className={style.group}>
       <div>Choose Vilain's position :</div>
       {allPositions.map(position => (
-        <Button
+        <LinkButton
           className={style.button}
           key={position}
           disabled={heroMove === Move.OPEN || !getHintsTable(heroMove, heroPosition, position)}
-          onClick={() => setVilainPosition(position)}
+          href={`/ranges/${moveToUrlParam(heroMove)}/${heroPosition}/vs/${position}`}
           active={vilainPosition === position}
         >
           {positionsNamesMap.get(position) || ''}
-        </Button>
+        </LinkButton>
       ))}
     </Vertical>
   </SideMenu>

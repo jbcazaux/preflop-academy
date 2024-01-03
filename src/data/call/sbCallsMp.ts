@@ -1,4 +1,6 @@
-const sbCallsMp : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const sbCallsMp: HintTable = [
   [
     /*AA*/ false,
     /*AKs*/ false,
@@ -160,7 +162,7 @@ const sbCallsMp : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*74o*/ false,
     /*64o*/ false,
     /*54o*/ false,
-    /*44*/  false,
+    /*44*/ false,
     /*43s*/ false,
     /*42s*/ false,
   ],

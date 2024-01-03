@@ -1,2 +1,40 @@
 @use 'style/variables.scss' as *;
 @use 'style/breakpoints.scss' as *;
+
+.combo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 25px;
+  height: 25px;
+  font-size: 0.75em;
+  opacity: 0.6;
+  margin: 1px;
+  border: 1px solid $black;
+  border-radius: 3px;
+  box-sizing: border-box;
+  cursor: pointer;
+  background-color: $secondary;
+
+  &.active,
+  &.active.suited,
+  &.active.pair {
+    opacity: 1;
+    background-color: $range-active;
+  }
+  &.selected {
+    border: 3px solid $range-selected;
+  }
+  &.suited {
+    background-color: $primary;
+  }
+  &.pair {
+    background-color: $secondary;
+  }
+
+  @media (max-width: $breakpoints-max-tablet) {
+    width: 20px;
+    height: 20px;
+    font-size: 0.6em;
+  }
+}

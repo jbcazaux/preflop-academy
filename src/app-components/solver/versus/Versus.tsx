@@ -1,13 +1,13 @@
 'use client'
 
-import { useMemo } from 'react'
+import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import versusApi, { VsResult } from 'api/versus'
-import { getHintsTable } from 'data/gto'
+import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import Hand from 'domain/hand'
-import { getRange } from 'domain/hintTable'
+import { extractRange } from 'domain/hintTable'
 import Position from 'domain/position'
 
 import Vertical from 'components/layout/Vertical'
@@ -25,17 +25,27 @@ interface Props {
 }
 
 const Versus = ({ hero, hand, board, actions }: Props) => {
-  const range = useMemo(() => {
-    const vilainLastAction = actions.reduce(
-      (lastAction: Action | null, cur) => (cur.position !== hero ? cur : lastAction),
-      null
-    )
-    if (!vilainLastAction) return null
+  const [range, setRange] = useState<ReadonlyArray<string>>([])
 
-    const hintsTable = getHintsTable(vilainLastAction.move, vilainLastAction.position, hero)
-    if (!hintsTable) return null
+  useEffect(() => {
+    const effect = async () => {
+      const vilainLastAction = actions.reduce(
+        (lastAction: Action | null, cur) => (cur.position !== hero ? cur : lastAction),
+        null
+      )
+      if (!vilainLastAction) {
+        setRange([])
+        return
+      }
+      const hintsTable = await getHintsTable(vilainLastAction.move, vilainLastAction.position, hero)
+      if (!hintsTable) {
+        setRange([])
+        return
+      }
 
-    return getRange(hintsTable)
+      setRange(extractRange(hintsTable))
+    }
+    effect()
   }, [actions, hero])
 
   const {

@@ -1,7 +1,6 @@
-'use client'
+import 'server-only'
 
-import { useMemo, useState } from 'react'
-import { getHintsTable } from 'data/gto'
+import { getHintsTable } from 'data/gto-client'
 import Move from 'domain/move'
 import Position, { positionsNamesMap } from 'domain/position'
 
@@ -17,10 +16,10 @@ import style from './PreflopRanges.module.scss'
 interface TitleProps {
   move: Move
   hero: Position
-  vilain: Position
+  vilain?: Position
 }
 const Title = ({ move, hero, vilain }: TitleProps) => {
-  if (move === Move.OPEN) {
+  if (move === Move.OPEN || !vilain) {
     return <b>{`${move} @ ${positionsNamesMap.get(hero)} :`}</b>
   }
   return <b>{`${move} @ ${positionsNamesMap.get(hero)} vs. ${positionsNamesMap.get(vilain)} :`}</b>
@@ -36,50 +35,39 @@ const getVilainMove = (heroMove: Move) => {
   return Move.FOLD
 }
 
-const Ranges = () => {
-  const [heroPosition, setHeroPosition] = useState<Position>(Position.B)
-  const [vilainPosition, setVilainPosition] = useState<Position>(Position.B)
-  const [heroMove, setHeroMove] = useState<Move>(Move.OPEN)
+interface Props {
+  heroPosition: Position
+  heroMove: Move
+  vilainPosition?: Position
+}
 
-  const vilainMove = useMemo(() => getVilainMove(heroMove), [heroMove])
-
-  const heroHintsTable = useMemo(
-    () => getHintsTable(heroMove, heroPosition, vilainPosition),
-    [heroMove, heroPosition, vilainPosition]
-  )
-  const vilainHintsTable = useMemo(
-    () => getHintsTable(vilainMove, vilainPosition, heroPosition),
-    [heroPosition, vilainMove, vilainPosition]
-  )
+const PreflopRanges = async ({ heroPosition, heroMove, vilainPosition }: Props) => {
+  const vilainMove = getVilainMove(heroMove)
+  const heroHintTable = await getHintsTable(heroMove, heroPosition, vilainPosition)
+  const vilainHintTable = vilainPosition ? await getHintsTable(vilainMove, vilainPosition, heroPosition) : null
+  const _3betHintTable = heroMove === Move.CALL ? await getHintsTable(Move._3BET, heroPosition, vilainPosition) : null
 
   return (
     <Horizontal>
-      <RangesMenu
-        heroMove={heroMove}
-        setHeroMove={setHeroMove}
-        heroPosition={heroPosition}
-        setHeroPosition={setHeroPosition}
-        vilainPosition={vilainPosition}
-        setVilainPosition={setVilainPosition}
-      />
+      <RangesMenu heroMove={heroMove} heroPosition={heroPosition} vilainPosition={vilainPosition} />
       <Horizontal className={style.wrap}>
         <Vertical className={style['range-container']}>
           <Title move={heroMove} hero={heroPosition} vilain={vilainPosition} />
-          <PercentageOfPlayedHands hintsTable={heroHintsTable} />
-          <RangeTable hintsTable={heroHintsTable} />
+          <PercentageOfPlayedHands hintsTable={heroHintTable} />
+          <RangeTable hintsTable={heroHintTable} />
         </Vertical>
-        {heroMove === Move.CALL && (
+        {heroMove === Move.CALL && _3betHintTable && (
           <Vertical className={style['range-container']}>
             <Title move={Move._3BET} hero={heroPosition} vilain={vilainPosition} />
-            <PercentageOfPlayedHands hintsTable={getHintsTable(Move._3BET, heroPosition, vilainPosition)} />
-            <RangeTable hintsTable={getHintsTable(Move._3BET, heroPosition, vilainPosition)} />
+            <PercentageOfPlayedHands hintsTable={_3betHintTable} />
+            <RangeTable hintsTable={_3betHintTable} />
           </Vertical>
         )}
-        {hasVilainOpen(heroMove) && (
+        {hasVilainOpen(heroMove) && vilainPosition && (
           <Vertical className={style['range-container']}>
             <Title move={vilainMove} hero={vilainPosition} vilain={heroPosition} />
-            <PercentageOfPlayedHands hintsTable={vilainHintsTable} />
-            <RangeTable hintsTable={vilainHintsTable} />
+            <PercentageOfPlayedHands hintsTable={vilainHintTable} />
+            <RangeTable hintsTable={vilainHintTable} />
           </Vertical>
         )}
       </Horizontal>
@@ -87,4 +75,4 @@ const Ranges = () => {
   )
 }
 
-export default Ranges
+export default PreflopRanges
