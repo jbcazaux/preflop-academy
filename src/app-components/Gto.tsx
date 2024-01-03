@@ -1,4 +1,5 @@
-import gto from 'data/gto'
+import { useEffect, useState } from 'react'
+import gto from 'data/gto-client'
 import Action from 'domain/action'
 import Hand from 'domain/hand'
 import Position from 'domain/position'
@@ -12,12 +13,19 @@ interface Props {
 }
 
 const Gto = ({ hero, actions, hand }: Props) => {
-  const move = gto(
-    hero,
-    actions.map(a => a.position),
-    hand
-  )
-  return <ActionComponent>You should : {move || 'N/A'}</ActionComponent>
+  const [move, setMove] = useState<string>('')
+
+  useEffect(() => {
+    gto(
+      hero,
+      actions.map(a => a.position),
+      hand
+    ).then(result => {
+      setMove(result || 'N/A')
+    })
+  }, [hero, actions, hand])
+
+  return <ActionComponent>You should : {move}</ActionComponent>
 }
 
 export default Gto

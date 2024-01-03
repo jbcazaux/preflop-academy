@@ -41,8 +41,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
         <Button
           className={style.heroPosition}
           onClick={() => {
-            console.log('will route to SB')
-            return router.push('./SB')
+            router.push('./SB')
           }}
           active={heroPosition === Position.SB}
         >

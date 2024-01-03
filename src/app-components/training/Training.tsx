@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 import PreFlopSolver from 'app-components/solver/PreFlopSolver'
-import gto from 'data/gto'
+import gto from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import Hand from 'domain/hand'

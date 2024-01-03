@@ -24,7 +24,14 @@ const RangeTableClickable = ({ hintsTable, hand }: Props) => {
           {cards.map((c2, j) => {
             const selected = xyInRangeTable?.[0] === i && xyInRangeTable?.[1] === j
             return (
-              <Combo key={`${c1}${c2}`} active={!!hintsTable?.[i][j]} suited={i < j} pair={i === j} selected={selected}>
+              <Combo
+                key={`${c1}${c2}`}
+                active={!!hintsTable?.[i][j]}
+                suited={i < j}
+                pair={i === j}
+                selected={selected}
+                xy={[i, j]}
+              >
                 {i < j ? `${c1}${c2}` : `${c2}${c1}`}
               </Combo>
             )

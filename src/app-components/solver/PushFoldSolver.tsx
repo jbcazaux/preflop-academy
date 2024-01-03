@@ -1,10 +1,12 @@
 'use client'
 
-import { useMemo, useState } from 'react'
-import { gtoPushFold } from 'data/gto'
-import pushfoldHintsTable from 'data/pushfold'
+import { useEffect, useState } from 'react'
+import { pushOrFold } from 'api/hintTables'
+import { gtoPushFold } from 'data/gto-client'
 import ButtonPosition from 'domain/buttonPosition'
 import Hand from 'domain/hand'
+import HintTable from 'domain/hintTable'
+import Move from 'domain/move'
 import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
 
@@ -19,15 +21,21 @@ interface Props {
 
 const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
   const [stack, setStack] = useState<number>(5)
+  const [action, setAction] = useState<Move | null>(null)
+  const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
 
-  const action = useMemo(() => {
+  useEffect(() => {
     const hero = heroPositionFromButtonPosition(buttonPosition)
-    return gtoPushFold(hero, hand, stack)
+    gtoPushFold(hero, hand, stack).then(result => {
+      setAction(result)
+    })
   }, [buttonPosition, hand, stack])
 
-  const hintsTable = useMemo(() => {
+  useEffect(() => {
     const hero = heroPositionFromButtonPosition(buttonPosition)
-    return pushfoldHintsTable(hero, stack)
+    pushOrFold.get(stack, hero).then(result => {
+      setHintsTable(result)
+    })
   }, [buttonPosition, stack])
 
   return (

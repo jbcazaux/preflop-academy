@@ -1,3 +1,5 @@
+import 'server-only'
+
 import pushfoldHintsTable from 'data/pushfold'
 import Hand from 'domain/hand'
 import HintTable from 'domain/hintTable'
