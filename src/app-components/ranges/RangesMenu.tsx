@@ -60,7 +60,7 @@ interface Props {
 }
 
 const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => (
-  <SideMenu position="left" title="Ranges" className={style.menu}>
+  <SideMenu position="left" title="Ranges">
     <Vertical className={style.group}>
       <div>Choose your move :</div>
       <Moves heroMove={heroMove} />
