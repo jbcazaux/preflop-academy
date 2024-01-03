@@ -3,8 +3,6 @@ import Hand from 'domain/hand'
 import Move from 'domain/move'
 import Position from 'domain/position'
 
-import 'jest-styled-components'
-
 import Gto from './Gto'
 
 jest.mock('data/gto-client', () => jest.fn().mockResolvedValue(Move.OPEN))
