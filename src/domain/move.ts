@@ -28,4 +28,5 @@ const moveToUrlParamMap = new Map<Move, string>([
   [Move.ALL_IN, 'all-in'],
 ])
 export const urlParamToMove = (value: string): Move | undefined => urlParamToMoveMap.get(value)
-export const moveToUrlParam = (value: Move): string | undefined => moveToUrlParamMap.get(value)
+export const moveToUrlParam = (value: Move | null): string | undefined =>
+  value ? moveToUrlParamMap.get(value) : undefined

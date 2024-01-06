@@ -1,17 +1,20 @@
-'use client'
+import 'server-only'
 
-import Move from 'domain/move'
+import Move, { moveToUrlParam } from 'domain/move'
 import Position from 'domain/position'
-import { useRouter } from 'next/navigation'
 import { useTranslations } from 'next-intl'
 
-import Button from 'components/button/Button'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
+import LinkButton from 'components/LinkButton/LinkButton'
 
 import style from './TrainingMenu.module.scss'
 
-const isMoveTypeAllowed = (move: Move, hero: Position): boolean => {
+const isMoveTypeAllowed = (move: Move | null, hero: Position): boolean => {
+  if (!move) {
+    return true
+  }
+
   switch (move) {
     case Move.OPEN:
       return hero !== Position.BB
@@ -29,87 +32,96 @@ interface Props {
   moveType: Move | null
 }
 
+const random = 'random'
 const TrainingMenu = ({ heroPosition, moveType }: Props) => {
-  const router = useRouter()
   const t = useTranslations('training')
 
   return (
     <SideMenu position="left" title={t('setup.title')}>
-      <Vertical className={style.positions}>
-        <div>{t('setup.position')}</div>
-        <Button onClick={() => router.push('./B')} active={heroPosition === Position.B} className={style.heroPosition}>
-          Button
-        </Button>
-        <Button
-          className={style.heroPosition}
-          onClick={() => {
-            router.push('./SB')
-          }}
-          active={heroPosition === Position.SB}
-        >
-          Small Blind
-        </Button>
-        <Button
-          className={style.heroPosition}
-          onClick={() => router.push('./BB')}
-          active={heroPosition === Position.BB}
-        >
-          Big Blind
-        </Button>
-        <Button
-          className={style.heroPosition}
-          onClick={() => router.push('./UTG')}
-          active={heroPosition === Position.UTG}
-        >
-          UTG
-        </Button>
-        <Button
-          className={style.heroPosition}
-          onClick={() => router.push('./MP')}
-          active={heroPosition === Position.MP}
-        >
-          HJ
-        </Button>
-        <Button
-          className={style.heroPosition}
-          onClick={() => router.push('./CO')}
-          active={heroPosition === Position.CO}
-        >
-          Cut Off
-        </Button>
-        <Button className={style.heroPosition} onClick={() => router.push('./random')} active={heroPosition === null}>
-          Random
-        </Button>
-      </Vertical>
       <Vertical className={style.moves}>
         <div>{t('setup.move')}</div>
-        <Button
+        <LinkButton
+          href={`/training/${moveToUrlParam(Move.OPEN) || random}/${Position.B}`}
           className={style.move}
-          onClick={() => router.push(`./${Move.OPEN}`)}
           active={moveType === Move.OPEN}
-          disabled={!heroPosition || !isMoveTypeAllowed(Move.OPEN, heroPosition)}
         >
           OPEN
-        </Button>
-        <Button
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(Move.CALL) || random}/${Position.B}`}
           className={style.move}
-          onClick={() => router.push(`./${Move.CALL}`)}
           active={moveType === Move.CALL}
-          disabled={!heroPosition || !isMoveTypeAllowed(Move.CALL, heroPosition)}
         >
           FOLD / CALL / 3BET
-        </Button>
-        <Button
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(Move.CALL3BET) || random}/${Position.B}`}
           className={style.move}
-          onClick={() => router.push(`./${Move.CALL3BET}`)}
           active={moveType === Move.CALL3BET}
-          disabled={!heroPosition || !isMoveTypeAllowed(Move.CALL3BET, heroPosition)}
         >
           FOLD/ CALL 3BET
-        </Button>
-        <Button className={style.move} onClick={() => router.push(`./${Move.OPEN}`)} active={moveType === null}>
-          RANDOM
-        </Button>
+        </LinkButton>
+        <LinkButton href={`/training/${random}/${Position.B}`} className={style.move} active={moveType === null}>
+          {t('random')}
+        </LinkButton>
+      </Vertical>
+      <Vertical className={style.positions}>
+        <div>{t('setup.position')}</div>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType) || random}/${Position.B}`}
+          className={style.heroPosition}
+          active={heroPosition === Position.B}
+          disabled={!isMoveTypeAllowed(moveType, Position.B)}
+        >
+          Button
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType)}/${Position.SB}`}
+          className={style.heroPosition}
+          active={heroPosition === Position.SB}
+          disabled={!isMoveTypeAllowed(moveType, Position.SB)}
+        >
+          Small Blind
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType)}/${Position.BB}`}
+          className={style.heroPosition}
+          active={heroPosition === Position.BB}
+          disabled={!isMoveTypeAllowed(moveType, Position.BB)}
+        >
+          Big Blind
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType)}/${Position.UTG}`}
+          className={style.heroPosition}
+          active={heroPosition === Position.UTG}
+          disabled={!isMoveTypeAllowed(moveType, Position.UTG)}
+        >
+          UTG
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType)}/${Position.MP}`}
+          className={style.heroPosition}
+          active={heroPosition === Position.MP}
+          disabled={!isMoveTypeAllowed(moveType, Position.MP)}
+        >
+          HJ
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType)}/${Position.CO}`}
+          className={style.heroPosition}
+          active={heroPosition === Position.CO}
+          disabled={!isMoveTypeAllowed(moveType, Position.CO)}
+        >
+          Cut Off
+        </LinkButton>
+        <LinkButton
+          href={`/training/${moveToUrlParam(moveType) || random}/${random}`}
+          className={style.heroPosition}
+          active={heroPosition === null}
+        >
+          {t('random')}
+        </LinkButton>
       </Vertical>
     </SideMenu>
   )

@@ -17,6 +17,7 @@
       "position": "Choose your position:",
       "move": "Choose your move:"
     },
+    "random": "Random",
     "ask-move": "What's your move ?",
     "score": "Score"
   },

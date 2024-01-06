@@ -15,7 +15,7 @@ interface MovesProps {
   heroMove: Move
 }
 const Moves = ({ heroMove }: MovesProps) => (
-  <>
+  <Vertical className={style.group}>
     <LinkButton
       href={`/ranges/${moveToUrlParam(Move.OPEN)}/${Position.B}`}
       active={heroMove === Move.OPEN}
@@ -51,7 +51,7 @@ const Moves = ({ heroMove }: MovesProps) => (
     >
       {Move._4BET}
     </LinkButton>
-  </>
+  </Vertical>
 )
 
 interface Props {
