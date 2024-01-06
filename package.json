@@ -52,7 +52,7 @@
     "lint": "next lint",
     "prebuild": "npm test",
     "build:server": "tsc",
-    "test": "jest src",
+    "test": "NODE_ENV=test jest",
     "test:coverage": "jest --coverage",
     "ncuu": "ncu -u",
     "prepare": "husky install"
