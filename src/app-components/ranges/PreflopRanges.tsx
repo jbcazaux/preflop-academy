@@ -1,6 +1,6 @@
 import 'server-only'
 
-import { getHintsTable } from 'data/gto-client'
+import { getHintsTable } from 'data/gto'
 import Move from 'domain/move'
 import Position, { positionsNamesMap } from 'domain/position'
 
