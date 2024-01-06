@@ -1,0 +1,20 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.title {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  margin: 0;
+  padding: 5px;
+  border: solid 1px #2e404f;
+  border-radius: 5px 5px 0 0;
+  cursor: pointer;
+  color: #2e404f;
+  background-color: $white;
+
+  &.selected {
+    color: $white;
+    background-color: #2e404f;
+  }
+}

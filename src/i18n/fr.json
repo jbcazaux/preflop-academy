@@ -1,26 +1,30 @@
 {
-  "translation": {
-    "menu": {
-      "home": "Accueil",
-      "training": "Exercices",
-      "solver": "Calculs",
-      "ranges": "Ranges",
-      "ranges-editor": "Éditeur de ranges"
+  "menu": {
+    "home": "Accueil",
+    "training": "Exercices",
+    "solver": "Calculs",
+    "ranges": "Ranges",
+    "ranges-editor": "Éditeur de ranges"
+  },
+  "ranges": {
+    "choose-move": "Choisissez votre coup :",
+    "choose-position": "Votre position :",
+    "choose-vilain-position": "Position de l'adversaire :"
+  },
+  "training": {
+    "setup": {
+      "title": "Installation",
+      "position": "Position :",
+      "move": "Coup :"
     },
-    "training": {
-      "setup": {
-        "title": "Installation",
-        "position": "Position :",
-        "move": "Coup :"
-      },
-      "ask-move": "Que faire ?",
-      "score": "Score"
-    },
-    "solver": {
-      "moreThan20bb": "Plus de 20BB"
-    },
-    "home": {
-      "welcome": "Bienvenue !"
-    }
-  }
+    "ask-move": "Que faire ?",
+    "score": "Score"
+  },
+  "solver": {
+    "moreThan20bb": "Plus de 20BB"
+  },
+  "home": {
+    "welcome": "Bienvenue !"
+  },
+  "title": "Flop Academy"
 }

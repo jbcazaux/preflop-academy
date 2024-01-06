@@ -1,4 +1,6 @@
-const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const bbCallsB: HintTable = [
   [
     /*AA*/ false,
     /*AKs*/ false,
@@ -32,7 +34,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
   [
     /*AQo*/ false,
     /*KQo*/ false,
-    /*QQ*/  false,
+    /*QQ*/ false,
     /*QJs*/ false,
     /*QTs*/ false,
     /*Q9s*/ false,
@@ -48,7 +50,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*AJo*/ false,
     /*KJo*/ false,
     /*QJo*/ true,
-    /*JJ*/  false,
+    /*JJ*/ false,
     /*JTs*/ false,
     /*J9s*/ false,
     /*J8s*/ false,
@@ -64,7 +66,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*KTo*/ true,
     /*QTo*/ true,
     /*JTo*/ true,
-    /*TT*/  false,
+    /*TT*/ false,
     /*T9s*/ false,
     /*T8s*/ false,
     /*T7s*/ true,
@@ -80,7 +82,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*Q9o*/ false,
     /*J9o*/ true,
     /*T9o*/ true,
-    /*99*/  false,
+    /*99*/ false,
     /*98s*/ false,
     /*97s*/ true,
     /*96s*/ true,
@@ -96,7 +98,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*J8o*/ false,
     /*T8o*/ false,
     /*98o*/ false,
-    /*88*/  true,
+    /*88*/ true,
     /*87s*/ true,
     /*86s*/ true,
     /*85s*/ false,
@@ -112,7 +114,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*T7o*/ false,
     /*97o*/ false,
     /*87o*/ false,
-    /*77*/  true,
+    /*77*/ true,
     /*76s*/ true,
     /*75s*/ true,
     /*74s*/ true,
@@ -128,7 +130,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*96o*/ false,
     /*86o*/ false,
     /*76o*/ false,
-    /*66*/  true,
+    /*66*/ true,
     /*65s*/ true,
     /*64s*/ true,
     /*63s*/ false,
@@ -144,7 +146,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*85o*/ false,
     /*75o*/ false,
     /*65o*/ false,
-    /*55*/  true,
+    /*55*/ true,
     /*54s*/ true,
     /*53s*/ true,
     /*52s*/ false,
@@ -160,7 +162,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*74o*/ false,
     /*64o*/ false,
     /*54o*/ false,
-    /*44*/  true,
+    /*44*/ true,
     /*43s*/ true,
     /*42s*/ false,
   ],
@@ -176,7 +178,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*63o*/ false,
     /*53o*/ false,
     /*43o*/ false,
-    /*33*/  true,
+    /*33*/ true,
     /*32s*/ false,
   ],
   [
@@ -192,7 +194,7 @@ const bbCallsB : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*52o*/ false,
     /*42o*/ false,
     /*32s*/ false,
-    /*22*/  true,
+    /*22*/ true,
   ],
 ]
 

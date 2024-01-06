@@ -1,18 +1,21 @@
+'use client'
+
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import { DefaultTheme, useTheme } from 'styled-components'
 import Action from 'domain/action'
-import ButtonPosition from 'domain/buttonPosition'
 import Board from 'domain/board'
-import { Dimensions } from 'components/PokerTable/types'
-import { drawTable } from 'components/PokerTable/drawTable'
+import ButtonPosition from 'domain/buttonPosition'
+
+import { drawActions } from 'components/PokerTable/drawActions'
 import { drawCard } from 'components/PokerTable/drawCards'
 import { drawPlayers } from 'components/PokerTable/drawPlayers'
 import { drawPositions } from 'components/PokerTable/drawPositions'
-import { drawActions } from 'components/PokerTable/drawActions'
+import { drawTable } from 'components/PokerTable/drawTable'
+import { Dimensions } from 'components/PokerTable/types'
+import style from 'components/Theme/style'
 
-const dimensions = (canvasWidth: number, theme: DefaultTheme): Dimensions => {
-  const breakpointMobile = theme.breakpoints.mobile
-  const breakpointTablet = theme.breakpoints.tablet
+const dimensions = (canvasWidth: number): Dimensions => {
+  const breakpointMobile = 420
+  const breakpointTablet = 768
   const canvasMarge = canvasWidth < 400 ? 10 : canvasWidth < 600 ? 20 : 50
   const width = Math.min(
     canvasWidth - 2 * canvasMarge,
@@ -46,10 +49,9 @@ const PokerTable = ({
   board = Board.newBoard,
   width,
 }: Props) => {
-  const theme = useTheme()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [context, setContext] = useState<CanvasRenderingContext2D | null>(null)
-  const canvas = useMemo(() => dimensions(width, theme), [width, theme])
+  const canvas = useMemo(() => dimensions(width), [width])
 
   const onMouseClick = useCallback(
     (event: MouseEvent) => {
@@ -98,14 +100,14 @@ const PokerTable = ({
       return
     }
 
-    context.fillStyle = theme.colors.background
+    context.fillStyle = style.colors.background
     context.fillRect(0, 0, canvas.width + 2 * canvas.marge, canvas.height + 2 * canvas.marge)
-    drawTable(context, canvas, theme)
+    drawTable(context, canvas)
 
-    board?.cards.forEach((card, index) => drawCard(context, index + 1, board?.cards.length, canvas, card, theme))
+    board?.cards.forEach((card, index) => drawCard(context, index + 1, board?.cards.length, canvas, card))
 
-    drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, buttonPosition, theme)
-    drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition, theme)
+    drawActions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, actions, buttonPosition)
+    drawPositions(context, canvas.centerX, canvas.centerY, canvas.width, canvas.height, buttonPosition)
     !canvas.isMobile &&
       !canvas.isTablet &&
       drawPlayers(
@@ -113,10 +115,9 @@ const PokerTable = ({
         canvas.width / 2 + canvas.marge,
         canvas.height / 2 + canvas.marge,
         canvas.width,
-        canvas.height,
-        theme
+        canvas.height
       )
-  }, [actions, board, buttonPosition, canvas, context, theme])
+  }, [actions, board, buttonPosition, canvas, context])
 
   useEffect(() => {
     const c = canvasRef.current

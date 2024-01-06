@@ -1,0 +1,15 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.range-container {
+  flex: 0;
+  margin: 70px 20px 20px 20px;
+
+  @media (min-width: $breakpoints-min-desktop) {
+    margin: 10px 20px 10px 300px;
+  }
+}

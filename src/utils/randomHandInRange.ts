@@ -1,11 +1,11 @@
-import Move from 'domain/move'
+import { getHintsTable } from 'data/gto-client'
 import Hand from 'domain/hand'
-import { getHintsTable } from 'data/gto'
+import Move from 'domain/move'
 import Position from 'domain/position'
 
-const randomHandInRange = (move: Move, hero: Position): Hand => {
+const randomHandInRange = async (move: Move, hero: Position): Promise<Hand> => {
   if (move === Move.OPEN) {
-    const hintsTable = getHintsTable(Move.OPEN, hero, Position.ANY)
+    const hintsTable = await getHintsTable(Move.OPEN, hero)
     let retriesLeft = 300
     let hand: Hand
     let xy: [number, number]

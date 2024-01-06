@@ -1,13 +1,7 @@
-import styled from 'styled-components'
+import { ReactNode } from 'react'
 
-const Action = styled.div`
-  display: flex;
-  margin: 10px 0;
-  font-weight: bold;
-  font-size: 2em;
-  @media (${({ theme }) => theme.breakpoints.max.desktop}) {
-    font-size: 1em;
-  }
-`
+import style from './Action.module.scss'
+
+const Action = ({ children }: { children: ReactNode }) => <div className={style.action}>{children}</div>
 
 export default Action

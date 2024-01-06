@@ -1,18 +1,22 @@
-import Hand from 'domain/hand'
-import Position from 'domain/position'
-import open from './open'
-import call from './call'
-import _3bet from './3bet'
-import call3bet from './call3bet'
-import _4bet from './4bet'
-import Move from 'domain/move'
-import HintTable from 'domain/hintTable'
-import pushfoldHintsTable from 'data/pushfold'
+import 'server-only'
 
-export const getHintsTable = (move: Move, heroPosition: Position, vilainPosition: Position): HintTable | null => {
+import pushfoldHintsTable from 'data/pushfold'
+import Hand from 'domain/hand'
+import HintTable from 'domain/hintTable'
+import Move from 'domain/move'
+import Position from 'domain/position'
+
+import _3bet from './3bet'
+import _4bet from './4bet'
+import call from './call'
+import call3bet from './call3bet'
+import open from './open'
+
+export const getHintsTable = (move: Move, heroPosition: Position, vilainPosition?: Position): HintTable | null => {
   if (move === Move.OPEN) {
     return open.get(heroPosition) || null
   }
+  if (!vilainPosition) return null
   if (move === Move.CALL) {
     return call.get(heroPosition)?.get(vilainPosition) || null
   }
@@ -31,7 +35,7 @@ export const getHintsTable = (move: Move, heroPosition: Position, vilainPosition
 
 const openOrFold = (hand: Hand, hero: Position): Move | null => {
   const [x, y] = hand.xyInRangeTable()
-  const openHintsTable = getHintsTable(Move.OPEN, hero, Position.ANY)
+  const openHintsTable = getHintsTable(Move.OPEN, hero)
   if (!openHintsTable) {
     return null
   }
@@ -107,5 +111,3 @@ export const gtoPushFold = (hero: Position, hand: Hand, stack: number): Move | n
 
   return pushFoldHintsTable[x][y] ? Move.ALL_IN : Move.FOLD
 }
-
-

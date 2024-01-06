@@ -1,0 +1,22 @@
+@use 'style/variables.scss' as *;
+
+.app {
+  * {
+    box-sizing: border-box;
+  }
+  color: $black;
+  display: flex;
+  flex: 1;
+}
+
+.section {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: $background;
+}

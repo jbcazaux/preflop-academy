@@ -1,0 +1,9 @@
+.list {
+  display: flex;
+  list-style-type: none;
+  padding-left: 0;
+
+  .item {
+    margin: 0 10px;
+  }
+}

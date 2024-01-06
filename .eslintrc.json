@@ -12,7 +12,7 @@
       "version": "17.0.2"
     }
   },
-  "plugins": ["react", "react-hooks"],
+  "plugins": ["react", "react-hooks", "simple-import-sort"],
   "env": {
     "es6": true,
     "browser": true,
@@ -20,6 +20,8 @@
     "node": true
   },
   "extends": [
+    "next",
+    "next/core-web-vitals",
     "eslint:recommended",
     "standard-jsx",
     "plugin:react/recommended",
@@ -37,6 +39,7 @@
     "no-else-return": "error",
     "no-self-compare": "error",
     "no-shadow": "off",
+    "import/no-anonymous-default-export": "off",
     "jsx-quotes": ["error", "prefer-double"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "error",
@@ -46,10 +49,34 @@
   },
   "overrides": [
     {
-      "files": ["*.test.js"],
+      "files": ["*.test.ts"],
       "rules": {
-        "react/prop-types": "off",
         "react/display-name": "off"
+      }
+    },
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "rules": {
+        "simple-import-sort/imports": [
+          "error",
+          {
+            "groups": [
+              ["server-only", "client-only"],
+              // Packages `react` related packages come first.
+              ["^react", "^@?\\w"],
+              // Internal packages.
+              ["^(@|components)(/.*|$)"],
+              // Side effect imports.
+              ["^\\u0000"],
+              // Parent imports. Put `..` last.
+              ["^\\.\\.(?!/?$)", "^\\.\\./?$"],
+              // Other relative imports. Put same-folder imports and `.` last.
+              ["^\\./(?=.*/)(?!/?$)", "^\\.(?!/?$)", "^\\./?$"],
+              // Style imports.
+              ["^.+\\.?(css)$"]
+            ]
+          }
+        ]
       }
     }
   ]

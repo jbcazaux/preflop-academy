@@ -1,0 +1,15 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.group {
+  flex: 0;
+  margin-top: 10px;
+  &:last-of-type {
+    margin-bottom: 10px;
+  }
+}
+
+.button {
+  width: 175px;
+  margin: 5px 0;
+}

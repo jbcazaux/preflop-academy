@@ -1,8 +1,9 @@
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import { seatNumberByPositionAndButtonPosition } from 'domain/position'
-import { DefaultTheme } from 'styled-components'
+
 import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
+import style from 'components/Theme/style'
 
 export const drawActions = (
   ctx: CanvasRenderingContext2D,
@@ -11,8 +12,7 @@ export const drawActions = (
   tableWidth: number,
   tableHeight: number,
   actions: ReadonlyArray<Action>,
-  buttonPosition: ButtonPosition,
-  theme: DefaultTheme
+  buttonPosition: ButtonPosition
 ) => {
   const radius = (Math.max(tableWidth, tableHeight) / 2) * 0.6
   const ratio = tableHeight / tableWidth
@@ -28,7 +28,7 @@ export const drawActions = (
         ratio
       )
       ctx.beginPath()
-      ctx.fillStyle = theme.colors.table.action
+      ctx.fillStyle = style.colors.table.action
       ctx.font = `bold ${tableWidth / 30}px serif`
       ctx.textAlign = 'center'
       ctx.textBaseline = 'middle'

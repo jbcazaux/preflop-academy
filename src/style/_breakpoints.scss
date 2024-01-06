@@ -1,0 +1,25 @@
+/**
+ breakpoints: {
+    mobile: 420,
+    tablet: 768,
+    desktop: 1200,
+    min: {
+      mobile: 'min-width: 420px',
+      tablet: 'min-width: 768px',
+      desktop: 'min-width: 1200px',
+    },
+    max: {
+      mobile: 'max-width: 420px',
+      tablet: 'max-width: 768px',
+      desktop: 'max-width: 1200px',
+    },
+  },
+
+**/
+
+$breakpoints-min-mobile: 420px;
+$breakpoints-max-mobile: 420px;
+$breakpoints-min-tablet: 768px;
+$breakpoints-max-tablet: 768px;
+$breakpoints-min-desktop: 1200px;
+$breakpoints-max-desktop: 1200px;

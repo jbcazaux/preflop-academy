@@ -1,0 +1,11 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.wrap {
+  flex-wrap: wrap;
+}
+
+.tables {
+  width: 380px;
+  margin: 10px;
+}

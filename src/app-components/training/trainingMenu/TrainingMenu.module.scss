@@ -1,0 +1,27 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.positions {
+  flex: 0;
+  max-width: 150px;
+  margin-top: 10px;
+}
+
+.heroPosition {
+  width: 150px;
+  margin: 5px 0;
+}
+
+.moves {
+  flex: 0;
+  margin-top: 30px;
+}
+
+.move {
+  width: 160px;
+  margin: 5px 0;
+
+  @media (max-width: $breakpoints-max-tablet) {
+    width: 160px;
+  }
+}

@@ -8,10 +8,14 @@ enum Position {
   UTG = 'UTG',
   MP = 'MP',
   CO = 'CO',
-  ANY = 'ANY',
 }
 
 export default Position
+
+export const stringToPosition = (value: string): Position | undefined =>
+  (Object.values(Position) as string[]).includes(value.toLocaleUpperCase())
+    ? (value.toLocaleUpperCase() as Position)
+    : undefined
 
 export const positionsNamesMap = new Map<Position, string>([
   [Position.B, 'Button'],

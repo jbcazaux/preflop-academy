@@ -1,4 +1,6 @@
-const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const bCallsUtg: HintTable = [
   [
     /*AA*/ false,
     /*AKs*/ false,
@@ -48,7 +50,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*AJo*/ true,
     /*KJo*/ false,
     /*QJo*/ false,
-    /*JJ*/  false,
+    /*JJ*/ false,
     /*JTs*/ true,
     /*J9s*/ false,
     /*J8s*/ false,
@@ -64,7 +66,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*KTo*/ false,
     /*QTo*/ false,
     /*JTo*/ false,
-    /*TT*/  true,
+    /*TT*/ true,
     /*T9s*/ true,
     /*T8s*/ false,
     /*T7s*/ false,
@@ -80,7 +82,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*Q9o*/ false,
     /*J9o*/ false,
     /*T9o*/ false,
-    /*99*/  true,
+    /*99*/ true,
     /*98s*/ true,
     /*97s*/ false,
     /*96s*/ false,
@@ -96,7 +98,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*J8o*/ false,
     /*T8o*/ false,
     /*98o*/ false,
-    /*88*/  true,
+    /*88*/ true,
     /*87s*/ true,
     /*86s*/ false,
     /*85s*/ false,
@@ -112,7 +114,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*T7o*/ false,
     /*97o*/ false,
     /*87o*/ false,
-    /*77*/  true,
+    /*77*/ true,
     /*76s*/ true,
     /*75s*/ false,
     /*74s*/ false,
@@ -128,7 +130,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*96o*/ false,
     /*86o*/ false,
     /*76o*/ false,
-    /*66*/  true,
+    /*66*/ true,
     /*65s*/ true,
     /*64s*/ false,
     /*63s*/ false,
@@ -144,7 +146,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*85o*/ false,
     /*75o*/ false,
     /*65o*/ false,
-    /*55*/  false,
+    /*55*/ false,
     /*54s*/ false,
     /*53s*/ false,
     /*52s*/ false,
@@ -160,7 +162,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*74o*/ false,
     /*64o*/ false,
     /*54o*/ false,
-    /*44*/  false,
+    /*44*/ false,
     /*43s*/ false,
     /*42s*/ false,
   ],
@@ -176,7 +178,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*63o*/ false,
     /*53o*/ false,
     /*43o*/ false,
-    /*33*/  false,
+    /*33*/ false,
     /*32s*/ false,
   ],
   [
@@ -192,7 +194,7 @@ const bCallsUtg : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*52o*/ false,
     /*42o*/ false,
     /*32s*/ false,
-    /*22*/  false,
+    /*22*/ false,
   ],
 ]
 

@@ -1,13 +1,49 @@
-type HintTable = ReadonlyArray<ReadonlyArray<boolean>>
+import { cards } from './card'
+
+export type HintTableRow = Readonly<
+  [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean]
+>
+
+type HintTable = Readonly<
+  [
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+    HintTableRow,
+  ]
+>
 
 export default HintTable
 
-const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
+export const defaultHintTable: HintTable = [
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+  [false, false, false, false, false, false, false, false, false, false, false, false, false],
+]
 
-export const getRange = (hintsTable: HintTable): ReadonlyArray<string> =>
+export const extractRange = (hintsTable: HintTable): ReadonlyArray<string> =>
   hintsTable.flatMap((row, rowIndex) =>
-    row.reduce((acc: ReadonlyArray<string>, card, cardIndex) => {
-      if (!card) return acc
+    row.reduce((acc: ReadonlyArray<string>, combo, cardIndex) => {
+      if (!combo) return acc
       if (rowIndex < cardIndex) {
         return acc.concat(`${cards[rowIndex]}${cards[cardIndex]}s`)
       }

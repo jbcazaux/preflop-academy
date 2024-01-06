@@ -1,0 +1,27 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.menu {
+  max-width: 375px;
+  min-width: 375px;
+  transform: translateX(320px);
+
+  @media (max-width: $breakpoints-max-tablet) {
+    max-width: 300px;
+    min-width: 300px;
+    transform: translateX(245px);
+  }
+}
+
+.text {
+  display: flex;
+  font-weight: bolder;
+  margin: 10px 0;
+}
+
+.margin {
+  margin: 0 auto;
+  @media (max-width: $breakpoints-max-tablet) {
+    margin: 0 10vw;
+  }
+}

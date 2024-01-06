@@ -1,36 +1,33 @@
-import styled from 'styled-components'
-import { Position } from 'components/layout/SideMenu/types'
+import cn from 'classnames'
 
-const Container = styled.div<{ position: Position }>`
-  display: flex;
-  font-size: 25px;
-  padding: 0 10px 5px 10px;
-  font-weight: bold;
-  align-self: ${({ position }) => (position === 'left' ? 'flex-end' : 'flex-start')};
-  cursor: pointer;
-  border: 1px solid ${({ theme }) => theme.colors.black}; ;
-`
+import { SideMenuPosition } from 'components/layout/SideMenu/SideMenu'
 
-const Arrow = styled.div<{ open: boolean; position: Position }>`
-  transform: ${({ open, position }) => (open ? (position === 'left' ? 'rotate(90deg)' : 'rotate(-90deg)') : '')};
-  transition: transform 0.3s linear;
-  transform-origin: 50% 60%;
-`
+import style from './Close.module.scss'
 
 interface Props {
   onClick: () => void
   open: boolean
-  hide: boolean
-  position: Position
+  position: SideMenuPosition
 }
 
-const Close = ({ onClick, open, position, hide }: Props) =>
-  hide ? null : (
-    <Container onClick={onClick} position={position}>
-      <Arrow open={open} position={position}>
-        {position === 'left' ? '>' : '<'}
-      </Arrow>
-    </Container>
-  )
+const Close = ({ onClick, open, position }: Props) => (
+  <div
+    className={cn(style.container, {
+      [style['position-left']]: position === 'left',
+      [style['position-right']]: position === 'right',
+    })}
+    onClick={onClick}
+  >
+    <div
+      className={cn(style.arrow, {
+        [style.open]: open,
+        [style['position-left']]: position === 'left',
+        [style['position-right']]: position === 'right',
+      })}
+    >
+      {position === 'left' ? '>' : '<'}
+    </div>
+  </div>
+)
 
 export default Close

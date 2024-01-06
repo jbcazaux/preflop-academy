@@ -1,3 +1,6 @@
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
+
 import bCalls3betBb from './bCalls3betBb'
 import bCalls3betSb from './bCalls3betSb'
 import coCalls3betB from './coCalls3betB'
@@ -13,8 +16,6 @@ import utgCalls3betBb from './utgCalls3betBb'
 import utgCalls3betCo from './utgCalls3betCo'
 import utgCalls3betMp from './utgCalls3betMp'
 import utgCalls3betSb from './utgCalls3betSb'
-import Position from 'domain/position'
-import HintTable from 'domain/hintTable'
 
 const call3bet: Map<Position, Map<Position, HintTable>> = new Map([
   [

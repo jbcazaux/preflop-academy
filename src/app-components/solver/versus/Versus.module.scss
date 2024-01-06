@@ -1,0 +1,7 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.center {
+  justify-content: center;
+  align-items: center;
+}

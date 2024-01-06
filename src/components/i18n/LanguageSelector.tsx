@@ -1,35 +1,21 @@
-import i18n from 'i18n/i18n'
-import styled from 'styled-components'
-import Horizontal from 'components/layout/Horizontal'
-import { Locale } from 'i18n/types'
 import FlagFr from 'assets/icons/FlagFr'
 import FlagUs from 'assets/icons/FlagUs'
+import Link from 'next/link'
 
-const StyledLanguageSelector = styled(Horizontal)``
+import Horizontal from 'components/layout/Horizontal'
 
-const LocaleButton = styled.div`
-  margin: 5px;
-  width: 40px;
-  cursor: pointer;
-`
 interface Props {
   className?: string
 }
-const LanguageSelector = ({ className = '' }: Props) => {
-  const changeLanguage = (lng: Locale) => {
-    i18n.changeLanguage(lng)
-  }
-
-  return (
-    <StyledLanguageSelector className={className}>
-      <LocaleButton onClick={() => changeLanguage('fr')}>
-        <FlagFr />
-      </LocaleButton>
-      <LocaleButton onClick={() => changeLanguage('en')}>
-        <FlagUs />
-      </LocaleButton>
-    </StyledLanguageSelector>
-  )
-}
+const LanguageSelector = ({ className = '' }: Props) => (
+  <Horizontal className={className}>
+    <Link href="/" locale="fr">
+      <FlagFr />
+    </Link>
+    <Link href="/" locale="en">
+      <FlagUs />
+    </Link>
+  </Horizontal>
+)
 
 export default LanguageSelector

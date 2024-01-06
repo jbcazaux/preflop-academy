@@ -1,0 +1,77 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.container {
+  display: flex;
+  position: fixed;
+  overflow-y: auto;
+  background-color: $background;
+  z-index: 5;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
+  clip-path: inset(0 -15px -15px -15px);
+  transition:
+    transform linear 0.3s,
+    height 0.3s 0s,
+    min-height 0.3s 0s;
+  min-height: 55px;
+  height: 55px;
+  max-width: 250px;
+  min-width: 250px;
+
+  &.open {
+    min-height: calc(100vh - 50px);
+  }
+
+  &.position-left,
+  &.position-right {
+    &.open {
+      transform: none;
+    }
+  }
+
+  &.position-right {
+    right: 0;
+  }
+
+  @media (min-width: $breakpoints-min-desktop) {
+    min-height: calc(100vh - 50px);
+
+    &.position-left,
+    &.position-right {
+      transform: none;
+    }
+  }
+
+  .header {
+    flex: 0;
+    align-items: center;
+    margin: 10px;
+    &.position-left {
+      flex-direction: row;
+      justify-content: flex-end;
+      transform: none;
+    }
+
+    &.position-right {
+      flex-direction: row-reverse;
+      justify-content: flex-start;
+      transform: none;
+    }
+
+    .title {
+      justify-content: center;
+      font-weight: bolder;
+    }
+  }
+
+  .center {
+    align-items: center;
+  }
+}
+
+.position-left {
+  transform: translateX(-195px);
+}
+.position-right {
+  transform: translateX(195px);
+}

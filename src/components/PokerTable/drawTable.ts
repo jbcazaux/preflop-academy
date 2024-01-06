@@ -1,7 +1,7 @@
 import { Dimensions } from 'components/PokerTable/types'
-import { DefaultTheme } from 'styled-components'
+import style from 'components/Theme/style'
 
-export const drawTable = (ctx: CanvasRenderingContext2D, dimensions: Dimensions, theme: DefaultTheme) => {
+export const drawTable = (ctx: CanvasRenderingContext2D, dimensions: Dimensions) => {
   const x = dimensions.width / 2 + dimensions.marge
   const y = dimensions.height + (dimensions.marge * dimensions.width) / dimensions.height
   const rw = dimensions.width / 2
@@ -20,8 +20,8 @@ export const drawTable = (ctx: CanvasRenderingContext2D, dimensions: Dimensions,
   ctx.restore()
 
   const gradientFill = ctx.createRadialGradient(x, y - 1.5 * rh, 0, x, y - 1.5 * rh, 1.25 * rw)
-  gradientFill.addColorStop(0, theme.colors.secondary)
-  gradientFill.addColorStop(1, theme.colors.primary)
+  gradientFill.addColorStop(0, style.colors.secondary)
+  gradientFill.addColorStop(1, style.colors.primary)
   ctx.fillStyle = gradientFill
   ctx.fill()
 }

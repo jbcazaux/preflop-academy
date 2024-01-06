@@ -1,0 +1,8 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

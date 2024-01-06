@@ -1,4 +1,6 @@
-export const open = [
+import { ComboType } from 'domain/combo'
+
+export const open: ReadonlyArray<ComboType> = [
   'AA',
   'KK',
   'QQ',

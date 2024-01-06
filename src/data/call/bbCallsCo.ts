@@ -1,4 +1,6 @@
-const bbCallsCo : ReadonlyArray<ReadonlyArray<boolean>> = [
+import HintTable from 'domain/hintTable'
+
+const bbCallsCo: HintTable = [
   [
     /*AA*/ false,
     /*AKs*/ false,
@@ -80,7 +82,7 @@ const bbCallsCo : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*Q9o*/ false,
     /*J9o*/ false,
     /*T9o*/ false,
-    /*99*/  true,
+    /*99*/ true,
     /*98s*/ true,
     /*97s*/ true,
     /*96s*/ true,
@@ -144,7 +146,7 @@ const bbCallsCo : ReadonlyArray<ReadonlyArray<boolean>> = [
     /*85o*/ false,
     /*75o*/ false,
     /*65o*/ false,
-    /*55*/  true,
+    /*55*/ true,
     /*54s*/ true,
     /*53s*/ true,
     /*52s*/ false,

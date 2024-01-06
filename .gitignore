@@ -3,5 +3,8 @@
 node_modules/
 coverage/
 test-report.xml
+junit.xml
 /build/
 /dist/
+.next/
+test-report.xml

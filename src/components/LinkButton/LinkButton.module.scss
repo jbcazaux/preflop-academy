@@ -1,0 +1,40 @@
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+.action {
+  text-decoration: none;
+  width: 100px;
+  height: 30px;
+  margin: 0;
+  padding: 2px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $button-default;
+  color: $black;
+  &.active {
+    background-color: $primary;
+  }
+
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  cursor: pointer;
+
+  @media (max-width: $breakpoints-max-mobile) {
+    width: 40px;
+    height: 18px;
+    font-size: 0.5em;
+  }
+  @media (min-width: $breakpoints-min-mobile) and (max-width: $breakpoints-max-tablet) {
+    width: 50px;
+    height: 20px;
+    font-size: 0.6em;
+  }
+  @media (min-width: $breakpoints-min-tablet) and (max-width: $breakpoints-max-desktop) {
+    width: 80px;
+    height: 25px;
+    font-size: 0.8em;
+  }
+}
