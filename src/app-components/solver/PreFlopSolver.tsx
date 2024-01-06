@@ -103,7 +103,6 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = tr
   return (
     <div className={style.container}>
       <Vertical>
-        ?
         <div className={style.wrap}>
           <Vertical>
             <Gto hero={hero} hand={hand} actions={actions} />

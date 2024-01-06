@@ -6,7 +6,7 @@ const axios = (): AxiosInstance => {
   if (instance) return instance
   instance = axiosLib.create({
     timeout: 15000,
-    baseURL: 'http://localhost:3000/api',
+    baseURL: '/api',
   })
   return instance
 }

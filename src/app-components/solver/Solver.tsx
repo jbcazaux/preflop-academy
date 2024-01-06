@@ -8,6 +8,7 @@ import ButtonPosition from 'domain/buttonPosition'
 import { Card as CardObject } from 'domain/card'
 import Hand from 'domain/hand'
 import { positionBySeatNumberAndButtonPosition } from 'domain/position'
+import { useTranslations } from 'next-intl'
 
 import HandDisplay from 'components/HandDisplay'
 import Horizontal from 'components/layout/Horizontal'
@@ -31,7 +32,7 @@ const Solver = () => {
 
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
   const windowSize = useWindowSize()
-  // const t = useTranslations()
+  const t = useTranslations('solver')
 
   const getPokerTableWidth = () => {
     if (solverContainerRef.current) {
@@ -85,7 +86,7 @@ const Solver = () => {
       </Vertical>
       <Horizontal className={style.tables}>
         <Tabs>
-          <Tab title={'solver.moreThan20bb'.toUpperCase()}>
+          <Tab title={t('moreThan20bb').toUpperCase()}>
             <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={board} />
           </Tab>
           <Tab title="PUSH OR FOLD">

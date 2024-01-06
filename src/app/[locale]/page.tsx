@@ -1,13 +1,11 @@
-import TestI18N from 'app-components/TestI18N'
 import Link from 'next/link'
-import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
+import { useTranslations } from 'next-intl'
 
 import Horizontal from 'components/layout/Horizontal'
 
 import styles from './page.module.scss'
 
 const Home = () => {
-  const messages = useMessages()
   const t = useTranslations('menu')
   return (
     <nav>
@@ -30,9 +28,6 @@ const Home = () => {
           </li>
         </ul>
       </Horizontal>
-      <NextIntlClientProvider locale="fr" messages={messages}>
-        <TestI18N />
-      </NextIntlClientProvider>
     </nav>
   )
 }

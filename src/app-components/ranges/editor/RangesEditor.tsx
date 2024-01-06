@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { open as openRank } from 'data/rank'
+import { cards } from 'domain/card'
 import Combo, { ComboType } from 'domain/combo'
 import HintTable, { defaultHintTable, HintTableRow } from 'domain/hintTable'
 
@@ -14,8 +15,6 @@ import PercentageOfPlayedHand from '../PercentageOfPlayedHands'
 import RangeSelector from './RangeSelector'
 
 import style from './RangesEditor.module.scss'
-
-const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
 const combosToHint = (combos: ReadonlyArray<ComboType>): ReadonlyArray<[number, number]> =>
   combos.map(combo => new Combo(combo).xyInHintTable())

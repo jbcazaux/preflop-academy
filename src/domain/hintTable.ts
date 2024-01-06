@@ -1,3 +1,5 @@
+import { cards } from './card'
+
 export type HintTableRow = Readonly<
   [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean]
 >
@@ -37,8 +39,6 @@ export const defaultHintTable: HintTable = [
   [false, false, false, false, false, false, false, false, false, false, false, false, false],
   [false, false, false, false, false, false, false, false, false, false, false, false, false],
 ]
-
-const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
 export const extractRange = (hintsTable: HintTable): ReadonlyArray<string> =>
   hintsTable.flatMap((row, rowIndex) =>

@@ -56,11 +56,5 @@
     "test:coverage": "jest --coverage",
     "ncuu": "ncu -u",
     "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*.{js,ts,tsx,json}": [
-      "prettier --write",
-      "git add"
-    ]
   }
 }

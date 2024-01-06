@@ -6,6 +6,11 @@
     "ranges": "Ranges",
     "ranges-editor": "Ranges editor"
   },
+  "ranges": {
+    "choose-move": "Choose your move:",
+    "choose-position": "Choose your position:",
+    "choose-vilain-position": "Vilain's position:"
+  },
   "training": {
     "setup": {
       "title": "Setup",

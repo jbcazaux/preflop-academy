@@ -1,3 +1,5 @@
+import { cards } from './card'
+
 type Pair = 'AA' | 'KK' | 'QQ' | 'JJ' | 'TT' | '99' | '88' | '77' | '66' | '55' | '44' | '33' | '22'
 type ComboBasic =
   | 'AK'
@@ -87,7 +89,6 @@ export default class Combo {
   isOffsuited = (): boolean => this.value.includes('o')
   isPair = (): boolean => this.value.length === 2 && this.value[0] === this.value[1]
   xyInHintTable = (): [number, number] => {
-    const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
     const xy: [number, number] = [
       cards.indexOf(this.value[0].toUpperCase()),
       cards.indexOf(this.value[1].toUpperCase()),

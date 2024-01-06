@@ -1,3 +1,4 @@
+import { cards } from 'domain/card'
 import PokerHand from 'domain/hand'
 import HintTable from 'domain/hintTable'
 
@@ -7,8 +8,6 @@ import Vertical from 'components/layout/Vertical'
 import Combo from './Combo'
 
 import style from './RangeTable.module.scss'
-
-const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
 interface Props {
   hintsTable: HintTable | null

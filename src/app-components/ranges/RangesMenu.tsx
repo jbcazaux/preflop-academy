@@ -3,6 +3,7 @@ import 'server-only'
 import { getHintsTable } from 'data/gto'
 import Move, { moveToUrlParam } from 'domain/move'
 import Position, { allPositions, positionsNamesMap } from 'domain/position'
+import { useTranslations } from 'next-intl'
 
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
@@ -59,48 +60,52 @@ interface Props {
   vilainPosition?: Position
 }
 
-const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => (
-  <SideMenu position="left" title="Ranges">
-    <Vertical className={style.group}>
-      <div>Choose your move :</div>
-      <Moves heroMove={heroMove} />
-    </Vertical>
-    <Vertical className={style.group}>
-      <div>Choose your position :</div>
-      {allPositions.map(position => {
-        const link =
-          Move.OPEN === heroMove
-            ? `/ranges/${moveToUrlParam(heroMove)}/${position}`
-            : `/ranges/${moveToUrlParam(heroMove)}/${position}/vs/${vilainPosition}`
+const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => {
+  const t = useTranslations('ranges')
 
-        return (
+  return (
+    <SideMenu position="left" title="Ranges">
+      <Vertical className={style.group}>
+        <div>{t('choose-move')}</div>
+        <Moves heroMove={heroMove} />
+      </Vertical>
+      <Vertical className={style.group}>
+        <div>{t('choose-position')}</div>
+        {allPositions.map(position => {
+          const link =
+            Move.OPEN === heroMove
+              ? `/ranges/${moveToUrlParam(heroMove)}/${position}`
+              : `/ranges/${moveToUrlParam(heroMove)}/${position}/vs/${vilainPosition}`
+
+          return (
+            <LinkButton
+              className={style.button}
+              key={position}
+              disabled={!getHintsTable(heroMove, position, vilainPosition)}
+              href={link}
+              active={heroPosition === position}
+            >
+              {positionsNamesMap.get(position) || ''}
+            </LinkButton>
+          )
+        })}
+      </Vertical>
+      <Vertical className={style.group}>
+        <div>{t('choose-vilain-position')}</div>
+        {allPositions.map(position => (
           <LinkButton
             className={style.button}
             key={position}
-            disabled={!getHintsTable(heroMove, position, vilainPosition)}
-            href={link}
-            active={heroPosition === position}
+            disabled={heroMove === Move.OPEN || !getHintsTable(heroMove, heroPosition, position)}
+            href={`/ranges/${moveToUrlParam(heroMove)}/${heroPosition}/vs/${position}`}
+            active={vilainPosition === position}
           >
             {positionsNamesMap.get(position) || ''}
           </LinkButton>
-        )
-      })}
-    </Vertical>
-    <Vertical className={style.group}>
-      <div>Choose Vilain's position :</div>
-      {allPositions.map(position => (
-        <LinkButton
-          className={style.button}
-          key={position}
-          disabled={heroMove === Move.OPEN || !getHintsTable(heroMove, heroPosition, position)}
-          href={`/ranges/${moveToUrlParam(heroMove)}/${heroPosition}/vs/${position}`}
-          active={vilainPosition === position}
-        >
-          {positionsNamesMap.get(position) || ''}
-        </LinkButton>
-      ))}
-    </Vertical>
-  </SideMenu>
-)
+        ))}
+      </Vertical>
+    </SideMenu>
+  )
+}
 
 export default RangesMenu

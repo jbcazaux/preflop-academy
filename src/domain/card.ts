@@ -36,7 +36,7 @@ export class Card {
 export const names = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'JACK', 'QUEEN', 'KING', 'AS']
 export type CardId = number
 
-const cards: Record<string, number> = {
+const cardsValueMap: Record<string, number> = {
   2: 1,
   3: 5,
   4: 9,
@@ -53,10 +53,11 @@ const cards: Record<string, number> = {
 }
 
 export const colors = ['SPADE', 'HEART', 'DIAMOND', 'CLUB'] as const
-export type Color = typeof colors[number]
+export type Color = (typeof colors)[number]
+export const cards: ReadonlyArray<string> = ['A', 'K', 'Q', 'J', 'T', '9', '8', '7', '6', '5', '4', '3', '2']
 
 export const deck: ReadonlyArray<ReadonlyArray<Card>> = colors.map((color, i) =>
-  Object.values(cards)
+  Object.values(cardsValueMap)
     .sort((a, b) => b - a)
     .map(value => new Card(value + i))
 )

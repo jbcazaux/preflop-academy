@@ -3,6 +3,7 @@
 import Move from 'domain/move'
 import Position from 'domain/position'
 import { useRouter } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 import Button from 'components/button/Button'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
@@ -30,11 +31,12 @@ interface Props {
 
 const TrainingMenu = ({ heroPosition, moveType }: Props) => {
   const router = useRouter()
+  const t = useTranslations('training')
 
   return (
-    <SideMenu position="left" title="'training.setup.title'">
+    <SideMenu position="left" title={t('setup.title')}>
       <Vertical className={style.positions}>
-        <div>'training.setup.position'</div>
+        <div>{t('setup.position')}</div>
         <Button onClick={() => router.push('./B')} active={heroPosition === Position.B} className={style.heroPosition}>
           Button
         </Button>
@@ -45,7 +47,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           }}
           active={heroPosition === Position.SB}
         >
-          Small Blind2
+          Small Blind
         </Button>
         <Button
           className={style.heroPosition}
@@ -80,7 +82,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
         </Button>
       </Vertical>
       <Vertical className={style.moves}>
-        <div>'setup.move'</div>
+        <div>{t('setup.move')}</div>
         <Button
           className={style.move}
           onClick={() => router.push(`./${Move.OPEN}`)}

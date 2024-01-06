@@ -9,6 +9,7 @@ import Hand from 'domain/hand'
 import Move from 'domain/move'
 import Position, { buttonPositionFromHeroPosition } from 'domain/position'
 import Score from 'domain/Score'
+import { useTranslations } from 'next-intl'
 import noop from 'utils/noop'
 
 import HandDisplay from 'components/HandDisplay'
@@ -35,7 +36,8 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
   const [goodAnswer, setGoodAnswer] = useState<Move | null>(null)
   const [score, setScore] = useState<Score>(new Score())
   const [heroPosition, setHeroPosition] = useState<Position | null>(heroPositionDefault)
-  //const { t } = useTranslations()
+
+  const t = useTranslations('training')
 
   const windowSize = useWindowSize()
   const buttonPosition = heroPosition ? buttonPositionFromHeroPosition(heroPosition) : 0
@@ -98,7 +100,7 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
         />
         <HandDisplay hand={hand} />
         <div className={style.margin}>
-          <div className={style.text}>'training.ask-move'</div>
+          <div className={style.text}>{t('ask-move')}</div>
           <TrainingAnswers
             buttonPosition={buttonPosition}
             actions={actions}
@@ -106,7 +108,7 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
             setAnswer={setGuess}
             next={newRandomPlay}
           />
-          <div className={style.text}>{`'training.score' ${score.score} / ${score.total}`}</div>
+          <div className={style.text}>{`${t('score')} ${score.score} / ${score.total}`}</div>
         </div>
       </Vertical>
     </>

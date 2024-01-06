@@ -6,6 +6,11 @@
     "ranges": "Ranges",
     "ranges-editor": "Éditeur de ranges"
   },
+  "ranges": {
+    "choose-move": "Choisissez votre coup :",
+    "choose-position": "Votre position :",
+    "choose-vilain-position": "Position de l'adversaire :"
+  },
   "training": {
     "setup": {
       "title": "Installation",
