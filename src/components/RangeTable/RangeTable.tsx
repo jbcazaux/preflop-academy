@@ -1,13 +1,11 @@
-import { cards } from 'domain/card'
-import PokerHand from 'domain/hand'
-import HintTable from 'domain/hintTable'
+import Combo from './Combo'
+import style from './RangeTable.module.scss'
 
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
-
-import Combo from './Combo'
-
-import style from './RangeTable.module.scss'
+import { cards } from 'domain/card'
+import PokerHand from 'domain/hand'
+import HintTable from 'domain/hintTable'
 
 interface Props {
   hintsTable: HintTable | null

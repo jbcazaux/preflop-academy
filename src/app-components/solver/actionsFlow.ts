@@ -22,7 +22,7 @@ const actionsFlow = (actions: ReadonlyArray<Action>, next: Position): ReadonlyAr
       return actions.slice(0, -1).concat(new Action(lastAction.position, Move._4BET))
     }
 
-    throw new Error('Cannot do that: ' + actions + ' ' + next)
+    throw new Error('Cannot do that: ' + actions.toString() + ' ' + next)
   }
   if (actions[actions.length - 1].position !== next) {
     const lastAction = actions[actions.length - 1]
@@ -34,7 +34,7 @@ const actionsFlow = (actions: ReadonlyArray<Action>, next: Position): ReadonlyAr
     }
     return actions
   }
-  throw new Error('Cannot do that: ' + actions + ' ' + next)
+  throw new Error('Cannot do that: ' + actions.toString() + ' ' + next)
 }
 
 export default actionsFlow

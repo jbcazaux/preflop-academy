@@ -1,10 +1,11 @@
-import { MouseEventHandler } from 'react'
 import classNames from 'classnames'
-import { Card as CardObject, cardValue, Color, colors, names } from 'domain/card'
+import { MouseEventHandler } from 'react'
 import { Clubs, Diamonds, Heart, Spade } from 'tabler-icons-react'
-import noop from 'utils/noop'
 
 import style from './Card.module.scss'
+
+import { Card as CardObject, cardValue, Color, colors, names } from 'domain/card'
+import noop from 'utils/noop'
 
 interface CardProps {
   title: string

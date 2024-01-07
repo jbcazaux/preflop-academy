@@ -1,20 +1,19 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { open as openRank } from 'data/rank'
-import { cards } from 'domain/card'
-import Combo, { ComboType } from 'domain/combo'
-import HintTable, { defaultHintTable, HintTableRow } from 'domain/hintTable'
+
+import PercentageOfPlayedHand from '../PercentageOfPlayedHands'
+
+import style from './RangesEditor.module.scss'
+import RangeSelector from './RangeSelector'
 
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import RangeTable from 'components/RangeTable/RangeTable'
-
-import PercentageOfPlayedHand from '../PercentageOfPlayedHands'
-
-import RangeSelector from './RangeSelector'
-
-import style from './RangesEditor.module.scss'
+import { open as openRank } from 'data/rank'
+import { cards } from 'domain/card'
+import Combo, { ComboType } from 'domain/combo'
+import HintTable, { defaultHintTable, HintTableRow } from 'domain/hintTable'
 
 const combosToHint = (combos: ReadonlyArray<ComboType>): ReadonlyArray<[number, number]> =>
   combos.map(combo => new Combo(combo).xyInHintTable())

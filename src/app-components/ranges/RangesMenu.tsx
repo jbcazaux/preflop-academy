@@ -1,15 +1,15 @@
 import 'server-only'
 
-import { getHintsTable } from 'data/gto'
-import Move, { moveToUrlParam } from 'domain/move'
-import Position, { allPositions, positionsNamesMap } from 'domain/position'
 import { useTranslations } from 'next-intl'
+
+import style from './RangesMenu.module.scss'
 
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
 import LinkButton from 'components/LinkButton/LinkButton'
-
-import style from './RangesMenu.module.scss'
+import { getHintsTable } from 'data/gto'
+import Move, { moveToUrlParam } from 'domain/move'
+import Position, { allPositions, positionsNamesMap } from 'domain/position'
 
 interface MovesProps {
   heroMove: Move

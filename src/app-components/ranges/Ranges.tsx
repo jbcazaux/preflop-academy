@@ -1,10 +1,9 @@
-import Hand from 'domain/hand'
-import HintTable from 'domain/hintTable'
+import PercentageOfPlayedHand from './PercentageOfPlayedHands'
 
 import Horizontal from 'components/layout/Horizontal'
 import RangeTable from 'components/RangeTable/RangeTable'
-
-import PercentageOfPlayedHand from './PercentageOfPlayedHands'
+import Hand from 'domain/hand'
+import HintTable from 'domain/hintTable'
 
 interface Props {
   hintsTable: HintTable

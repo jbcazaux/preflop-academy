@@ -2,20 +2,19 @@
 
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
+
+import style from './Versus.module.scss'
+import WLResults from './WLResults'
+
 import versusApi, { VsResult } from 'api/versus'
+import Vertical from 'components/layout/Vertical'
+import Loader from 'components/Loader/Loader'
 import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import Hand from 'domain/hand'
 import { extractRange } from 'domain/hintTable'
 import Position from 'domain/position'
-
-import Vertical from 'components/layout/Vertical'
-import Loader from 'components/Loader/Loader'
-
-import WLResults from './WLResults'
-
-import style from './Versus.module.scss'
 
 interface Props {
   hero: Position
@@ -45,7 +44,9 @@ const Versus = ({ hero, hand, board, actions }: Props) => {
 
       setRange(extractRange(hintsTable))
     }
-    effect()
+    effect().catch(() => {
+      // FIXME: add logger
+    })
   }, [actions, hero])
 
   const {

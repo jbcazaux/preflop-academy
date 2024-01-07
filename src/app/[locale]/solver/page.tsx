@@ -1,4 +1,5 @@
 import { NextIntlClientProvider, useMessages } from 'next-intl'
+
 import Solver from 'src/app-components/solver/Solver'
 
 const Page = () => {

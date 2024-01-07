@@ -1,7 +1,8 @@
 import React, { ReactNode } from 'react'
-import { Locale } from 'i18n/types'
 
 import ClientProviders from './clientProviders'
+
+import { Locale } from 'i18n/types'
 
 interface Props {
   children: ReactNode

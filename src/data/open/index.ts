@@ -1,11 +1,11 @@
-import HintTable from 'domain/hintTable'
-import Position from 'domain/position'
-
 import button from './button'
 import cutoff from './cutoff'
 import mp from './mp'
 import sb from './sb'
 import utg from './utg'
+
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
 
 const open = new Map<Position, HintTable | null>([
   [Position.B, button],

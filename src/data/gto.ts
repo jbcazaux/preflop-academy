@@ -1,16 +1,16 @@
 import 'server-only'
 
-import pushfoldHintsTable from 'data/pushfold'
-import Hand from 'domain/hand'
-import HintTable from 'domain/hintTable'
-import Move from 'domain/move'
-import Position from 'domain/position'
-
 import _3bet from './3bet'
 import _4bet from './4bet'
 import call from './call'
 import call3bet from './call3bet'
 import open from './open'
+
+import pushfoldHintsTable from 'data/pushfold'
+import Hand from 'domain/hand'
+import HintTable from 'domain/hintTable'
+import Move from 'domain/move'
+import Position from 'domain/position'
 
 export const getHintsTable = (move: Move, heroPosition: Position, vilainPosition?: Position): HintTable | null => {
   if (move === Move.OPEN) {

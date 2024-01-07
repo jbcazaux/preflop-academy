@@ -1,15 +1,15 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+
+import ActionComponent from 'components/Action'
+import Vertical from 'components/layout/Vertical'
 import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import HintTable from 'domain/hintTable'
 import Position, { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
-
-import ActionComponent from 'components/Action'
-import Vertical from 'components/layout/Vertical'
 
 interface Props {
   buttonPosition: ButtonPosition
@@ -36,7 +36,9 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
       setVilainHintsTable(await getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
       setVilainAction(vilainLastAction)
     }
-    effect()
+    effect().catch(() => {
+      // FIXME: add logger
+    })
   }, [actions, hero])
 
   return (

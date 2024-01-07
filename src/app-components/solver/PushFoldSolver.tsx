@@ -1,7 +1,11 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+
+import style from './PushFoldSolver.module.scss'
+
 import { pushOrFold } from 'api/hintTables'
+import Vertical from 'components/layout/Vertical'
 import { gtoPushFold } from 'data/gto-client'
 import ButtonPosition from 'domain/buttonPosition'
 import Hand from 'domain/hand'
@@ -9,10 +13,6 @@ import HintTable from 'domain/hintTable'
 import Move from 'domain/move'
 import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
-
-import Vertical from 'components/layout/Vertical'
-
-import style from './PushFoldSolver.module.scss'
 
 interface Props {
   hand: Hand
@@ -26,16 +26,25 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
 
   useEffect(() => {
     const hero = heroPositionFromButtonPosition(buttonPosition)
-    gtoPushFold(hero, hand, stack).then(result => {
-      setAction(result)
-    })
+    gtoPushFold(hero, hand, stack)
+      .then(result => {
+        setAction(result)
+      })
+      .catch(() => {
+        // FIXME: add logger
+      })
   }, [buttonPosition, hand, stack])
 
   useEffect(() => {
     const hero = heroPositionFromButtonPosition(buttonPosition)
-    pushOrFold.get(stack, hero).then(result => {
-      setHintsTable(result)
-    })
+    pushOrFold
+      .get(stack, hero)
+      .then(result => {
+        setHintsTable(result)
+      })
+      .catch(() => {
+        // FIXME: add logger
+      })
   }, [buttonPosition, stack])
 
   return (

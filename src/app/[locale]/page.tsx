@@ -1,9 +1,9 @@
 import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
-import Horizontal from 'components/layout/Horizontal'
-
 import styles from './page.module.scss'
+
+import Horizontal from 'components/layout/Horizontal'
 
 const Home = () => {
   const t = useTranslations('menu')

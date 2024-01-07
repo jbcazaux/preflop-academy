@@ -1,7 +1,14 @@
 'use client'
 
 import { useEffect, useMemo, useState } from 'react'
+
+import ImprovementCards from './improvements/ImprovementCards'
+import style from './PreflopSolver.module.scss'
+import Versus from './versus/Versus'
+import VilainPreflopRange from './VilainPreFlopRange'
+
 import Gto from 'app-components/Gto'
+import Vertical from 'components/layout/Vertical'
 import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
@@ -11,14 +18,6 @@ import HintTable from 'domain/hintTable'
 import Move from 'domain/move'
 import Position, { heroPositionFromButtonPosition } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
-
-import Vertical from 'components/layout/Vertical'
-
-import ImprovementCards from './improvements/ImprovementCards'
-import Versus from './versus/Versus'
-import VilainPreflopRange from './VilainPreFlopRange'
-
-import style from './PreflopSolver.module.scss'
 
 interface Props {
   hand: Hand
@@ -97,7 +96,9 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = tr
         }
       }
     }
-    effect()
+    effect().catch(() => {
+      // FIXME: add logger
+    })
   }, [hand, hero, actions])
 
   return (

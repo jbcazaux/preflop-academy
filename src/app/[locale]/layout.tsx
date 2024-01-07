@@ -1,14 +1,14 @@
 import 'server-only'
 
 import { ReactNode } from 'react'
-import Menu from 'app-components/menu/Menu'
-import { Locale } from 'i18n/types'
-
-import Header from 'components/header/Header'
 
 import Providers from '../lib/providers'
 
 import styles from './layout.module.scss'
+
+import Menu from 'app-components/menu/Menu'
+import Header from 'components/header/Header'
+import { Locale } from 'i18n/types'
 
 const RootLayout = ({ children, params: { locale } }: { children: ReactNode; params: { locale: string } }) => (
   <html lang={locale}>

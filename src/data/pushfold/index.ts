@@ -1,14 +1,3 @@
-import HintTable from 'domain/hintTable'
-import Position from 'domain/position'
-
-import _2BB from './2bb'
-import _3BB from './3bb'
-import _4BB from './4bb'
-import _5BB from './5bb'
-import _6BB from './6bb'
-import _7BB from './7bb'
-import _8BB from './8bb'
-import _9BB from './9bb'
 import _10BB from './10bb'
 import _11BB from './11bb'
 import _12BB from './12bb'
@@ -20,6 +9,17 @@ import _17BB from './17bb'
 import _18BB from './18bb'
 import _19BB from './19bb'
 import _20BB from './20bb'
+import _2BB from './2bb'
+import _3BB from './3bb'
+import _4BB from './4bb'
+import _5BB from './5bb'
+import _6BB from './6bb'
+import _7BB from './7bb'
+import _8BB from './8bb'
+import _9BB from './9bb'
+
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
 
 const map: { [key: number]: Map<Position, HintTable> } = {
   2: _2BB,

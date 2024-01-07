@@ -1,8 +1,8 @@
 import cn from 'classnames'
 
-import { SideMenuPosition } from 'components/layout/SideMenu/SideMenu'
-
 import style from './Close.module.scss'
+
+import { SideMenuPosition } from 'components/layout/SideMenu/SideMenu'
 
 interface Props {
   onClick: () => void

@@ -1,7 +1,8 @@
+import { NextRequest, NextResponse } from 'next/server'
+
 import { getHintsTable } from 'data/gto'
 import { urlParamToMove } from 'domain/move'
 import { stringToPosition } from 'domain/position'
-import { NextRequest, NextResponse } from 'next/server'
 import { throwError } from 'utils/throw-error'
 
 export const GET = (

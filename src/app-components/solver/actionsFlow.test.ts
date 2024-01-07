@@ -1,8 +1,8 @@
+import actionsFlow from './actionsFlow'
+
 import Action from 'domain/action'
 import Move from 'domain/move'
 import position from 'domain/position'
-
-import actionsFlow from './actionsFlow'
 
 describe('actions flow', () => {
   it('opens', () => {

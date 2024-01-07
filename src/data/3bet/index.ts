@@ -1,6 +1,3 @@
-import HintTable from 'domain/hintTable'
-import Position from 'domain/position'
-
 import b3betsCo from './b3betsCo'
 import b3betsMp from './b3betsMp'
 import b3betsUtg from './b3betsUtg'
@@ -16,6 +13,9 @@ import sb3betsB from './sb3betsB'
 import sb3betsCo from './sb3betsCo'
 import sb3betsMp from './sb3betsMp'
 import sb3betsUtg from './sb3betsUtg'
+
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
 
 const _3bet: Map<Position, Map<Position, HintTable>> = new Map([
   [

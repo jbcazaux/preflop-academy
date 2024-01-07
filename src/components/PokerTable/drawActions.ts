@@ -1,9 +1,8 @@
+import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
+import style from 'components/Theme/style'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import { seatNumberByPositionAndButtonPosition } from 'domain/position'
-
-import { xyBySeatNumber } from 'components/PokerTable/xyBySeatNumber'
-import style from 'components/Theme/style'
 
 export const drawActions = (
   ctx: CanvasRenderingContext2D,

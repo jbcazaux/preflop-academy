@@ -1,9 +1,6 @@
 'use client'
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import Action from 'domain/action'
-import Board from 'domain/board'
-import ButtonPosition from 'domain/buttonPosition'
 
 import { drawActions } from 'components/PokerTable/drawActions'
 import { drawCard } from 'components/PokerTable/drawCards'
@@ -12,6 +9,9 @@ import { drawPositions } from 'components/PokerTable/drawPositions'
 import { drawTable } from 'components/PokerTable/drawTable'
 import { Dimensions } from 'components/PokerTable/types'
 import style from 'components/Theme/style'
+import Action from 'domain/action'
+import Board from 'domain/board'
+import ButtonPosition from 'domain/buttonPosition'
 
 const dimensions = (canvasWidth: number): Dimensions => {
   const breakpointMobile = 420

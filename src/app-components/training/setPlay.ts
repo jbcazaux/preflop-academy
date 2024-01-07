@@ -1,12 +1,12 @@
+import { getRandomMoveType } from './trainingMovesDistribution'
+import { Play } from './types'
+
 import Action from 'domain/action'
 import Hand from 'domain/hand'
 import Move from 'domain/move'
 import Position, { getRandomHeroPosition } from 'domain/position'
 import { randomPosition } from 'utils/random'
 import randomHandInRange from 'utils/randomHandInRange'
-
-import { getRandomMoveType } from './trainingMovesDistribution'
-import { Play } from './types'
 
 const getRandomOpenActionForCallOr3Bet = (hero: Position): ReadonlyArray<Action> => {
   switch (hero) {
@@ -23,7 +23,7 @@ const getRandomOpenActionForCallOr3Bet = (hero: Position): ReadonlyArray<Action>
     case Position.BB:
       return [new Action(randomPosition([Position.UTG, Position.MP, Position.CO, Position.B, Position.SB]), Move.OPEN)]
     default:
-      throw Error('cannot be there - getRandomOpenActionForCall / ' + hero)
+      throw Error(`cannot be there - getRandomOpenActionForCall / ${String(hero)}`)
   }
 }
 
@@ -49,7 +49,7 @@ const getRandomOpenActionForCall3BetOr4Bet = (hero: Position): ReadonlyArray<Act
     case Position.BB:
       throw Error('cannot be there - getRandomOpenActionForCall3Bet / Cannot call 3bet from BB')
     default:
-      throw Error('cannot be there - getRandomOpenActionForCall / ' + hero)
+      throw Error(`cannot be there - getRandomOpenActionForCall / ${String(hero)}`)
   }
 }
 

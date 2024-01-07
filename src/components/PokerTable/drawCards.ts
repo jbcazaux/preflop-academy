@@ -2,10 +2,9 @@
 
 import 'client-only'
 
-import { Card, cardColor, cardValue } from 'domain/card'
-
 import { Dimensions } from 'components/PokerTable/types'
 import style from 'components/Theme/style'
+import { Card, cardColor, cardValue } from 'domain/card'
 
 const onBrowser = typeof window !== 'undefined'
 

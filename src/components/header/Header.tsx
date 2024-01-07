@@ -2,9 +2,9 @@ import 'server-only'
 
 import { getTranslations } from 'next-intl/server'
 
-import Horizontal from 'components/layout/Horizontal'
-
 import styles from './Header.module.scss'
+
+import Horizontal from 'components/layout/Horizontal'
 
 const Header = async () => {
   const t = await getTranslations()

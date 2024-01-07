@@ -1,13 +1,13 @@
 'use client'
 
-import { ReactNode, useState } from 'react'
 import cn from 'classnames'
+import { ReactNode, useState } from 'react'
+
+import style from './SideMenu.module.scss'
 
 import Horizontal from 'components/layout/Horizontal'
 import Close from 'components/layout/SideMenu/Close'
 import Vertical from 'components/layout/Vertical'
-
-import style from './SideMenu.module.scss'
 
 export type SideMenuPosition = 'left' | 'right'
 

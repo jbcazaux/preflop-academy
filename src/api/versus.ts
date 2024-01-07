@@ -1,8 +1,9 @@
 import { AxiosInstance } from 'axios'
-import Board from 'domain/board'
-import Hand from 'domain/hand'
 
 import getAxios from './axios'
+
+import Board from 'domain/board'
+import Hand from 'domain/hand'
 
 const axios: AxiosInstance = getAxios()
 

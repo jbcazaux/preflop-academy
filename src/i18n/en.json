@@ -18,6 +18,7 @@
       "move": "Choose your move:"
     },
     "random": "Random",
+    "next": "Next",
     "ask-move": "What's your move ?",
     "score": "Score"
   },

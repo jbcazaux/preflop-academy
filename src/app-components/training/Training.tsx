@@ -1,7 +1,18 @@
 'use client'
 
+import { useTranslations } from 'next-intl'
 import { useCallback, useEffect, useRef, useState } from 'react'
+
+import { setRandomPlay } from './setPlay'
+import style from './Training.module.scss'
+import TrainingAnswers from './TrainingAnswers'
+
 import PreFlopSolver from 'app-components/solver/PreFlopSolver'
+import HandDisplay from 'components/HandDisplay'
+import SideMenu from 'components/layout/SideMenu/SideMenu'
+import Vertical from 'components/layout/Vertical'
+import PokerTable from 'components/PokerTable/PokerTable'
+import useWindowSize from 'components/useWindowSize'
 import gto from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
@@ -9,19 +20,7 @@ import Hand from 'domain/hand'
 import Move from 'domain/move'
 import Position, { buttonPositionFromHeroPosition } from 'domain/position'
 import Score from 'domain/Score'
-import { useTranslations } from 'next-intl'
 import noop from 'utils/noop'
-
-import HandDisplay from 'components/HandDisplay'
-import SideMenu from 'components/layout/SideMenu/SideMenu'
-import Vertical from 'components/layout/Vertical'
-import PokerTable from 'components/PokerTable/PokerTable'
-import useWindowSize from 'components/useWindowSize'
-
-import { setRandomPlay } from './setPlay'
-import TrainingAnswers from './TrainingAnswers'
-
-import style from './Training.module.scss'
 
 interface Props {
   heroPosition: Position | null
@@ -57,7 +56,9 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
       const answerOK = heroPosition ? await gto(heroPosition, actionPositions, hand) : null
       setGoodAnswer(answerOK)
     }
-    effect()
+    effect().catch(() => {
+      // FIXME: add logger
+    })
   }, [heroPosition, hand, actions])
 
   useEffect(() => {
@@ -76,7 +77,9 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
   }
 
   useEffect(() => {
-    newRandomPlay()
+    newRandomPlay().catch(() => {
+      /* FIXME: add logger */
+    })
   }, [newRandomPlay])
 
   return (
@@ -106,7 +109,11 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
             actions={actions}
             goodAnswer={goodAnswer}
             setAnswer={setGuess}
-            next={newRandomPlay}
+            next={() => {
+              newRandomPlay().catch(() => {
+                /* FIXME: add logger */
+              })
+            }}
           />
           <div className={style.text}>{`${t('score')} ${score.score} / ${score.total}`}</div>
         </div>

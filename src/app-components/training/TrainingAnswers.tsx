@@ -1,15 +1,18 @@
-import { useEffect, useMemo, useState } from 'react'
+'use client'
+
 import classNames from 'classnames'
-import Action from 'domain/action'
-import ButtonPosition from 'domain/buttonPosition'
-import Move from 'domain/move'
-import Position, { heroPositionFromButtonPosition } from 'domain/position'
+import { useTranslations } from 'next-intl'
+import { useEffect, useMemo, useState } from 'react'
+
+import style from './TrainingAnswers.module.scss'
 
 import Button from 'components/button/Button'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
-
-import style from './TrainingAnswers.module.scss'
+import Action from 'domain/action'
+import ButtonPosition from 'domain/buttonPosition'
+import Move from 'domain/move'
+import Position, { heroPositionFromButtonPosition } from 'domain/position'
 
 interface AnswerButtonProps {
   active?: boolean
@@ -50,6 +53,7 @@ interface Props {
 const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next }: Props) => {
   const [myAnswer, setMyAnswer] = useState<Move | null>(null)
   const hero = useMemo(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
+  const t = useTranslations('training')
 
   useEffect(() => {
     setMyAnswer(null)
@@ -106,7 +110,7 @@ const TrainingAnswers = ({ buttonPosition, actions, setAnswer, goodAnswer, next 
         />
       </Horizontal>
       <Button className={style.next} active={!!myAnswer} disabled={!myAnswer} onClick={next} color="secondary">
-        NEXT
+        {t('next')}
       </Button>
     </Vertical>
   )

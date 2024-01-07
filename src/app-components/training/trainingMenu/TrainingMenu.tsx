@@ -1,14 +1,14 @@
 import 'server-only'
 
-import Move, { moveToUrlParam } from 'domain/move'
-import Position from 'domain/position'
 import { useTranslations } from 'next-intl'
+
+import style from './TrainingMenu.module.scss'
 
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
 import LinkButton from 'components/LinkButton/LinkButton'
-
-import style from './TrainingMenu.module.scss'
+import Move, { moveToUrlParam } from 'domain/move'
+import Position from 'domain/position'
 
 const isMoveTypeAllowed = (move: Move | null, hero: Position): boolean => {
   if (!move) {

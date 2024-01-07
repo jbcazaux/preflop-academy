@@ -1,8 +1,9 @@
 import { AxiosInstance } from 'axios'
-import HintTable from 'domain/hintTable'
-import Position from 'domain/position'
 
 import getAxios from './axios'
+
+import HintTable from 'domain/hintTable'
+import Position from 'domain/position'
 
 const axios: AxiosInstance = getAxios()
 
@@ -128,7 +129,7 @@ export const _4bet = {
 
 export const pushOrFold = {
   get: async (stack: number, position: Position) => {
-    const { data } = await axios.get(`/hint-tables/push-fold/${position}/${stack}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/push-fold/${position}/${stack}`)
     return data
   },
 }

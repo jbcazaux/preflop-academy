@@ -1,9 +1,9 @@
 import cn from 'classnames'
 
+import style from './WLResults.module.scss'
+
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
-
-import style from './WLResults.module.scss'
 
 const Rate = ({ rate }: { rate: number }) => <>{rate.toFixed(2)} %</>
 const numberWithSeparator = (x: number) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')

@@ -1,6 +1,7 @@
+import { NextRequest, NextResponse } from 'next/server'
+
 import pushfoldHintsTable from 'data/pushfold'
 import { stringToPosition } from 'domain/position'
-import { NextRequest, NextResponse } from 'next/server'
 import { throwError } from 'utils/throw-error'
 
 export const GET = (

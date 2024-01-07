@@ -1,8 +1,8 @@
+import { Distribution } from './types'
+
 import Move from 'domain/move'
 import Position from 'domain/position'
 import { random } from 'utils/random'
-
-import { Distribution } from './types'
 
 export const getRandomMoveDistribution = (heroPosition: Position): Distribution => {
   switch (heroPosition) {
@@ -34,7 +34,7 @@ export const getRandomMoveDistribution = (heroPosition: Position): Distribution 
         [Move._4BET]: 2,
       }
     default:
-      throw new Error('should not be there - getRandomMoveType / ' + heroPosition)
+      throw new Error(`should not be there - getRandomMoveType / ${String(heroPosition)}`)
   }
 }
 

@@ -1,17 +1,15 @@
 import 'server-only'
 
-import { getHintsTable } from 'data/gto'
-import Move from 'domain/move'
-import Position, { positionsNamesMap } from 'domain/position'
+import PercentageOfPlayedHands from './PercentageOfPlayedHands'
+import style from './PreflopRanges.module.scss'
+import RangesMenu from './RangesMenu'
 
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import RangeTable from 'components/RangeTable/RangeTable'
-
-import PercentageOfPlayedHands from './PercentageOfPlayedHands'
-import RangesMenu from './RangesMenu'
-
-import style from './PreflopRanges.module.scss'
+import { getHintsTable } from 'data/gto'
+import Move from 'domain/move'
+import Position, { positionsNamesMap } from 'domain/position'
 
 interface TitleProps {
   move: Move
@@ -41,11 +39,11 @@ interface Props {
   vilainPosition?: Position
 }
 
-const PreflopRanges = async ({ heroPosition, heroMove, vilainPosition }: Props) => {
+const PreflopRanges = ({ heroPosition, heroMove, vilainPosition }: Props) => {
   const vilainMove = getVilainMove(heroMove)
-  const heroHintTable = await getHintsTable(heroMove, heroPosition, vilainPosition)
-  const vilainHintTable = vilainPosition ? await getHintsTable(vilainMove, vilainPosition, heroPosition) : null
-  const _3betHintTable = heroMove === Move.CALL ? await getHintsTable(Move._3BET, heroPosition, vilainPosition) : null
+  const heroHintTable = getHintsTable(heroMove, heroPosition, vilainPosition)
+  const vilainHintTable = vilainPosition ? getHintsTable(vilainMove, vilainPosition, heroPosition) : null
+  const _3betHintTable = heroMove === Move.CALL ? getHintsTable(Move._3BET, heroPosition, vilainPosition) : null
 
   return (
     <Horizontal>

@@ -1,14 +1,13 @@
 import { useQuery } from 'react-query'
-import improvementsApi, { ImprovementCards } from 'api/improvements'
-import Board from 'domain/board'
-import Hand from 'domain/hand'
-
-import Vertical from 'components/layout/Vertical'
-import Loader from 'components/Loader/Loader'
-
-import ImprovementStats from './ImprovementStats'
 
 import style from './ImprovementCards.module.scss'
+import ImprovementStats from './ImprovementStats'
+
+import improvementsApi, { ImprovementCards } from 'api/improvements'
+import Vertical from 'components/layout/Vertical'
+import Loader from 'components/Loader/Loader'
+import Board from 'domain/board'
+import Hand from 'domain/hand'
 
 interface Props {
   hand: Hand
