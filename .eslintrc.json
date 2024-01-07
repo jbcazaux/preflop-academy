@@ -62,7 +62,7 @@
         },
         "pathGroups": [
           {
-            "pattern": "@/**",
+            "pattern": "(app|app-components|assets|components|data|domain|i18n|style|utils)/**",
             "group": "internal",
             "position": "after"
           }
