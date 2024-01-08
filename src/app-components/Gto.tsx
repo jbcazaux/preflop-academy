@@ -1,3 +1,6 @@
+'use client'
+
+import { useTranslations } from 'next-intl'
 import { useEffect, useState } from 'react'
 
 import ActionComponent from 'components/Action'
@@ -14,6 +17,7 @@ interface Props {
 
 const Gto = ({ hero, actions, hand }: Props) => {
   const [move, setMove] = useState<string>('')
+  const t = useTranslations('solver')
 
   useEffect(() => {
     gto(
@@ -29,7 +33,11 @@ const Gto = ({ hero, actions, hand }: Props) => {
       })
   }, [hero, actions, hand])
 
-  return <ActionComponent>You should : {move}</ActionComponent>
+  return (
+    <ActionComponent>
+      {t('you-should')} {move}
+    </ActionComponent>
+  )
 }
 
 export default Gto

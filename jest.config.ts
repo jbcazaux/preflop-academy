@@ -17,7 +17,7 @@ const config: Config = {
   coverageDirectory: '<rootDir>coverage',
   moduleNameMapper: {
     // ...
-    '^@/components/(.*)$': '<rootDir>/components/$1',
+    'components/navigation': require.resolve('next/navigation'),
     'api/(.*)$': ['<rootDir>/src/api/$1'],
     'app/(.*)$': ['<rootDir>/src/app/$1'],
     'assets/(.*)$': ['<rootDir>/src/assets/$1'],

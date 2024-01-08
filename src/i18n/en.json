@@ -23,7 +23,9 @@
     "score": "Score"
   },
   "solver": {
-    "moreThan20bb": "More than 20BB"
+    "moreThan20bb": "More than 20BB",
+    "improvement-cards": "Improvement cards",
+    "you-should": "You should:"
   },
   "title": "Flop Academy"
 }

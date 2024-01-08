@@ -23,7 +23,9 @@
     "score": "Score"
   },
   "solver": {
-    "moreThan20bb": "Plus de 20BB"
+    "moreThan20bb": "Plus de 20BB",
+    "improvement-cards": "Cartes d'amélioration",
+    "you-should": "Conseil :"
   },
   "home": {
     "welcome": "Bienvenue !"

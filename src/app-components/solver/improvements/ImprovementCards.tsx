@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl'
 import { useQuery } from 'react-query'
 
 import style from './ImprovementCards.module.scss'
@@ -15,6 +16,8 @@ interface Props {
 }
 
 const ImprovementCards = ({ hand, board }: Props) => {
+  const t = useTranslations('solver')
+
   const {
     data: improvementCardsFlop = null,
     isLoading: isLoadingImprovementCardsFlop,
@@ -47,10 +50,14 @@ const ImprovementCards = ({ hand, board }: Props) => {
   }
 
   if (improvementCardsFlop) {
-    return <ImprovementStats title="Improvement cards @ Flop" cards={improvementCardsFlop.cards} board={board} />
+    return (
+      <ImprovementStats title={`${t('improvement-cards')} @ Flop`} cards={improvementCardsFlop.cards} board={board} />
+    )
   }
   if (improvementCardsTurn) {
-    return <ImprovementStats title="Improvement cards @ Turn" cards={improvementCardsTurn.cards} board={board} />
+    return (
+      <ImprovementStats title={`${t('improvement-cards')} @ Turn`} cards={improvementCardsTurn.cards} board={board} />
+    )
   }
   return null
 }
