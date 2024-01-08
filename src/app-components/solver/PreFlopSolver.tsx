@@ -2,9 +2,7 @@
 
 import { useEffect, useMemo, useState } from 'react'
 
-import ImprovementCards from './improvements/ImprovementCards'
 import style from './PreflopSolver.module.scss'
-import Versus from './versus/Versus'
 import VilainPreflopRange from './VilainPreFlopRange'
 
 import Gto from 'app-components/Gto'
@@ -24,10 +22,10 @@ interface Props {
   board: Board
   buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
-  displayStats?: boolean
+  children?: React.ReactNode
 }
 
-const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = true }: Props) => {
+const PreFlopSolver = ({ hand, buttonPosition, actions, children }: Props) => {
   const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
 
@@ -112,12 +110,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, board, displayStats = tr
           <VilainPreflopRange actions={actions} buttonPosition={buttonPosition} />
         </div>
       </Vertical>
-      {displayStats && (
-        <Vertical>
-          <Versus hand={hand} board={board} actions={actions} hero={hero} />
-          <ImprovementCards hand={hand} board={board} />
-        </Vertical>
-      )}
+      {children}
     </div>
   )
 }

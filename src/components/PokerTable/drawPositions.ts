@@ -22,7 +22,10 @@ const drawButton = (ctx: CanvasRenderingContext2D, xy: number[], tableWidth: num
   ctx.textAlign = 'center'
   ctx.textBaseline = 'middle'
   ctx.fillStyle = style.colors.black
-  ctx.fillText('D', x + 1, y + 2)
+
+  const xoffset = tableWidth > 400 ? 1.5 : 0.5
+  const yoffset = tableWidth > 400 ? 2 : 1
+  ctx.fillText('D', x + xoffset, y + yoffset)
 }
 
 export const drawPositions = (

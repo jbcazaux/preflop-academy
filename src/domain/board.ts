@@ -16,4 +16,6 @@ export default class Board {
   }
 
   contains = (card: Card): boolean => this.cards.some(c => c.equals(card))
+
+  isEmpty = (): boolean => this.cards.length === 0
 }

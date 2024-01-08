@@ -1,12 +1,14 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import actionsFlow from './actionsFlow'
+import ImprovementCards from './improvements/ImprovementCards'
 import PreFlopSolver from './PreFlopSolver'
 import PushFoldSolver from './PushFoldSolver'
 import style from './Solver.module.scss'
+import Versus from './versus/Versus'
 
 import Deck from 'app-components/Deck'
 import HandDisplay from 'components/HandDisplay'
@@ -21,7 +23,7 @@ import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
 import { Card as CardObject } from 'domain/card'
 import Hand from 'domain/hand'
-import { positionBySeatNumberAndButtonPosition } from 'domain/position'
+import Position, { heroPositionFromButtonPosition, positionBySeatNumberAndButtonPosition } from 'domain/position'
 
 const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
@@ -63,6 +65,8 @@ const Solver = () => {
     [buttonPosition]
   )
 
+  const hero = useMemo<Position>(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
+
   useEffect(() => {
     setHand(Hand.newHand)
     setBoard(Board.newBoard)
@@ -82,6 +86,10 @@ const Solver = () => {
         />
         <HandDisplay hand={hand} />
         <Deck onClick={onCardClick} hand={hand} board={board} />
+        <Vertical className={style.stats}>
+          <Versus hand={hand} board={board} actions={actions} hero={hero} />
+          <ImprovementCards hand={hand} board={board} />
+        </Vertical>
       </Vertical>
       <Horizontal className={style.tables}>
         <Tabs>

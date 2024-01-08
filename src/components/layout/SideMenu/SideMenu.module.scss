@@ -4,7 +4,6 @@
 .container {
   display: flex;
   position: fixed;
-  overflow-y: auto;
   background-color: $background;
   z-index: 5;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.75);
@@ -26,6 +25,7 @@
   &.position-right {
     &.open {
       transform: none;
+      overflow-y: auto;
     }
   }
 
@@ -47,8 +47,6 @@
     align-items: center;
     margin: 10px;
     &.position-left {
-      flex-direction: row;
-      justify-content: flex-end;
       transform: none;
     }
 

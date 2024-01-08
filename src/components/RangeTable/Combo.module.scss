@@ -21,6 +21,7 @@
   &.active.pair {
     opacity: 1;
     background-color: $range-active;
+    font-weight: 500;
   }
   &.selected {
     border: 3px solid $range-selected;

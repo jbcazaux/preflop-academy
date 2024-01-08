@@ -85,13 +85,7 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
   return (
     <>
       <SideMenu position="right" title="Ranges" className={style.menu}>
-        <PreFlopSolver
-          hand={hand}
-          buttonPosition={buttonPosition}
-          actions={actions}
-          board={Board.newBoard}
-          displayStats={false}
-        />
+        <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={Board.newBoard} />
       </SideMenu>
       <Vertical ref={trainingContainerRef}>
         <PokerTable

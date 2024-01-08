@@ -2,7 +2,7 @@
   "menu": {
     "home": "Accueil",
     "training": "Exercices",
-    "solver": "Calculs",
+    "solver": "Analyse",
     "ranges": "Ranges",
     "ranges-editor": "Éditeur de ranges"
   },
