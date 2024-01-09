@@ -1,5 +1,18 @@
-.locale-button {
-  margin: 5px;
-  width: 40px;
-  cursor: pointer;
+@use 'style/variables.scss' as *;
+@use 'style/breakpoints.scss' as *;
+
+div.container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  svg {
+    margin: 5px;
+    width: 40px;
+    cursor: pointer;
+  }
+  @media (max-width: $breakpoints-max-tablet) {
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+  }
 }

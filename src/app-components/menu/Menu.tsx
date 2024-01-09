@@ -1,17 +1,19 @@
 import 'server-only'
 
-import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 import { Book, Calculator, Cards, Home2, Table, TableImport } from 'tabler-icons-react'
 
 import style from './Menu.module.scss'
+
+import LanguageSelector from 'components/i18n/LanguageSelector'
+import { Link } from 'i18n/navigation'
 
 const Menu = async () => {
   const t = await getTranslations('menu')
   return (
     <nav className={style.menu}>
       <div className={style.title}>
-        <Cards size={36} /> <span>GTO Poker</span>
+        <Cards size={36} /> <span>{t('title')}</span>
       </div>
       <ul>
         <li>
@@ -27,7 +29,7 @@ const Menu = async () => {
           </Link>
         </li>
         <li>
-          <Link href="/training" className={style.link}>
+          <Link href="/training/open/B" className={style.link}>
             <Book size={36} />
             <span>{t('training')}</span>
           </Link>
@@ -45,6 +47,7 @@ const Menu = async () => {
           </Link>
         </li>
       </ul>
+      <LanguageSelector />
     </nav>
   )
 }

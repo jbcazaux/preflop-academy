@@ -1,7 +1,8 @@
 import cn from 'classnames'
-import Link from 'next/link'
 
 import style from './LinkButton.module.scss'
+
+import { Link } from 'i18n/navigation'
 
 interface Props {
   active?: boolean

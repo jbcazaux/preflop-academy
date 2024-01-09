@@ -4,7 +4,8 @@
     "training": "Exercices",
     "solver": "Analyse",
     "ranges": "Ranges",
-    "ranges-editor": "Éditeur de ranges"
+    "ranges-editor": "Éditeur de ranges",
+    "title": "Flop Academy"
   },
   "ranges": {
     "choose-move": "Choisissez votre coup :",

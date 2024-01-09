@@ -4,7 +4,8 @@
     "training": "Training",
     "solver": "Solver",
     "ranges": "Ranges",
-    "ranges-editor": "Ranges editor"
+    "ranges-editor": "Ranges editor",
+    "title": "Flop Academy"
   },
   "ranges": {
     "choose-move": "Choose your move:",

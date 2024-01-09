@@ -1,10 +1,10 @@
 'use client'
 
-import { usePathname, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 import Move, { moveToUrlParam } from 'domain/move'
 import Position from 'domain/position'
+import { usePathname, useRouter } from 'i18n/navigation'
 
 const Training = () => {
   const router = useRouter()

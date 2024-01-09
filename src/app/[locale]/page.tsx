@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
 
 import styles from './page.module.scss'
 
 import Horizontal from 'components/layout/Horizontal'
+import { Link } from 'i18n/navigation'
 
 const Home = () => {
   const t = useTranslations('menu')

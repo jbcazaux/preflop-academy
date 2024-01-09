@@ -1,21 +1,30 @@
-import Link from 'next/link'
+'use client'
+
+import style from './LanguageSelector.module.scss'
 
 import FlagFr from 'assets/icons/FlagFr'
 import FlagUs from 'assets/icons/FlagUs'
 import Horizontal from 'components/layout/Horizontal'
+import { useRouter, usePathname } from 'i18n/navigation'
+import { Locale } from 'i18n/types'
 
-interface Props {
-  className?: string
+const LanguageSelector = () => {
+  const router = useRouter()
+  const pathname = usePathname()
+
+  const handleChange = (locale: Locale) => {
+    router.push(pathname, { locale })
+  }
+  return (
+    <Horizontal className={style.container}>
+      <div onClick={() => handleChange('fr')}>
+        <FlagFr />
+      </div>
+      <div onClick={() => handleChange('en')}>
+        <FlagUs />
+      </div>
+    </Horizontal>
+  )
 }
-const LanguageSelector = ({ className = '' }: Props) => (
-  <Horizontal className={className}>
-    <Link href="/" locale="fr">
-      <FlagFr />
-    </Link>
-    <Link href="/" locale="en">
-      <FlagUs />
-    </Link>
-  </Horizontal>
-)
 
 export default LanguageSelector
