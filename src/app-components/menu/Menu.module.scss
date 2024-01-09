@@ -15,7 +15,9 @@
     display: block;
   }
   @media (max-width: $breakpoints-max-tablet) {
+    flex: 1;
     min-width: 50px;
+    max-width: 50px;
   }
 
   ul {
@@ -24,7 +26,6 @@
     list-style-type: none;
     align-items: center;
     padding: 5px;
-    height: 40px;
     color: $black;
     font-size: 1.2em;
     padding-left: 0;
@@ -48,6 +49,12 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        @media (max-width: $breakpoints-max-tablet) {
+          &.hideForMobile {
+            display: none;
+          }
+        }
       }
 
       &:nth-child(1) {

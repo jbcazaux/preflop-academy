@@ -2,7 +2,9 @@
 @use 'style/breakpoints.scss' as *;
 
 .wrap {
-  flex-wrap: wrap;
+  @media screen and (max-width: $breakpoints-max-desktop) {
+    flex-direction: column;
+  }
 }
 
 .tables,

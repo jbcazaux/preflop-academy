@@ -1,5 +1,6 @@
 import 'server-only'
 
+import cn from 'classnames'
 import { getTranslations } from 'next-intl/server'
 import { Book, Calculator, Cards, Home2, Table, TableImport } from 'tabler-icons-react'
 
@@ -41,7 +42,7 @@ const Menu = async () => {
           </Link>
         </li>
         <li>
-          <Link href="/ranges/editor" className={style.link}>
+          <Link href="/ranges/editor" className={cn(style.link, style.hideForMobile)}>
             <TableImport size={36} />
             <span>{t('ranges-editor')}</span>
           </Link>
