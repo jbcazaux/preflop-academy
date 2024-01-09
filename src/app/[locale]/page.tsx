@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { useTranslations } from 'next-intl'
 
 import styles from './page.module.scss'
@@ -33,3 +35,5 @@ const Home = () => {
 }
 
 export default Home
+
+export const revalidate = 'force-cache'

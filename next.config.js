@@ -7,7 +7,7 @@ module.exports = withNextIntl({
   async headers() {
     return [
       {
-        source: '/api/:all*',
+        source: '/api/hint-tables/:all*',
         headers: [
           {
             key: 'Cache-Control',
@@ -20,16 +20,16 @@ module.exports = withNextIntl({
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public,max-age=3600,s-maxage=3600',
+            value: 'public,max-age=3600,s-maxage=3§00',
           },
         ],
       },
       {
-        source: '/:all*',
+        source: '/(fr|en)/:all*',
         headers: [
           {
             key: 'Cache-Control',
-            value: 'public,max-age=7200,s-maxage=3601',
+            value: 'public,max-age=7200,s-maxage=3600',
           },
         ],
       },
