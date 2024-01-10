@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 
 import ActionComponent from 'components/Action'
@@ -19,7 +20,7 @@ interface Props {
 const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
   const [vilainHintsTable, setVilainHintsTable] = useState<HintTable | null>(null)
   const [vilainAction, setVilainAction] = useState<Action | null>(null)
-
+  const queryClient = useQueryClient()
   const hero = useMemo<Position>(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
@@ -32,14 +33,17 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
 
       const vilainLastAction = actions.reduce((acc: Action | null, cur) => (cur.position !== hero ? cur : acc), null)
       if (!vilainLastAction) throw new Error('can not happen')
-
-      setVilainHintsTable(await getHintsTable(vilainLastAction.move, vilainLastAction.position, hero))
+      const hintTable = await queryClient.fetchQuery({
+        queryKey: ['hintsTable', vilainLastAction.move, vilainLastAction.position, hero],
+        queryFn: () => getHintsTable(vilainLastAction.move, vilainLastAction.position, hero),
+      })
+      setVilainHintsTable(hintTable)
       setVilainAction(vilainLastAction)
     }
     effect().catch(() => {
       // FIXME: add logger
     })
-  }, [actions, hero])
+  }, [actions, hero, queryClient])
 
   return (
     <Vertical>

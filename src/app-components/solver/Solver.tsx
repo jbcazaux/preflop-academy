@@ -68,9 +68,9 @@ const Solver = () => {
   const hero = useMemo<Position>(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
 
   useEffect(() => {
-    setHand(Hand.newHand)
-    setBoard(Board.newBoard)
-    setActions([])
+    setHand(prev => (prev.isEmpty() ? prev : Hand.newHand))
+    setBoard(prev => (prev.isEmpty() ? prev : Board.newBoard))
+    setActions(prev => (prev.length === 0 ? prev : []))
   }, [buttonPosition])
 
   return (

@@ -1,5 +1,5 @@
+import { useQuery } from '@tanstack/react-query'
 import { useTranslations } from 'next-intl'
-import { useQuery } from 'react-query'
 
 import style from './ImprovementCards.module.scss'
 import ImprovementStats from './ImprovementStats'
@@ -22,14 +22,19 @@ const ImprovementCards = ({ hand, board }: Props) => {
     data: improvementCardsFlop = null,
     isLoading: isLoadingImprovementCardsFlop,
     isError: isErrorImprovementCardsFlop,
-  } = useQuery<ImprovementCards | null>([hand, board, 'improvement', 'flop'], () => improvementsApi.flop(hand, board), {
+  } = useQuery<ImprovementCards | null>({
+    queryKey: ['improvement', 'flop', hand, board],
+    queryFn: () => improvementsApi.flop(hand, board),
     enabled: hand.isComplete() && board.cards.length === 3,
   })
+
   const {
     data: improvementCardsTurn = null,
     isLoading: isLoadingImprovementCardsTurn,
     isError: isErrorImprovementCardsTurn,
-  } = useQuery<ImprovementCards | null>([hand, board, 'improvement', 'turn'], () => improvementsApi.turn(hand, board), {
+  } = useQuery<ImprovementCards | null>({
+    queryKey: ['improvement', 'turn', hand, board],
+    queryFn: () => improvementsApi.turn(hand, board),
     enabled: hand.isComplete() && board.cards.length === 4,
   })
 

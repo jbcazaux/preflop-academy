@@ -1,7 +1,7 @@
 'use client'
 
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { useQuery } from 'react-query'
 
 import style from './Versus.module.scss'
 import WLResults from './WLResults'
@@ -25,6 +25,7 @@ interface Props {
 
 const Versus = ({ hero, hand, board, actions }: Props) => {
   const [range, setRange] = useState<ReadonlyArray<string>>([])
+  const queryClient = useQueryClient()
 
   useEffect(() => {
     const effect = async () => {
@@ -36,7 +37,12 @@ const Versus = ({ hero, hand, board, actions }: Props) => {
         setRange([])
         return
       }
-      const hintsTable = await getHintsTable(vilainLastAction.move, vilainLastAction.position, hero)
+
+      const hintsTable = await queryClient.fetchQuery({
+        queryKey: ['hintsTable', vilainLastAction.move, vilainLastAction.position, hero],
+        queryFn: () => getHintsTable(vilainLastAction.move, vilainLastAction.position, hero),
+      })
+
       if (!hintsTable) {
         setRange([])
         return
@@ -47,13 +53,15 @@ const Versus = ({ hero, hand, board, actions }: Props) => {
     effect().catch(() => {
       // FIXME: add logger
     })
-  }, [actions, hero])
+  }, [actions, hero, queryClient])
 
   const {
     data: resultPreflop = null,
     isLoading: isLoadingPreflop,
     isError: isErrorPreflop,
-  } = useQuery<VsResult | null>([range, hand, board, 'preflop'], () => versusApi.rangePreflop(range || [], hand), {
+  } = useQuery<VsResult | null>({
+    queryKey: [range, hand, board, 'preflop'],
+    queryFn: () => versusApi.rangePreflop(range || [], hand),
     enabled: !!range?.length && hand.isComplete() && board.cards.length === 0,
   })
 
@@ -61,7 +69,9 @@ const Versus = ({ hero, hand, board, actions }: Props) => {
     data: resultPostFlop = null,
     isLoading: isLoadingPostflop,
     isError: isErrorPostflop,
-  } = useQuery<VsResult | null>([range, hand, board, 'postflop'], () => versusApi.range(range || [], hand, board), {
+  } = useQuery<VsResult | null>({
+    queryKey: [range, hand, board, 'postflop'],
+    queryFn: () => versusApi.range(range || [], hand, board),
     enabled: !!range?.length && hand.isComplete() && board.cards.length > 0,
   })
 
