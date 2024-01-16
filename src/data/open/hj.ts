@@ -1,6 +1,6 @@
 import HintTable from 'domain/hintTable'
 
-const mp: HintTable = [
+const hj: HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
@@ -198,4 +198,4 @@ const mp: HintTable = [
   ],
 ]
 
-export default mp
+export default hj

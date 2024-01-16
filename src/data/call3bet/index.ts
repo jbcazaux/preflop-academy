@@ -3,15 +3,15 @@ import bCalls3betSb from './bCalls3betSb'
 import coCalls3betB from './coCalls3betB'
 import coCalls3betBb from './coCalls3betBb'
 import coCalls3betSb from './coCalls3betSb'
-import mpCalls3betB from './mpCalls3betB'
-import mpCalls3betBb from './mpCalls3betBb'
-import mpCalls3betCo from './mpCalls3betCo'
-import mpCalls3betSb from './mpCalls3betSb'
+import mpCalls3betB from './hjCalls3betB'
+import mpCalls3betBb from './hjCalls3betBb'
+import mpCalls3betCo from './hjCalls3betCo'
+import mpCalls3betSb from './hjCalls3betSb'
 import sbCalls3betBb from './sbCalls3betBb'
 import utgCalls3betB from './utgCalls3betB'
 import utgCalls3betBb from './utgCalls3betBb'
 import utgCalls3betCo from './utgCalls3betCo'
-import utgCalls3betMp from './utgCalls3betMp'
+import utgCalls3betHj from './utgCalls3betHj'
 import utgCalls3betSb from './utgCalls3betSb'
 
 import HintTable from 'domain/hintTable'
@@ -34,7 +34,7 @@ const call3bet: Map<Position, Map<Position, HintTable>> = new Map([
     ]),
   ],
   [
-    Position.MP,
+    Position.HJ,
     new Map<Position, HintTable>([
       [Position.CO, mpCalls3betCo],
       [Position.B, mpCalls3betB],
@@ -45,7 +45,7 @@ const call3bet: Map<Position, Map<Position, HintTable>> = new Map([
   [
     Position.UTG,
     new Map<Position, HintTable>([
-      [Position.MP, utgCalls3betMp],
+      [Position.HJ, utgCalls3betHj],
       [Position.CO, utgCalls3betCo],
       [Position.B, utgCalls3betB],
       [Position.SB, utgCalls3betSb],

@@ -1,6 +1,6 @@
 import button from './button'
 import cutoff from './cutoff'
-import mp from './mp'
+import hj from './hj'
 import sb from './sb'
 import utg from './utg'
 
@@ -13,7 +13,7 @@ const open = new Map<Position, HintTable | null>([
   [Position.BB, null],
   [Position.UTG, utg],
   [Position.CO, cutoff],
-  [Position.MP, mp],
+  [Position.HJ, hj],
 ])
 
 export default open

@@ -12,19 +12,19 @@ export const isMoveAllowed = (move: Move | null, hero: Position, vilain?: Positi
     case Move.CALL:
     case Move._3BET: {
       if (hero === Position.UTG || !vilain || hero === vilain) return false
-      if (hero === Position.MP) return vilain === Position.UTG
-      if (hero === Position.CO) return [(Position.UTG, Position.MP)].includes(vilain)
-      if (hero === Position.B) return [Position.UTG, Position.MP, Position.CO].includes(vilain)
-      if (hero === Position.SB) return [Position.UTG, Position.MP, Position.CO, Position.B].includes(vilain)
+      if (hero === Position.HJ) return vilain === Position.UTG
+      if (hero === Position.CO) return [(Position.UTG, Position.HJ)].includes(vilain)
+      if (hero === Position.B) return [Position.UTG, Position.HJ, Position.CO].includes(vilain)
+      if (hero === Position.SB) return [Position.UTG, Position.HJ, Position.CO, Position.B].includes(vilain)
       if (hero === Position.BB)
-        return [Position.UTG, Position.MP, Position.CO, Position.B, Position.SB].includes(vilain)
+        return [Position.UTG, Position.HJ, Position.CO, Position.B, Position.SB].includes(vilain)
       return false
     }
     case Move.CALL3BET:
     case Move._4BET: {
       if (hero === Position.BB || !vilain || hero === vilain) return false
       if (hero === Position.UTG) return true
-      if (hero === Position.MP) return vilain !== Position.UTG
+      if (hero === Position.HJ) return vilain !== Position.UTG
       if (hero === Position.CO) return [(Position.B, Position.SB, Position.BB)].includes(vilain)
       if (hero === Position.B) return [(Position.SB, Position.BB)].includes(vilain)
       if (hero === Position.SB) return vilain === Position.BB

@@ -30,7 +30,7 @@ const Menu = async () => {
           </Link>
         </li>
         <li>
-          <Link href="/training/open/B" className={style.link}>
+          <Link href="/training/open/b" className={style.link}>
             <Book size={36} />
             <span>{t('training')}</span>
           </Link>

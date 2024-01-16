@@ -25,7 +25,7 @@ export const getRandomMoveDistribution = (heroPosition: Position): Distribution 
       }
     case Position.B:
     case Position.CO:
-    case Position.MP:
+    case Position.HJ:
       return {
         [Move.OPEN]: 10,
         [Move.CALL]: 10,

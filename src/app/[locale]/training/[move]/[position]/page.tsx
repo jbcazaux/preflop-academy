@@ -8,7 +8,7 @@ import TrainingMenu from 'app-components/training/trainingMenu/TrainingMenu'
 import Horizontal from 'components/layout/Horizontal'
 import { isMovePossible } from 'data/movesByPositions'
 import Move, { moveToUrlParam, urlParamToMove } from 'domain/move'
-import Position, { stringToPosition } from 'domain/position'
+import Position, { positionToUrlParam, stringToPosition } from 'domain/position'
 
 const Page = ({
   params: { position, move, locale },
@@ -33,20 +33,39 @@ const Page = ({
 export default Page
 
 const allMoves = [Move.CALL, Move.CALL3BET, Move._3BET, Move._4BET, Move.OPEN]
-const allPositions = [Position.B, Position.SB, Position.BB, Position.UTG, Position.MP, Position.CO]
+const allPositions = [Position.B, Position.SB, Position.BB, Position.UTG, Position.HJ, Position.CO]
 
 export const generateStaticParams = () =>
-  allMoves.flatMap(move =>
-    allPositions.map(position => {
-      if (!isMovePossible(move, position)) {
-        return null
-      }
+  allMoves
+    .flatMap(move =>
+      allPositions.map(position => {
+        if (!isMovePossible(move, position)) {
+          return null
+        }
 
-      return {
+        return {
+          move: moveToUrlParam(move),
+          position: positionToUrlParam(position),
+        }
+      })
+    )
+    .filter(Boolean)
+    .concat(
+      allMoves.flatMap(move => ({
+        position: 'random',
         move: moveToUrlParam(move),
-        position: position.toLowerCase(),
-      }
-    })
-  )
+      }))
+    )
+    .concat(
+      allPositions
+        .flatMap(position => ({
+          position: positionToUrlParam(position),
+          move: 'random',
+        }))
+        .concat({
+          position: 'random',
+          move: 'random',
+        })
+    )
 
 export const dynamicParams = false

@@ -4,7 +4,7 @@ import { unstable_setRequestLocale } from 'next-intl/server'
 
 import { isMoveAllowed } from 'data/movesByPositions'
 import Move, { moveToUrlParam, urlParamToMove } from 'domain/move'
-import Position, { stringToPosition } from 'domain/position'
+import Position, { positionToUrlParam, stringToPosition } from 'domain/position'
 import PreflopRanges from 'src/app-components/ranges/PreflopRanges'
 import { throwError } from 'utils/throw-error'
 
@@ -24,7 +24,7 @@ const Page = ({
 export default Page
 
 const allowedMovesWithVersus = [Move.CALL, Move.CALL3BET, Move._3BET, Move._4BET]
-const allPositions = [Position.B, Position.SB, Position.BB, Position.UTG, Position.MP, Position.CO]
+const allPositions = [Position.B, Position.SB, Position.BB, Position.UTG, Position.HJ, Position.CO]
 
 export const generateStaticParams = () =>
   allPositions
@@ -35,9 +35,9 @@ export const generateStaticParams = () =>
             return null
           }
           return {
-            position: position.toLowerCase(),
+            position: positionToUrlParam(position),
             move: moveToUrlParam(move),
-            vilainPosition: vilainPosition.toLowerCase(),
+            vilainPosition: positionToUrlParam(vilainPosition),
           }
         })
       )

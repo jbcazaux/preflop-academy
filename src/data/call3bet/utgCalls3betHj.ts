@@ -1,9 +1,9 @@
 import HintTable from 'domain/hintTable'
 
-const co3betsMp: HintTable = [
+const utgCalls3betHj: HintTable = [
   [
-    /*AA*/ true,
-    /*AKs*/ true,
+    /*AA*/ false,
+    /*AKs*/ false,
     /*AQs*/ true,
     /*AJs*/ true,
     /*ATs*/ true,
@@ -17,10 +17,10 @@ const co3betsMp: HintTable = [
     /*A2s*/ false,
   ],
   [
-    /*AKo*/ true,
-    /*KK*/ true,
-    /*KQs*/ true,
-    /*KJs*/ true,
+    /*AKo*/ false,
+    /*KK*/ false,
+    /*KQs*/ false,
+    /*KJs*/ false,
     /*KTs*/ false,
     /*K9s*/ false,
     /*K8s*/ false,
@@ -32,11 +32,11 @@ const co3betsMp: HintTable = [
     /*K2s*/ false,
   ],
   [
-    /*AQo*/ true,
-    /*KQo*/ true,
+    /*AQo*/ false,
+    /*KQo*/ false,
     /*QQ*/ true,
-    /*QJs*/ true,
-    /*QTs*/ true,
+    /*QJs*/ false,
+    /*QTs*/ false,
     /*Q9s*/ false,
     /*Q8s*/ false,
     /*Q7s*/ false,
@@ -51,7 +51,7 @@ const co3betsMp: HintTable = [
     /*KJo*/ false,
     /*QJo*/ false,
     /*JJ*/ true,
-    /*JTs*/ true,
+    /*JTs*/ false,
     /*J9s*/ false,
     /*J8s*/ false,
     /*J7s*/ false,
@@ -198,4 +198,4 @@ const co3betsMp: HintTable = [
   ],
 ]
 
-export default co3betsMp
+export default utgCalls3betHj

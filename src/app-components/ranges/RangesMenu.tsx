@@ -9,7 +9,7 @@ import Vertical from 'components/layout/Vertical'
 import LinkButton from 'components/LinkButton/LinkButton'
 import { getHintsTable } from 'data/gto'
 import Move, { moveToUrlParam } from 'domain/move'
-import Position, { allPositions, positionsNamesMap } from 'domain/position'
+import Position, { allPositions, positionsNamesMap, positionToUrlParam } from 'domain/position'
 
 interface MovesProps {
   heroMove: Move
@@ -17,35 +17,43 @@ interface MovesProps {
 const Moves = ({ heroMove }: MovesProps) => (
   <Vertical className={style.group}>
     <LinkButton
-      href={`/ranges/${moveToUrlParam(Move.OPEN)}/${Position.B}`}
+      href={`/ranges/${moveToUrlParam(Move.OPEN)}/${positionToUrlParam(Position.B)}`}
       active={heroMove === Move.OPEN}
       className={style.button}
     >
       {Move.OPEN}
     </LinkButton>
     <LinkButton
-      href={`/ranges/${moveToUrlParam(Move.CALL)}/${Position.B}/vs/${Position.UTG}`}
+      href={`/ranges/${moveToUrlParam(Move.CALL)}/${positionToUrlParam(Position.B)}/vs/${positionToUrlParam(
+        Position.UTG
+      )}`}
       active={heroMove === Move.CALL}
       className={style.button}
     >
       {Move.CALL}
     </LinkButton>
     <LinkButton
-      href={`/ranges/${moveToUrlParam(Move._3BET)}/${Position.B}/vs/${Position.UTG}`}
+      href={`/ranges/${moveToUrlParam(Move._3BET)}/${positionToUrlParam(Position.B)}/vs/${positionToUrlParam(
+        Position.UTG
+      )}`}
       active={heroMove === Move._3BET}
       className={style.button}
     >
       {Move._3BET}
     </LinkButton>
     <LinkButton
-      href={`/ranges/${moveToUrlParam(Move.CALL3BET)}/${Position.UTG}/vs/${Position.B}`}
+      href={`/ranges/${moveToUrlParam(Move.CALL3BET)}/${positionToUrlParam(Position.UTG)}/vs/${positionToUrlParam(
+        Position.B
+      )}`}
       active={heroMove === Move.CALL3BET}
       className={style.button}
     >
       {Move.CALL3BET}
     </LinkButton>
     <LinkButton
-      href={`/ranges/${moveToUrlParam(Move._4BET)}/${Position.UTG}/vs/${Position.B}`}
+      href={`/ranges/${moveToUrlParam(Move._4BET)}/${positionToUrlParam(Position.UTG)}/vs/${positionToUrlParam(
+        Position.B
+      )}`}
       active={heroMove === Move._4BET}
       className={style.button}
     >

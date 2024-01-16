@@ -1,20 +1,20 @@
 import HintTable from 'domain/hintTable'
 
-const utg4betsMp: HintTable = [
+const bb3betsHj: HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
-    /*AQs*/ false,
+    /*AQs*/ true,
     /*AJs*/ false,
     /*ATs*/ false,
     /*A9s*/ false,
     /*A8s*/ false,
     /*A7s*/ false,
     /*A6s*/ false,
-    /*A5s*/ false,
-    /*A4s*/ false,
-    /*A3s*/ false,
-    /*A2s*/ false,
+    /*A5s*/ true,
+    /*A4s*/ true,
+    /*A3s*/ true,
+    /*A2s*/ true,
   ],
   [
     /*AKo*/ true,
@@ -34,9 +34,9 @@ const utg4betsMp: HintTable = [
   [
     /*AQo*/ false,
     /*KQo*/ false,
-    /*QQ*/ false,
-    /*QJs*/ false,
-    /*QTs*/ false,
+    /*QQ*/ true,
+    /*QJs*/ true,
+    /*QTs*/ true,
     /*Q9s*/ false,
     /*Q8s*/ false,
     /*Q7s*/ false,
@@ -50,8 +50,8 @@ const utg4betsMp: HintTable = [
     /*AJo*/ false,
     /*KJo*/ false,
     /*QJo*/ false,
-    /*JJ*/ false,
-    /*JTs*/ false,
+    /*JJ*/ true,
+    /*JTs*/ true,
     /*J9s*/ false,
     /*J8s*/ false,
     /*J7s*/ false,
@@ -67,7 +67,7 @@ const utg4betsMp: HintTable = [
     /*QTo*/ false,
     /*JTo*/ false,
     /*TT*/ false,
-    /*T9s*/ false,
+    /*T9s*/ true,
     /*T8s*/ false,
     /*T7s*/ false,
     /*T6s*/ false,
@@ -108,7 +108,7 @@ const utg4betsMp: HintTable = [
   ],
   [
     /*A7o*/ false,
-    /*K7o*/ false,
+    /*K7o*/ true,
     /*Q7o*/ false,
     /*J7o*/ false,
     /*T7o*/ false,
@@ -182,7 +182,7 @@ const utg4betsMp: HintTable = [
     /*32s*/ false,
   ],
   [
-    /*A2o*/ false,
+    /*A2o*/ true,
     /*K2o*/ false,
     /*Q2o*/ false,
     /*J2o*/ false,
@@ -198,4 +198,4 @@ const utg4betsMp: HintTable = [
   ],
 ]
 
-export default utg4betsMp
+export default bb3betsHj

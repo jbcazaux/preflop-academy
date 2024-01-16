@@ -3,14 +3,14 @@ import b4betsSb from './b4betsSb'
 import co4betsB from './co4betsB'
 import co4betsBb from './co4betsBb'
 import co4betsSb from './co4betsSb'
-import mp4betsB from './mp4betsB'
-import mp4betsBb from './mp4betsBb'
-import mp4betsCo from './mp4betsCo'
-import mp4betsSb from './mp4betsSb'
+import mp4betsB from './hj4betsB'
+import mp4betsBb from './hj4betsBb'
+import mp4betsCo from './hj4betsCo'
+import mp4betsSb from './hj4betsSb'
 import utg4betsB from './utg4betsB'
 import utg4betsBb from './utg4betsBb'
 import utg4betsCo from './utg4betsCo'
-import utg4betsMp from './utg4betsMp'
+import utg4betsHj from './utg4betsHj'
 import utg4betsSb from './utg4betsSb'
 
 import sb4betsBb from 'data/4bet/sb4betsBb'
@@ -34,7 +34,7 @@ const _4bet: Map<Position, Map<Position, HintTable>> = new Map([
     ]),
   ],
   [
-    Position.MP,
+    Position.HJ,
     new Map<Position, HintTable>([
       [Position.CO, mp4betsCo],
       [Position.B, mp4betsB],
@@ -45,7 +45,7 @@ const _4bet: Map<Position, Map<Position, HintTable>> = new Map([
   [
     Position.UTG,
     new Map<Position, HintTable>([
-      [Position.MP, utg4betsMp],
+      [Position.HJ, utg4betsHj],
       [Position.CO, utg4betsCo],
       [Position.B, utg4betsB],
       [Position.SB, utg4betsSb],

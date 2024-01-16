@@ -3,7 +3,7 @@ import 'server-only'
 import { unstable_setRequestLocale } from 'next-intl/server'
 
 import Move, { moveToUrlParam, urlParamToMove } from 'domain/move'
-import Position, { stringToPosition } from 'domain/position'
+import Position, { positionToUrlParam, stringToPosition } from 'domain/position'
 import PreflopRanges from 'src/app-components/ranges/PreflopRanges'
 import { throwError } from 'utils/throw-error'
 
@@ -20,12 +20,15 @@ const Page = ({
 
 export default Page
 
-const allowedPositionsWithoutVersus = [Position.B, Position.SB, Position.UTG, Position.MP, Position.CO]
+const allowedPositionsWithoutVersus = [Position.B, Position.SB, Position.UTG, Position.HJ, Position.CO]
 const allowedMovesWithoutVersus = [Move.OPEN]
 
 export const generateStaticParams = () =>
   allowedMovesWithoutVersus.flatMap(move =>
-    allowedPositionsWithoutVersus.map(position => ({ position: position.toLowerCase(), move: moveToUrlParam(move) }))
+    allowedPositionsWithoutVersus.map(position => ({
+      position: positionToUrlParam(position),
+      move: moveToUrlParam(move),
+    }))
   )
 
 export const dynamicParams = false

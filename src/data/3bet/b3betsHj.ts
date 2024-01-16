@@ -1,10 +1,10 @@
 import HintTable from 'domain/hintTable'
 
-const sbCallsMp: HintTable = [
+const b3betsHj: HintTable = [
   [
-    /*AA*/ false,
-    /*AKs*/ false,
-    /*AQs*/ false,
+    /*AA*/ true,
+    /*AKs*/ true,
+    /*AQs*/ true,
     /*AJs*/ false,
     /*ATs*/ false,
     /*A9s*/ false,
@@ -17,8 +17,8 @@ const sbCallsMp: HintTable = [
     /*A2s*/ false,
   ],
   [
-    /*AKo*/ false,
-    /*KK*/ false,
+    /*AKo*/ true,
+    /*KK*/ true,
     /*KQs*/ false,
     /*KJs*/ false,
     /*KTs*/ false,
@@ -32,11 +32,11 @@ const sbCallsMp: HintTable = [
     /*K2s*/ false,
   ],
   [
-    /*AQo*/ false,
-    /*KQo*/ false,
-    /*QQ*/ false,
-    /*QJs*/ false,
-    /*QTs*/ false,
+    /*AQo*/ true,
+    /*KQo*/ true,
+    /*QQ*/ true,
+    /*QJs*/ true,
+    /*QTs*/ true,
     /*Q9s*/ false,
     /*Q8s*/ false,
     /*Q7s*/ false,
@@ -198,4 +198,4 @@ const sbCallsMp: HintTable = [
   ],
 ]
 
-export default sbCallsMp
+export default b3betsHj

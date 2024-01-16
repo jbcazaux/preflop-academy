@@ -9,7 +9,7 @@ export const buttonPositionForCall = {
   [Position.SB]: 14,
   [Position.BB]: 8,
   [Position.UTG]: 0,
-  [Position.MP]: 32,
+  [Position.HJ]: 32,
   [Position.CO]: 26,
 }
 export const getButtonPositionForCall = (): number => randomPositionWithDistributionMap(buttonPositionForCall)
@@ -19,7 +19,7 @@ export const buttonPositionForOpen = {
   [Position.SB]: 20,
   [Position.BB]: 20,
   [Position.UTG]: 20,
-  [Position.MP]: 0,
+  [Position.HJ]: 0,
   [Position.CO]: 20,
 }
 export const getButtonPositionForOpen = (): Position => randomPositionWithDistributionMap(buttonPositionForOpen)
@@ -29,7 +29,7 @@ export const buttonPositionFor3BetCall = {
   [Position.SB]: 20,
   [Position.BB]: 26,
   [Position.UTG]: 32,
-  [Position.MP]: 0,
+  [Position.HJ]: 0,
   [Position.CO]: 8,
 }
 export const getButtonPositionFor3BetCall = (): Position => randomPositionWithDistributionMap(buttonPositionFor3BetCall)

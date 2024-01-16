@@ -1,12 +1,12 @@
 import HintTable from 'domain/hintTable'
 
-const b3betsMp: HintTable = [
+const co3betsHj: HintTable = [
   [
     /*AA*/ true,
     /*AKs*/ true,
     /*AQs*/ true,
-    /*AJs*/ false,
-    /*ATs*/ false,
+    /*AJs*/ true,
+    /*ATs*/ true,
     /*A9s*/ false,
     /*A8s*/ false,
     /*A7s*/ false,
@@ -19,8 +19,8 @@ const b3betsMp: HintTable = [
   [
     /*AKo*/ true,
     /*KK*/ true,
-    /*KQs*/ false,
-    /*KJs*/ false,
+    /*KQs*/ true,
+    /*KJs*/ true,
     /*KTs*/ false,
     /*K9s*/ false,
     /*K8s*/ false,
@@ -50,8 +50,8 @@ const b3betsMp: HintTable = [
     /*AJo*/ false,
     /*KJo*/ false,
     /*QJo*/ false,
-    /*JJ*/ false,
-    /*JTs*/ false,
+    /*JJ*/ true,
+    /*JTs*/ true,
     /*J9s*/ false,
     /*J8s*/ false,
     /*J7s*/ false,
@@ -66,7 +66,7 @@ const b3betsMp: HintTable = [
     /*KTo*/ false,
     /*QTo*/ false,
     /*JTo*/ false,
-    /*TT*/ false,
+    /*TT*/ true,
     /*T9s*/ false,
     /*T8s*/ false,
     /*T7s*/ false,
@@ -82,7 +82,7 @@ const b3betsMp: HintTable = [
     /*Q9o*/ false,
     /*J9o*/ false,
     /*T9o*/ false,
-    /*99*/ false,
+    /*99*/ true,
     /*98s*/ false,
     /*97s*/ false,
     /*96s*/ false,
@@ -198,4 +198,4 @@ const b3betsMp: HintTable = [
   ],
 ]
 
-export default b3betsMp
+export default co3betsHj

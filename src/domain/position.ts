@@ -6,7 +6,7 @@ enum Position {
   SB = 'SB',
   BB = 'BB',
   UTG = 'UTG',
-  MP = 'MP',
+  HJ = 'HJ',
   CO = 'CO',
 }
 
@@ -22,7 +22,7 @@ export const positionsNamesMap = new Map<Position, string>([
   [Position.SB, 'SB'],
   [Position.BB, 'BB'],
   [Position.UTG, 'UTG'],
-  [Position.MP, 'MP'],
+  [Position.HJ, 'HJ'],
   [Position.CO, 'CO'],
 ])
 export const allPositions: ReadonlyArray<Position> = [
@@ -30,7 +30,7 @@ export const allPositions: ReadonlyArray<Position> = [
   Position.SB,
   Position.BB,
   Position.UTG,
-  Position.MP,
+  Position.HJ,
   Position.CO,
 ]
 export const buttonPositionByHeroPositionMap = new Map<Position, ButtonPosition>([
@@ -38,7 +38,7 @@ export const buttonPositionByHeroPositionMap = new Map<Position, ButtonPosition>
   [Position.SB, 5],
   [Position.BB, 4],
   [Position.UTG, 3],
-  [Position.MP, 2],
+  [Position.HJ, 2],
   [Position.CO, 1],
 ])
 
@@ -60,3 +60,5 @@ export const buttonPositionFromHeroPosition = (heroPosition: Position): ButtonPo
 }
 
 export const getRandomHeroPosition = () => allPositions[random(0, 5)]
+
+export const positionToUrlParam = (value: Position): string => value.toLowerCase()

@@ -1,12 +1,12 @@
 import HintTable from 'domain/hintTable'
 
-const utgCalls3betMp: HintTable = [
+const coCallsHj: HintTable = [
   [
     /*AA*/ false,
     /*AKs*/ false,
-    /*AQs*/ true,
-    /*AJs*/ true,
-    /*ATs*/ true,
+    /*AQs*/ false,
+    /*AJs*/ false,
+    /*ATs*/ false,
     /*A9s*/ false,
     /*A8s*/ false,
     /*A7s*/ false,
@@ -34,7 +34,7 @@ const utgCalls3betMp: HintTable = [
   [
     /*AQo*/ false,
     /*KQo*/ false,
-    /*QQ*/ true,
+    /*QQ*/ false,
     /*QJs*/ false,
     /*QTs*/ false,
     /*Q9s*/ false,
@@ -50,7 +50,7 @@ const utgCalls3betMp: HintTable = [
     /*AJo*/ false,
     /*KJo*/ false,
     /*QJo*/ false,
-    /*JJ*/ true,
+    /*JJ*/ false,
     /*JTs*/ false,
     /*J9s*/ false,
     /*J8s*/ false,
@@ -66,7 +66,7 @@ const utgCalls3betMp: HintTable = [
     /*KTo*/ false,
     /*QTo*/ false,
     /*JTo*/ false,
-    /*TT*/ true,
+    /*TT*/ false,
     /*T9s*/ false,
     /*T8s*/ false,
     /*T7s*/ false,
@@ -82,7 +82,7 @@ const utgCalls3betMp: HintTable = [
     /*Q9o*/ false,
     /*J9o*/ false,
     /*T9o*/ false,
-    /*99*/ true,
+    /*99*/ false,
     /*98s*/ false,
     /*97s*/ false,
     /*96s*/ false,
@@ -198,4 +198,4 @@ const utgCalls3betMp: HintTable = [
   ],
 ]
 
-export default utgCalls3betMp
+export default coCallsHj

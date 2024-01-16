@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 
 import Move, { moveToUrlParam } from 'domain/move'
-import Position from 'domain/position'
+import Position, { positionToUrlParam } from 'domain/position'
 import { usePathname, useRouter } from 'i18n/navigation'
 
 const Training = () => {
@@ -11,7 +11,7 @@ const Training = () => {
   const pathname = usePathname()
 
   useEffect(() => {
-    router.push(`${pathname}/${moveToUrlParam(Move.OPEN)}/${Position.B.toLowerCase()}/`)
+    router.push(`${pathname}/${moveToUrlParam(Move.OPEN)}/${positionToUrlParam(Position.B)}/`)
   })
   return null
 }

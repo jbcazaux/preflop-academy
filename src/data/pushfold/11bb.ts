@@ -592,7 +592,7 @@ export const co: HintTable = [
     /*22 */ true,
   ],
 ]
-export const mp: HintTable = [
+export const hj: HintTable = [
   [
     /*AA */ true,
     /*AKs*/ true,
@@ -991,6 +991,6 @@ export default new Map<Position, HintTable>([
   [Position.SB, sb],
   [Position.B, button],
   [Position.CO, co],
-  [Position.MP, mp],
+  [Position.HJ, hj],
   [Position.UTG, utg],
 ])

@@ -20,8 +20,8 @@ export const open = {
     const { data } = await axios.get<HintTable>('/hint-tables/open/utg')
     return data
   },
-  MP: async () => {
-    const { data } = await axios.get<HintTable>('/hint-tables/open/mp')
+  HJ: async () => {
+    const { data } = await axios.get<HintTable>('/hint-tables/open/hj')
     return data
   },
   CO: async () => {
@@ -40,8 +40,8 @@ export const call = {
     const { data } = await axios.get<HintTable>(`/hint-tables/call/co/vs/${vs}`)
     return data
   },
-  MP: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call/mp/vs/${vs}`)
+  HJ: async (vs: Position) => {
+    const { data } = await axios.get<HintTable>(`/hint-tables/call/hj/vs/${vs}`)
     return data
   },
   SB: async (vs: Position) => {
@@ -64,8 +64,8 @@ export const _3bet = {
     const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/co/vs/${vs}`)
     return data
   },
-  MP: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/mp/vs/${vs}`)
+  HJ: async (vs: Position) => {
+    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/hj/vs/${vs}`)
     return data
   },
   SB: async (vs: Position) => {
@@ -88,8 +88,8 @@ export const call3bet = {
     const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/co/vs/${vs}`)
     return data
   },
-  MP: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/mp/vs/${vs}`)
+  HJ: async (vs: Position) => {
+    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/hj/vs/${vs}`)
     return data
   },
   SB: async (vs: Position) => {
@@ -112,8 +112,8 @@ export const _4bet = {
     const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/co/vs/${vs}`)
     return data
   },
-  MP: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/mp/vs/${vs}`)
+  HJ: async (vs: Position) => {
+    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/hj/vs/${vs}`)
     return data
   },
   SB: async (vs: Position) => {
