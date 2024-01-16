@@ -1,5 +1,15 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "regions": ["cdg1"],
-  "framework": "nextjs"
+  "framework": "nextjs",
+  "functions": {
+    "api/hint-tables/**/*.ts": {
+      "runtime": "edge",
+      "maxDuration": 10
+    },
+    "api/(vs|improvement)/**": {
+      "runtime": "edge",
+      "maxDuration": 25
+    }
+  }
 }
