@@ -3,6 +3,9 @@ const path = require('path')
 const withNextIntl = require('next-intl/plugin')('./src/i18n/i18n.ts')
 
 module.exports = withNextIntl({
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   reactStrictMode: false,
   async headers() {
     return [

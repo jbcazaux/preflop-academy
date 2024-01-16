@@ -1,6 +1,8 @@
 const NotFound = () => (
   <html lang="en">
-    <body>Page not found</body>
+    <body>
+      <span>Page not found</span>
+    </body>
   </html>
 )
 

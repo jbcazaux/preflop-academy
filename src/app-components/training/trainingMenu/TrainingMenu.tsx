@@ -7,25 +7,9 @@ import style from './TrainingMenu.module.scss'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
 import LinkButton from 'components/LinkButton/LinkButton'
+import { isMovePossible } from 'data/movesByPositions'
 import Move, { moveToUrlParam } from 'domain/move'
 import Position from 'domain/position'
-
-const isMoveTypeAllowed = (move: Move | null, hero: Position): boolean => {
-  if (!move) {
-    return true
-  }
-
-  switch (move) {
-    case Move.OPEN:
-      return hero !== Position.BB
-    case Move.CALL:
-      return hero !== Position.UTG
-    case Move.CALL3BET:
-      return hero !== Position.BB
-    default:
-      return false
-  }
-}
 
 interface Props {
   heroPosition: Position | null
@@ -71,7 +55,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           href={`/training/${moveToUrlParam(moveType) || random}/${Position.B}`}
           className={style.heroPosition}
           active={heroPosition === Position.B}
-          disabled={!isMoveTypeAllowed(moveType, Position.B)}
+          disabled={!isMovePossible(moveType, Position.B)}
         >
           Button
         </LinkButton>
@@ -79,7 +63,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           href={`/training/${moveToUrlParam(moveType)}/${Position.SB}`}
           className={style.heroPosition}
           active={heroPosition === Position.SB}
-          disabled={!isMoveTypeAllowed(moveType, Position.SB)}
+          disabled={!isMovePossible(moveType, Position.SB)}
         >
           Small Blind
         </LinkButton>
@@ -87,7 +71,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           href={`/training/${moveToUrlParam(moveType)}/${Position.BB}`}
           className={style.heroPosition}
           active={heroPosition === Position.BB}
-          disabled={!isMoveTypeAllowed(moveType, Position.BB)}
+          disabled={!isMovePossible(moveType, Position.BB)}
         >
           Big Blind
         </LinkButton>
@@ -95,7 +79,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           href={`/training/${moveToUrlParam(moveType)}/${Position.UTG}`}
           className={style.heroPosition}
           active={heroPosition === Position.UTG}
-          disabled={!isMoveTypeAllowed(moveType, Position.UTG)}
+          disabled={!isMovePossible(moveType, Position.UTG)}
         >
           UTG
         </LinkButton>
@@ -103,7 +87,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           href={`/training/${moveToUrlParam(moveType)}/${Position.MP}`}
           className={style.heroPosition}
           active={heroPosition === Position.MP}
-          disabled={!isMoveTypeAllowed(moveType, Position.MP)}
+          disabled={!isMovePossible(moveType, Position.MP)}
         >
           HJ
         </LinkButton>
@@ -111,7 +95,7 @@ const TrainingMenu = ({ heroPosition, moveType }: Props) => {
           href={`/training/${moveToUrlParam(moveType)}/${Position.CO}`}
           className={style.heroPosition}
           active={heroPosition === Position.CO}
-          disabled={!isMoveTypeAllowed(moveType, Position.CO)}
+          disabled={!isMovePossible(moveType, Position.CO)}
         >
           Cut Off
         </LinkButton>

@@ -11,7 +11,7 @@ const Training = () => {
   const pathname = usePathname()
 
   useEffect(() => {
-    router.push(`${pathname}/${moveToUrlParam(Move.OPEN)}/${Position.B}/`)
+    router.push(`${pathname}/${moveToUrlParam(Move.OPEN)}/${Position.B.toLowerCase()}/`)
   })
   return null
 }
