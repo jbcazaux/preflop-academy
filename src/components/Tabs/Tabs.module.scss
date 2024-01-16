@@ -7,4 +7,6 @@
 .tablist {
   display: flex;
   flex-direction: row;
+  box-shadow: 0 5px 5px rgba(0, 0, 0, 0.2);
+  clip-path: inset(-15px);
 }

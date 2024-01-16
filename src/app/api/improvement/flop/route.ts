@@ -1,18 +1,23 @@
-import { AxiosInstance } from 'axios'
-import { NextRequest, NextResponse } from 'next/server'
-
-import getAxios from 'api/axios-server'
-import { ImprovementCards } from 'api/improvements'
 import Hand from 'domain/hand'
 
-const axios: AxiosInstance = getAxios()
-
-export const POST = async (request: NextRequest) => {
+export const POST = async (request: Request) => {
   const body = (await request.json()) as { hand: Hand; flop: [number, number, number] }
+
   try {
-    const { data } = await axios.post<ImprovementCards>('/improvement/flop', body)
-    return NextResponse.json(data)
+    const rawResponse = await fetch(`${process.env.API_URL}/improvement/flop`, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    })
+    const content = (await rawResponse.json()) as string
+
+    return Response.json(content)
   } catch (e) {
     // FIXME: add logger
   }
 }
+
+export const runtime = 'edge'

@@ -3,13 +3,24 @@
   "regions": ["cdg1"],
   "framework": "nextjs",
   "functions": {
-    "api/hint-tables/**/*.ts": {
+    "/src/app/api/edge": {
       "runtime": "edge",
-      "maxDuration": 10
+      "maxDuration": 8
     },
-    "api/(vs|improvement)/**": {
+    "app/api/edge": {
       "runtime": "edge",
-      "maxDuration": 25
+      "maxDuration": 9
+    },
+    "/api/edge": {
+      "runtime": "edge",
+      "maxDuration": 12
+    },
+    "api/edge": {
+      "runtime": "edge",
+      "maxDuration": 13
+    },
+    "src/pages/isr/**/*": {
+      "maxDuration": 10
     }
   }
 }

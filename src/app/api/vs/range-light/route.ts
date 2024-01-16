@@ -1,15 +1,20 @@
-import { AxiosInstance } from 'axios'
-import { NextRequest, NextResponse } from 'next/server'
-
-import getAxios from 'api/axios-server'
-import { VsResult } from 'api/versus'
 import Board from 'domain/board'
 import Hand from 'domain/hand'
 
-const axios: AxiosInstance = getAxios()
-
-export const POST = async (request: NextRequest) => {
+export const POST = async (request: Request) => {
   const body = (await request.json()) as { vilain: ReadonlyArray<string>; hero: Hand; board?: Board }
-  const { data } = await axios.post<VsResult>('/vs/range-light', body)
-  return NextResponse.json(data)
+
+  const rawResponse = await fetch(`${process.env.API_URL}/vs/range-light`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(body),
+  })
+  const content = (await rawResponse.json()) as string
+
+  return Response.json(content)
 }
+
+export const runtime = 'edge'

@@ -82,8 +82,10 @@ const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => {
         {allPositions.map(position => {
           const link =
             Move.OPEN === heroMove
-              ? `/ranges/${moveToUrlParam(heroMove)}/${position}`
-              : `/ranges/${moveToUrlParam(heroMove)}/${position}/vs/${vilainPosition}`
+              ? `/ranges/${moveToUrlParam(heroMove)}/${positionToUrlParam(position)}`
+              : `/ranges/${moveToUrlParam(heroMove)}/${positionToUrlParam(position)}/vs/${
+                  vilainPosition ? positionToUrlParam(vilainPosition) : ''
+                }`
 
           return (
             <LinkButton
@@ -105,7 +107,9 @@ const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => {
             className={style.button}
             key={position}
             disabled={heroMove === Move.OPEN || !getHintsTable(heroMove, heroPosition, position)}
-            href={`/ranges/${moveToUrlParam(heroMove)}/${heroPosition}/vs/${position}`}
+            href={`/ranges/${moveToUrlParam(heroMove)}/${positionToUrlParam(heroPosition)}/vs/${positionToUrlParam(
+              position
+            )}`}
             active={vilainPosition === position}
           >
             {positionsNamesMap.get(position) || ''}

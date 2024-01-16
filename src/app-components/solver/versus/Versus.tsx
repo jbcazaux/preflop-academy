@@ -72,7 +72,7 @@ const Versus = ({ hero, hand, board, actions }: Props) => {
   } = useQuery<VsResult | null>({
     queryKey: [range, hand, board, 'postflop'],
     queryFn: () => versusApi.range(range || [], hand, board),
-    enabled: !!range?.length && hand.isComplete() && board.cards.length > 0,
+    enabled: !!range?.length && hand.isComplete() && board.cards.length >= 3,
   })
 
   if (isLoadingPreflop || isLoadingPostflop) {

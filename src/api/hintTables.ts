@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios'
 import getAxios from './axios'
 
 import HintTable from 'domain/hintTable'
-import Position from 'domain/position'
+import Position, { positionToUrlParam } from 'domain/position'
 
 const axios: AxiosInstance = getAxios()
 
@@ -33,23 +33,23 @@ export const open = {
 
 export const call = {
   B: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call/b/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call/b/vs/${positionToUrlParam(vs)}`)
     return data
   },
   CO: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call/co/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call/co/vs/${positionToUrlParam(vs)}`)
     return data
   },
   HJ: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call/hj/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call/hj/vs/${positionToUrlParam(vs)}`)
     return data
   },
   SB: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call/sb/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call/sb/vs/${positionToUrlParam(vs)}`)
     return data
   },
   BB: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call/bb/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call/bb/vs/${positionToUrlParam(vs)}`)
     return data
   },
   UTG: () => Promise.resolve(null),
@@ -57,23 +57,23 @@ export const call = {
 
 export const _3bet = {
   B: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/b/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/b/vs/${positionToUrlParam(vs)}`)
     return data
   },
   CO: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/co/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/co/vs/${positionToUrlParam(vs)}`)
     return data
   },
   HJ: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/hj/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/hj/vs/${positionToUrlParam(vs)}`)
     return data
   },
   SB: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/sb/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/sb/vs/${positionToUrlParam(vs)}`)
     return data
   },
   BB: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/bb/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/3-bet/bb/vs/${positionToUrlParam(vs)}`)
     return data
   },
   UTG: () => Promise.resolve(null),
@@ -81,55 +81,55 @@ export const _3bet = {
 
 export const call3bet = {
   B: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/b/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/b/vs/${positionToUrlParam(vs)}`)
     return data
   },
   CO: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/co/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/co/vs/${positionToUrlParam(vs)}`)
     return data
   },
   HJ: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/hj/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/hj/vs/${positionToUrlParam(vs)}`)
     return data
   },
   SB: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/sb/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/sb/vs/${positionToUrlParam(vs)}`)
     return data
   },
   BB: () => Promise.resolve(null),
   UTG: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/utg/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/call-3-bet/utg/vs/${positionToUrlParam(vs)}`)
     return data
   },
 } satisfies Record<Position, (vs: Position) => Promise<HintTable | null>>
 
 export const _4bet = {
   B: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/b/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/b/vs/${positionToUrlParam(vs)}`)
     return data
   },
   CO: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/co/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/co/vs/${positionToUrlParam(vs)}`)
     return data
   },
   HJ: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/hj/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/hj/vs/${positionToUrlParam(vs)}`)
     return data
   },
   SB: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/sb/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/sb/vs/${positionToUrlParam(vs)}`)
     return data
   },
   BB: () => Promise.resolve(null),
   UTG: async (vs: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/utg/vs/${vs}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/4-bet/utg/vs/${positionToUrlParam(vs)}`)
     return data
   },
 } satisfies Record<Position, (vs: Position) => Promise<HintTable | null>>
 
 export const pushOrFold = {
   get: async (stack: number, position: Position) => {
-    const { data } = await axios.get<HintTable>(`/hint-tables/push-fold/${position}/${stack}`)
+    const { data } = await axios.get<HintTable>(`/hint-tables/push-fold/${positionToUrlParam(position)}/${stack}`)
     return data
   },
 }
