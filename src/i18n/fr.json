@@ -21,12 +21,20 @@
     "random": "Au hasard",
     "next": "Suivant",
     "ask-move": "Que faire ?",
-    "score": "Score"
+    "score": "Score",
+    "metadata": {
+      "title": "Entrainement pré flop",
+      "description": "Entrainement {move, select, open {à l ouverture} CALL {pour call} RAISE {pour relancer} _3BET {pour 3 bet} CALL3BET {pour call 3 bet} _4BET {pour 4 bet} other {?}} {position, select, b {au bouton} sb {en small blind} bb {en big blind} utg {UTG} hj {au HJ} co {au CO} other {?}} "
+    }
   },
   "solver": {
     "moreThan20bb": "Plus de 20BB",
     "improvement-cards": "Cartes d'amélioration",
-    "you-should": "Conseil :"
+    "you-should": "Conseil :",
+    "metadata": {
+      "title": "Analyse des mains preflop et postflop",
+      "description": "Analyse des mains preflop et postflop"
+    }
   },
   "home": {
     "welcome": "Bienvenue !"

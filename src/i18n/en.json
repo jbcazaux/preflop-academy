@@ -21,12 +21,19 @@
     "random": "Random",
     "next": "Next",
     "ask-move": "What's your move ?",
-    "score": "Score"
+    "score": "Score",
+    "metadata": {
+      "title": "Entrainement pré flop",
+      "description": "Training {move, select, open {open} CALL {call} RAISE {raise} _3BET {3 bet} CALL3BET {call 3 bet} _4BET {4 bet} other {?}} {position, select, b {button} sb {Small Blind} bb {Big Blind} utg {UTG} hj {HJ} co {CO} other {?}} "
+    }
   },
   "solver": {
     "moreThan20bb": "More than 20BB",
     "improvement-cards": "Improvement cards",
-    "you-should": "You should:"
+    "you-should": "You should:",
+    "metadata": {
+      "title": "Poker preflop and postflop solver"
+    }
   },
   "title": "Flop Academy"
 }

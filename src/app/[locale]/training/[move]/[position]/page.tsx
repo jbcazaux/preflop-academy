@@ -1,7 +1,8 @@
 import 'server-only'
 
+import { Metadata } from 'next'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
-import { unstable_setRequestLocale } from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 
 import Training from 'app-components/training/Training'
 import TrainingMenu from 'app-components/training/trainingMenu/TrainingMenu'
@@ -9,6 +10,19 @@ import Horizontal from 'components/layout/Horizontal'
 import { isMovePossible } from 'data/movesByPositions'
 import Move, { moveToUrlParam, urlParamToMove } from 'domain/move'
 import Position, { positionToUrlParam, stringToPosition } from 'domain/position'
+
+export const generateMetadata = async ({
+  params: { position, move, locale },
+}: {
+  params: { position: string; move: string; locale: string }
+}): Promise<Metadata> => {
+  const t = await getTranslations({ locale, namespace: 'training' })
+
+  return {
+    title: t('metadata.title'),
+    description: t('metadata.description', { position, move }),
+  }
+}
 
 const Page = ({
   params: { position, move, locale },
