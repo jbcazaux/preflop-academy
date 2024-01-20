@@ -1,6 +1,6 @@
-import { ComboType } from 'domain/combo'
+import { Range } from 'domain/combo'
 
-export const open: ReadonlyArray<ComboType> = [
+export const open: Range = [
   'AA',
   'KK',
   'QQ',

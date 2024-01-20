@@ -49,12 +49,6 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
-
-        @media (max-width: $breakpoints-max-tablet) {
-          &.hideForMobile {
-            display: none;
-          }
-        }
       }
 
       &:nth-child(1) {

@@ -1,8 +1,7 @@
 import 'server-only'
 
-import cn from 'classnames'
 import { getTranslations } from 'next-intl/server'
-import { Book, Calculator, Cards, Home2, Table, TableImport } from 'tabler-icons-react'
+import { Book, Calculator, Cards, Home2, Table } from 'tabler-icons-react'
 
 import style from './Menu.module.scss'
 
@@ -39,12 +38,6 @@ const Menu = async () => {
           <Link href="/ranges" className={style.link}>
             <Table size={36} />
             <span>{t('ranges')}</span>
-          </Link>
-        </li>
-        <li>
-          <Link href="/ranges/editor" className={cn(style.link, style.hideForMobile)}>
-            <TableImport size={36} />
-            <span>{t('ranges-editor')}</span>
           </Link>
         </li>
       </ul>

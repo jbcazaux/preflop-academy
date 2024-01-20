@@ -82,6 +82,10 @@ type ComboBasic =
   | '32'
 export type ComboType = `${ComboBasic}s` | `${ComboBasic}o` | Pair
 
+export function isComboType(c: string | null): c is ComboType {
+  return !!c && /^([AKQJT2-9])\1{1}|([AKQJT2-9]{2}[os])$/g.test(c)
+}
+
 export default class Combo {
   constructor(readonly value: ComboType) {}
 
@@ -99,3 +103,5 @@ export default class Combo {
     return xy
   }
 }
+
+export type Range = ReadonlyArray<ComboType>

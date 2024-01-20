@@ -12,8 +12,8 @@ const PercentageOfPlayedHand = ({ hintsTable }: Props) => {
     const l = line.reduce((accLine, h, j) => {
       if (!h) return accLine
       const pair = i === j
-      const suited = i < j
       if (pair) return accLine + 12
+      const suited = i < j
       if (suited) return accLine + 4 * 2
       return accLine + 12 * 2
     }, 0)

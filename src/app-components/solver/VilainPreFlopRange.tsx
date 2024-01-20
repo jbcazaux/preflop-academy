@@ -3,21 +3,23 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 
+import RangesEditor from 'app-components/ranges/editor/RangesEditor'
 import ActionComponent from 'components/Action'
 import Vertical from 'components/layout/Vertical'
 import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
+import { Range } from 'domain/combo'
 import HintTable from 'domain/hintTable'
 import Position, { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
-import Ranges from 'src/app-components/ranges/Ranges'
 
 interface Props {
   buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
+  onVilainRangeUpdate?: (r: Range) => void
 }
 
-const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
+const VilainPreflopRange = ({ buttonPosition, actions, onVilainRangeUpdate }: Props) => {
   const [vilainHintsTable, setVilainHintsTable] = useState<HintTable | null>(null)
   const [vilainAction, setVilainAction] = useState<Action | null>(null)
   const queryClient = useQueryClient()
@@ -54,7 +56,9 @@ const VilainPreflopRange = ({ buttonPosition, actions }: Props) => {
           </>
         )}
       </ActionComponent>
-      {vilainHintsTable && <Ranges hintsTable={vilainHintsTable} hintsTableName={vilainAction?.move || ''} />}
+      {vilainHintsTable && onVilainRangeUpdate && (
+        <RangesEditor defaultHintsTable={vilainHintsTable} onCombosUpdate={onVilainRangeUpdate} />
+      )}
     </Vertical>
   )
 }

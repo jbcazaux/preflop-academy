@@ -1,7 +1,7 @@
 'use client'
 
 import { useTranslations } from 'next-intl'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 import actionsFlow from './actionsFlow'
 import ImprovementCards from './improvements/ImprovementCards'
@@ -22,13 +22,15 @@ import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
 import { Card as CardObject } from 'domain/card'
+import { Range } from 'domain/combo'
 import Hand from 'domain/hand'
-import Position, { heroPositionFromButtonPosition, positionBySeatNumberAndButtonPosition } from 'domain/position'
+import { positionBySeatNumberAndButtonPosition } from 'domain/position'
 
 const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [board, setBoard] = useState<Board>(Board.newBoard)
+  const [vilainRange, setVilainRange] = useState<Range>([])
   const solverContainerRef = useRef<HTMLDivElement>(null)
 
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])
@@ -65,8 +67,6 @@ const Solver = () => {
     [buttonPosition]
   )
 
-  const hero = useMemo<Position>(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
-
   useEffect(() => {
     setHand(prev => (prev.isEmpty() ? prev : Hand.newHand))
     setBoard(prev => (prev.isEmpty() ? prev : Board.newBoard))
@@ -87,14 +87,20 @@ const Solver = () => {
         <HandDisplay hand={hand} />
         <Deck onClick={onCardClick} hand={hand} board={board} />
         <Vertical className={style.stats}>
-          <Versus hand={hand} board={board} actions={actions} hero={hero} />
+          <Versus hand={hand} board={board} vilainRange={vilainRange} />
           <ImprovementCards hand={hand} board={board} />
         </Vertical>
       </Vertical>
       <Horizontal className={style.tables}>
         <Tabs>
           <Tab title={t('moreThan20bb').toUpperCase()}>
-            <PreFlopSolver hand={hand} buttonPosition={buttonPosition} actions={actions} board={board} />
+            <PreFlopSolver
+              hand={hand}
+              buttonPosition={buttonPosition}
+              actions={actions}
+              board={board}
+              onVilainRangeUpdate={setVilainRange}
+            />
           </Tab>
           <Tab title="PUSH OR FOLD">
             <PushFoldSolver hand={hand} buttonPosition={buttonPosition} />

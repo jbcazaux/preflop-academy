@@ -7,26 +7,28 @@ import style from './PreflopSolver.module.scss'
 import VilainPreflopRange from './VilainPreFlopRange'
 
 import Gto from 'app-components/Gto'
+import Ranges from 'app-components/ranges/Ranges'
 import Vertical from 'components/layout/Vertical'
 import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
+import { Range } from 'domain/combo'
 import Hand from 'domain/hand'
 import HintTable from 'domain/hintTable'
 import Move from 'domain/move'
 import Position, { heroPositionFromButtonPosition } from 'domain/position'
-import Ranges from 'src/app-components/ranges/Ranges'
 
 interface Props {
   hand: Hand
   board: Board
   buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
+  onVilainRangeUpdate?: (r: Range) => void
   children?: React.ReactNode
 }
 
-const PreFlopSolver = ({ hand, buttonPosition, actions, children }: Props) => {
+const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, children }: Props) => {
   const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
   const queryClient = useQueryClient()
@@ -129,11 +131,15 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, children }: Props) => {
     <div className={style.container}>
       <Vertical>
         <div className={style.wrap}>
+          <VilainPreflopRange
+            actions={actions}
+            buttonPosition={buttonPosition}
+            onVilainRangeUpdate={onVilainRangeUpdate}
+          />
           <Vertical>
             <Gto hero={hero} hand={hand} actions={actions} />
             {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} hintsTableName={hintsTableName} />}
           </Vertical>
-          <VilainPreflopRange actions={actions} buttonPosition={buttonPosition} />
         </div>
       </Vertical>
       {children}

@@ -27,9 +27,6 @@ const Home = ({ params: { locale } }: { params: { locale: string } }) => {
           <li className={styles.item}>
             <Link href="/ranges">{t('ranges')}</Link>
           </li>
-          <li className={styles.item}>
-            <Link href="/ranges/editor">{t('ranges-editor')}</Link>
-          </li>
         </ul>
       </Horizontal>
     </nav>

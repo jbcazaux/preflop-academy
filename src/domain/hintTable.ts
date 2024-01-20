@@ -1,4 +1,5 @@
 import { cards } from './card'
+import { ComboType, Range, isComboType } from './combo'
 
 export type HintTableRow = Readonly<
   [boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean, boolean]
@@ -40,16 +41,20 @@ export const defaultHintTable: HintTable = [
   [false, false, false, false, false, false, false, false, false, false, false, false, false],
 ]
 
-export const extractRange = (hintsTable: HintTable): ReadonlyArray<string> =>
+export const extractRange = (hintsTable: HintTable): Range =>
   hintsTable.flatMap((row, rowIndex) =>
-    row.reduce((acc: ReadonlyArray<string>, combo, cardIndex) => {
+    row.reduce((acc: ReadonlyArray<ComboType>, combo, cardIndex) => {
       if (!combo) return acc
+
       if (rowIndex < cardIndex) {
-        return acc.concat(`${cards[rowIndex]}${cards[cardIndex]}s`)
+        const c = `${cards[rowIndex]}${cards[cardIndex]}s`
+        return isComboType(c) ? acc.concat(c) : acc
       }
       if (rowIndex > cardIndex) {
-        return acc.concat(`${cards[cardIndex]}${cards[rowIndex]}o`)
+        const c = `${cards[cardIndex]}${cards[rowIndex]}o`
+        return isComboType(c) ? acc.concat(c) : acc
       }
-      return acc.concat(`${cards[cardIndex]}${cards[rowIndex]}`)
+      const c = `${cards[cardIndex]}${cards[rowIndex]}`
+      return isComboType(c) ? acc.concat(c) : acc
     }, [])
   )

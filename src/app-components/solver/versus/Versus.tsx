@@ -1,7 +1,6 @@
 'use client'
 
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 import style from './Versus.module.scss'
 import WLResults from './WLResults'
@@ -9,60 +8,25 @@ import WLResults from './WLResults'
 import versusApi, { VsResult } from 'api/versus'
 import Vertical from 'components/layout/Vertical'
 import Loader from 'components/Loader/Loader'
-import { getHintsTable } from 'data/gto-client'
-import Action from 'domain/action'
 import Board from 'domain/board'
+import { ComboType } from 'domain/combo'
 import Hand from 'domain/hand'
-import { extractRange } from 'domain/hintTable'
-import Position from 'domain/position'
 
 interface Props {
-  hero: Position
   hand: Hand
   board: Board
-  actions: ReadonlyArray<Action>
+  vilainRange: ReadonlyArray<ComboType>
 }
 
-const Versus = ({ hero, hand, board, actions }: Props) => {
-  const [range, setRange] = useState<ReadonlyArray<string>>([])
-  const queryClient = useQueryClient()
-
-  useEffect(() => {
-    const effect = async () => {
-      const vilainLastAction = actions.reduce(
-        (lastAction: Action | null, cur) => (cur.position !== hero ? cur : lastAction),
-        null
-      )
-      if (!vilainLastAction) {
-        setRange([])
-        return
-      }
-
-      const hintsTable = await queryClient.fetchQuery({
-        queryKey: ['hintsTable', vilainLastAction.move, vilainLastAction.position, hero],
-        queryFn: () => getHintsTable(vilainLastAction.move, vilainLastAction.position, hero),
-      })
-
-      if (!hintsTable) {
-        setRange([])
-        return
-      }
-
-      setRange(extractRange(hintsTable))
-    }
-    effect().catch(() => {
-      // FIXME: add logger
-    })
-  }, [actions, hero, queryClient])
-
+const Versus = ({ hand, board, vilainRange }: Props) => {
   const {
     data: resultPreflop = null,
     isLoading: isLoadingPreflop,
     isError: isErrorPreflop,
   } = useQuery<VsResult | null>({
-    queryKey: [range, hand, board, 'preflop'],
-    queryFn: () => versusApi.rangePreflop(range || [], hand),
-    enabled: !!range?.length && hand.isComplete() && board.cards.length === 0,
+    queryKey: [vilainRange, hand, board, 'preflop'],
+    queryFn: () => versusApi.rangePreflop(vilainRange || [], hand),
+    enabled: !!vilainRange?.length && hand.isComplete() && board.cards.length === 0,
   })
 
   const {
@@ -70,9 +34,9 @@ const Versus = ({ hero, hand, board, actions }: Props) => {
     isLoading: isLoadingPostflop,
     isError: isErrorPostflop,
   } = useQuery<VsResult | null>({
-    queryKey: [range, hand, board, 'postflop'],
-    queryFn: () => versusApi.range(range || [], hand, board),
-    enabled: !!range?.length && hand.isComplete() && board.cards.length >= 3,
+    queryKey: [vilainRange, hand, board, 'postflop'],
+    queryFn: () => versusApi.range(vilainRange || [], hand, board),
+    enabled: !!vilainRange?.length && hand.isComplete() && board.cards.length >= 3,
   })
 
   if (isLoadingPreflop || isLoadingPostflop) {
