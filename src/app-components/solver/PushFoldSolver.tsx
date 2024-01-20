@@ -30,8 +30,10 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
       .then(result => {
         setAction(result)
       })
-      .catch(() => {
-        // FIXME: add logger
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.error(e)
+        return
       })
   }, [buttonPosition, hand, stack])
 
@@ -42,8 +44,9 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
       .then(result => {
         setHintsTable(result)
       })
-      .catch(() => {
-        // FIXME: add logger
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.error(e)
       })
   }, [buttonPosition, stack])
 

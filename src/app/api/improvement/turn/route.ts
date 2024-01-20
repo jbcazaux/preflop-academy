@@ -1,4 +1,5 @@
 import Hand from 'domain/hand'
+import logger from 'utils/logger'
 
 export const POST = async (request: Request) => {
   const body = (await request.json()) as { hand: Hand; turn: [number, number, number, number] }
@@ -15,7 +16,7 @@ export const POST = async (request: Request) => {
 
     return Response.json(content)
   } catch (e) {
-    // FIXME: add logger
+    logger.error(e)
   }
 }
 

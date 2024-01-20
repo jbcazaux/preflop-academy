@@ -42,8 +42,9 @@ const VilainPreflopRange = ({ buttonPosition, actions, onVilainRangeUpdate }: Pr
       setVilainHintsTable(hintTable)
       setVilainAction(vilainLastAction)
     }
-    effect().catch(() => {
-      // FIXME: add logger
+    effect().catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e)
     })
   }, [actions, hero, queryClient])
 

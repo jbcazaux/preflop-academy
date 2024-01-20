@@ -28,8 +28,9 @@ const Gto = ({ hero, actions, hand }: Props) => {
       .then(result => {
         setMove(result || 'N/A')
       })
-      .catch(() => {
-        //FIXME: add logger
+      .catch(e => {
+        // eslint-disable-next-line no-console
+        console.error(e)
       })
   }, [hero, actions, hand])
 

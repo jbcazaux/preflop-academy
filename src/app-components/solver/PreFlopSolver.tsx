@@ -122,8 +122,9 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
         }
       }
     }
-    effect().catch(() => {
-      // FIXME: add logger
+    effect().catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e)
     })
   }, [hand, hero, actions, queryClient])
 

@@ -56,8 +56,9 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
       const answerOK = heroPosition ? await gto(heroPosition, actionPositions, hand) : null
       setGoodAnswer(answerOK)
     }
-    effect().catch(() => {
-      // FIXME: add logger
+    effect().catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e)
     })
   }, [heroPosition, hand, actions])
 
@@ -77,8 +78,9 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
   }
 
   useEffect(() => {
-    newRandomPlay().catch(() => {
-      /* FIXME: add logger */
+    newRandomPlay().catch(e => {
+      // eslint-disable-next-line no-console
+      console.error(e)
     })
   }, [newRandomPlay])
 
@@ -104,8 +106,9 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
             goodAnswer={goodAnswer}
             setAnswer={setGuess}
             next={() => {
-              newRandomPlay().catch(() => {
-                /* FIXME: add logger */
+              newRandomPlay().catch(e => {
+                // eslint-disable-next-line no-console
+                console.error(e)
               })
             }}
           />
