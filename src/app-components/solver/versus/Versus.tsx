@@ -5,6 +5,7 @@ import { useQuery } from '@tanstack/react-query'
 import style from './Versus.module.scss'
 import WLResults from './WLResults'
 
+import { config as fetchConfig, Config } from 'api/config'
 import versusApi, { VsResult } from 'api/versus'
 import Vertical from 'components/layout/Vertical'
 import Loader from 'components/Loader/Loader'
@@ -19,14 +20,21 @@ interface Props {
 }
 
 const Versus = ({ hand, board, vilainRange }: Props) => {
+  const { data: config } = useQuery<Config>({
+    queryKey: ['config'],
+    queryFn: fetchConfig,
+    initialData: { DISABLE_PREFLOP_VERSUS_RANGE: true },
+  })
+
   const {
     data: resultPreflop = null,
     isLoading: isLoadingPreflop,
     isError: isErrorPreflop,
   } = useQuery<VsResult | null>({
-    queryKey: [vilainRange, hand, board, 'preflop'],
+    queryKey: ['versus', 'preflop', vilainRange, hand, board],
     queryFn: () => versusApi.rangePreflop(vilainRange || [], hand),
-    enabled: !!vilainRange?.length && hand.isComplete() && board.cards.length === 0,
+    enabled:
+      !config.DISABLE_PREFLOP_VERSUS_RANGE && !!vilainRange?.length && hand.isComplete() && board.cards.length === 0,
   })
 
   const {
@@ -34,7 +42,7 @@ const Versus = ({ hand, board, vilainRange }: Props) => {
     isLoading: isLoadingPostflop,
     isError: isErrorPostflop,
   } = useQuery<VsResult | null>({
-    queryKey: [vilainRange, hand, board, 'postflop'],
+    queryKey: ['versus', 'postflop', vilainRange, hand, board],
     queryFn: () => versusApi.range(vilainRange || [], hand, board),
     enabled: !!vilainRange?.length && hand.isComplete() && board.cards.length >= 3,
   })
