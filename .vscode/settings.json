@@ -1,5 +1,8 @@
 {
   "search.exclude": {
     "**/.next": true
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
   }
 }

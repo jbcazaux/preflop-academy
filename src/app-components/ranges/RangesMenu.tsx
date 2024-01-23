@@ -7,7 +7,7 @@ import style from './RangesMenu.module.scss'
 import SideMenu from 'components/layout/SideMenu/SideMenu'
 import Vertical from 'components/layout/Vertical'
 import LinkButton from 'components/LinkButton/LinkButton'
-import { getHintsTable } from 'data/gto'
+import { isMoveAllowed } from 'data/movesByPositions'
 import Move, { moveToUrlParam } from 'domain/move'
 import Position, { allPositions, positionsNamesMap, positionToUrlParam } from 'domain/position'
 
@@ -91,7 +91,8 @@ const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => {
             <LinkButton
               className={style.button}
               key={position}
-              disabled={!getHintsTable(heroMove, position, vilainPosition)}
+              // disabled={!getHintsTable(heroMove, position, vilainPosition)}
+              disabled={!isMoveAllowed(heroMove, position, vilainPosition)}
               href={link}
               active={heroPosition === position}
             >
@@ -106,7 +107,7 @@ const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => {
           <LinkButton
             className={style.button}
             key={position}
-            disabled={heroMove === Move.OPEN || !getHintsTable(heroMove, heroPosition, position)}
+            disabled={heroMove === Move.OPEN || !isMoveAllowed(heroMove, heroPosition, position)}
             href={`/ranges/${moveToUrlParam(heroMove)}/${positionToUrlParam(heroPosition)}/vs/${positionToUrlParam(
               position
             )}`}

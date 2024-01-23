@@ -6,10 +6,10 @@ import { useEffect, useMemo, useState } from 'react'
 import style from './PreflopSolver.module.scss'
 import VilainPreflopRange from './VilainPreFlopRange'
 
+import { fetchHintTable } from 'api/hintTables'
 import Gto from 'app-components/Gto'
 import Ranges from 'app-components/ranges/Ranges'
 import Vertical from 'components/layout/Vertical'
-import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
@@ -39,7 +39,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
       if (actions.length === 0 || (actions.length === 1 && actions[0].position === hero)) {
         const openHintTable = await queryClient.fetchQuery({
           queryKey: ['hintsTable', Move.OPEN, hero],
-          queryFn: () => getHintsTable(Move.OPEN, hero),
+          queryFn: () => fetchHintTable(Move.OPEN, hero),
         })
         setHintsTable(openHintTable)
         setHintsTableName('OPEN')
@@ -53,7 +53,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
         if (!hand.isComplete()) {
           const hintTable = await queryClient.fetchQuery({
             queryKey: ['hintsTable', Move.CALL, hero, initialRaiser],
-            queryFn: () => getHintsTable(Move.CALL, hero, initialRaiser),
+            queryFn: () => fetchHintTable(Move.CALL, hero, initialRaiser),
           })
           setHintsTable(hintTable)
           setHintsTableName('CALL')
@@ -61,7 +61,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
         }
         const _3BetHintsTable = await queryClient.fetchQuery({
           queryKey: ['hintsTable', Move._3BET, hero, initialRaiser],
-          queryFn: () => getHintsTable(Move._3BET, hero, initialRaiser),
+          queryFn: () => fetchHintTable(Move._3BET, hero, initialRaiser),
         })
         const [x, y] = hand.xyInRangeTable()
         if (_3BetHintsTable?.[x][y]) {
@@ -72,7 +72,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
 
         const hintTable = await queryClient.fetchQuery({
           queryKey: ['hintsTable', Move.CALL, hero, initialRaiser],
-          queryFn: () => getHintsTable(Move.CALL, hero, initialRaiser),
+          queryFn: () => fetchHintTable(Move.CALL, hero, initialRaiser),
         })
         setHintsTable(hintTable)
         setHintsTableName('CALL')
@@ -86,7 +86,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
           if (!hand.isComplete()) {
             const hintTable = await queryClient.fetchQuery({
               queryKey: ['hintsTable', Move.CALL3BET, hero, lastRaiser],
-              queryFn: () => getHintsTable(Move.CALL3BET, hero, lastRaiser),
+              queryFn: () => fetchHintTable(Move.CALL3BET, hero, lastRaiser),
             })
 
             setHintsTable(hintTable)
@@ -96,7 +96,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
 
           const _4BetHintsTable = await queryClient.fetchQuery({
             queryKey: ['hintsTable', Move._4BET, hero, lastRaiser],
-            queryFn: () => getHintsTable(Move._4BET, hero, lastRaiser),
+            queryFn: () => fetchHintTable(Move._4BET, hero, lastRaiser),
           })
           const [x, y] = hand.xyInRangeTable()
           if (_4BetHintsTable?.[x][y]) {
@@ -107,7 +107,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
 
           const call3BetsHintsTable = await queryClient.fetchQuery({
             queryKey: ['hintsTable', Move.CALL3BET, hero, lastRaiser],
-            queryFn: () => getHintsTable(Move.CALL3BET, hero, lastRaiser),
+            queryFn: () => fetchHintTable(Move.CALL3BET, hero, lastRaiser),
           })
           setHintsTable(call3BetsHintsTable)
           setHintsTableName(call3BetsHintsTable ? 'CALL 3 BET' : 'N/A')
@@ -115,7 +115,7 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
           // hero !== initial raiser
           const hintTable = await queryClient.fetchQuery({
             queryKey: ['hintsTable', Move._3BET, lastRaiser, initialRaiser],
-            queryFn: () => getHintsTable(Move._3BET, lastRaiser, initialRaiser),
+            queryFn: () => fetchHintTable(Move._3BET, lastRaiser, initialRaiser),
           })
           setHintsTable(hintTable)
           setHintsTableName(Move._3BET)

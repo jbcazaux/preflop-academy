@@ -1,4 +1,5 @@
 import { cards } from './card'
+import HintTable from './hintTable'
 
 type Pair = 'AA' | 'KK' | 'QQ' | 'JJ' | 'TT' | '99' | '88' | '77' | '66' | '55' | '44' | '33' | '22'
 type ComboBasic =
@@ -105,3 +106,18 @@ export default class Combo {
 }
 
 export type Range = ReadonlyArray<ComboType>
+export type RatioRange = Partial<Record<ComboType, string>>
+
+export const convertToHintsTable = (range: RatioRange): HintTable => {
+  const lines = cards.map((c1, i) => {
+    const line = cards.map((c2, j) => {
+      const hand = i < j ? `${c1}${c2}` : `${c2}${c1}`
+      const sop = i === j ? '' : i < j ? 's' : 'o'
+      const actualCombo = `${hand}${sop}` as ComboType
+      const inRange = range?.[actualCombo]
+      return !!inRange
+    })
+    return line
+  })
+  return lines as unknown as HintTable
+}

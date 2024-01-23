@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL")
+  directUrl = env("POSTGRES_URL_NON_POOLING")
+}
+
+model Ranges {
+  id        Int      @id @default(autoincrement())
+  move      String
+  position  String
+  versus    String   @default("")
+  range     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@unique([move, position, versus], name: "move_position_versus")
+}
+
+model PushFold {
+  id        Int      @id @default(autoincrement())
+  bb        Int
+  position  String
+  range     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+
+  @@unique([bb, position], name: "bb_position")
+}

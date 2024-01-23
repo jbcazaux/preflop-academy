@@ -8,5 +8,9 @@ junit.xml
 /dist/
 .next/
 test-report.xml
+dumps/
 
 .env.local
+.env
+.env*.local
+.vercel

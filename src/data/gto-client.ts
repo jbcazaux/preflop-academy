@@ -1,36 +1,15 @@
-import { _3bet, _4bet, call, call3bet, open, pushOrFold } from 'api/hintTables'
+import { fetchHintTable, fetchPushOrFold } from 'api/hintTables'
+import { queryClient } from 'app/lib/clientProviders'
 import Hand from 'domain/hand'
-import HintTable from 'domain/hintTable'
 import Move from 'domain/move'
 import Position from 'domain/position'
 
-export const getHintsTable = (
-  move: Move,
-  heroPosition: Position,
-  vilainPosition?: Position
-): Promise<HintTable | null> => {
-  if (move === Move.OPEN) {
-    return open[heroPosition]()
-  }
-  if (!vilainPosition) return Promise.resolve(null)
-  if (move === Move.CALL) {
-    return call[heroPosition](vilainPosition)
-  }
-  if (move === Move._3BET) {
-    return _3bet[heroPosition](vilainPosition)
-  }
-  if (move === Move.CALL3BET) {
-    return call3bet[heroPosition](vilainPosition)
-  }
-  if (move === Move._4BET) {
-    return _4bet[heroPosition](vilainPosition)
-  }
-  return Promise.resolve(null)
-}
-
 const openOrFold = async (hand: Hand, heroPosition: Position): Promise<Move | null> => {
   const [x, y] = hand.xyInRangeTable()
-  const openHintsTable = await getHintsTable(Move.OPEN, heroPosition)
+  const openHintsTable = await queryClient.fetchQuery({
+    queryKey: ['hintsTable', Move.OPEN, heroPosition],
+    queryFn: () => fetchHintTable(Move.OPEN, heroPosition),
+  })
   if (!openHintsTable) {
     return null
   }
@@ -46,12 +25,20 @@ const foldOrCallOr3bet = async (
   const initialRaiser = raisePositions[0]
   const [x, y] = hand.xyInRangeTable()
 
-  const _3BetHintsTable = await getHintsTable(Move._3BET, hero, initialRaiser)
+  const _3BetHintsTable = await queryClient.fetchQuery({
+    queryKey: ['hintsTable', Move._3BET, hero, initialRaiser],
+    queryFn: () => fetchHintTable(Move._3BET, hero, initialRaiser),
+  })
+
   if (_3BetHintsTable?.[x][y]) {
     return Move._3BET
   }
 
-  const callHintsTable = await getHintsTable(Move.CALL, hero, initialRaiser)
+  const callHintsTable = await queryClient.fetchQuery({
+    queryKey: ['hintsTable', Move.CALL, hero, initialRaiser],
+    queryFn: () => fetchHintTable(Move.CALL, hero, initialRaiser),
+  })
+
   if (!callHintsTable) {
     return null
   }
@@ -67,17 +54,21 @@ const foldOrCall3betOr4bet = async (
   const lastRaiser = raisePositions[raisePositions.length - 1]
   const [x, y] = hand.xyInRangeTable()
 
-  const _4BetHintsTable = await getHintsTable(Move._4BET, hero, lastRaiser)
+  const _4BetHintsTable = await queryClient.fetchQuery({
+    queryKey: ['hintsTable', Move._4BET, hero, lastRaiser],
+    queryFn: () => fetchHintTable(Move._4BET, hero, lastRaiser),
+  })
+
   if (_4BetHintsTable?.[x][y]) {
     return Move._4BET
   }
 
-  const _3BetsHintsTable = await getHintsTable(Move.CALL3BET, hero, lastRaiser)
-  if (!_3BetsHintsTable) {
-    return null
-  }
+  const _3BetsHintsTable = await queryClient.fetchQuery({
+    queryKey: ['hintsTable', Move.CALL3BET, hero, lastRaiser],
+    queryFn: () => fetchHintTable(Move.CALL3BET, hero, lastRaiser),
+  })
 
-  return _3BetsHintsTable[x][y] ? Move.CALL3BET : Move.FOLD
+  return _3BetsHintsTable?.[x][y] ? Move.CALL3BET : Move.FOLD
 }
 
 const gto = (heroPosition: Position, raisePositions: ReadonlyArray<Position>, hand: Hand): Promise<Move | null> => {
@@ -107,7 +98,10 @@ export const gtoPushFold = async (hero: Position, hand: Hand, stack: number): Pr
   }
   const [x, y] = hand.xyInRangeTable()
 
-  const pushFoldHintsTable = await pushOrFold.get(stack, hero)
+  const pushFoldHintsTable = await queryClient.fetchQuery({
+    queryKey: ['pushFold', hero, stack],
+    queryFn: () => fetchPushOrFold(stack, hero),
+  })
   if (!pushFoldHintsTable) {
     return Promise.resolve(null)
   }

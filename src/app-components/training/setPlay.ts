@@ -1,12 +1,16 @@
+import { QueryClient } from '@tanstack/react-query'
+
 import { getRandomMoveType } from './trainingMovesDistribution'
 import { Play } from './types'
 
+import { fetchHintTable } from 'api/hintTables'
 import Action from 'domain/action'
 import Hand from 'domain/hand'
 import Move from 'domain/move'
 import Position, { getRandomHeroPosition } from 'domain/position'
 import { randomPosition } from 'utils/random'
 import randomHandInRange from 'utils/randomHandInRange'
+import { throwError } from 'utils/throw-error'
 
 const getRandomOpenActionForCallOr3Bet = (hero: Position): ReadonlyArray<Action> => {
   switch (hero) {
@@ -53,7 +57,11 @@ const getRandomOpenActionForCall3BetOr4Bet = (hero: Position): ReadonlyArray<Act
   }
 }
 
-export const setRandomPlay = async (move: Move | null, heroPosition: Position | null): Promise<Play> => {
+export const setRandomPlay = async (
+  move: Move | null,
+  heroPosition: Position | null,
+  queryClient: QueryClient
+): Promise<Play> => {
   const hero = heroPosition || getRandomHeroPosition()
   const newMove = move || getRandomMoveType(hero)
 
@@ -79,19 +87,20 @@ export const setRandomPlay = async (move: Move | null, heroPosition: Position | 
         heroPosition: hero,
       }
     }
-    case Move.CALL3BET: {
-      return {
-        hand: await randomHandInRange(Move.OPEN, hero),
-        actions: getRandomOpenActionForCall3BetOr4Bet(hero),
-        heroPosition: hero,
-      }
-    }
+    case Move.CALL3BET:
     case Move._4BET: {
-      return {
-        hand: await randomHandInRange(Move.OPEN, hero),
-        actions: getRandomOpenActionForCall3BetOr4Bet(hero),
-        heroPosition: hero,
+      const openHintsTable = await queryClient.fetchQuery({
+        queryKey: ['hintsTable', hero, Move.OPEN],
+        queryFn: () => fetchHintTable(Move.OPEN, hero),
+      })
+      if (openHintsTable !== null) {
+        return {
+          hand: randomHandInRange(Move.OPEN, openHintsTable),
+          actions: getRandomOpenActionForCall3BetOr4Bet(hero),
+          heroPosition: hero,
+        }
       }
+      return throwError(`hintTable is null open @${hero}`)
     }
     default:
       throw Error('should not be there - setRandomPlay / ' + newMove)

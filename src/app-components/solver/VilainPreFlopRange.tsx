@@ -3,14 +3,15 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useMemo, useState } from 'react'
 
+import { fetchHintTable } from 'api/hintTables'
 import RangesEditor from 'app-components/ranges/editor/RangesEditor'
 import ActionComponent from 'components/Action'
 import Vertical from 'components/layout/Vertical'
-import { getHintsTable } from 'data/gto-client'
 import Action from 'domain/action'
 import ButtonPosition from 'domain/buttonPosition'
 import { Range } from 'domain/combo'
 import HintTable from 'domain/hintTable'
+import Move from 'domain/move'
 import Position, { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 
 interface Props {
@@ -35,9 +36,12 @@ const VilainPreflopRange = ({ buttonPosition, actions, onVilainRangeUpdate }: Pr
 
       const vilainLastAction = actions.reduce((acc: Action | null, cur) => (cur.position !== hero ? cur : acc), null)
       if (!vilainLastAction) throw new Error('can not happen')
+      const heroPosition = vilainLastAction.move === Move.OPEN ? undefined : hero
       const hintTable = await queryClient.fetchQuery({
-        queryKey: ['hintsTable', vilainLastAction.move, vilainLastAction.position, hero],
-        queryFn: () => getHintsTable(vilainLastAction.move, vilainLastAction.position, hero),
+        queryKey: ['hintsTable', vilainLastAction.move, vilainLastAction.position].concat(
+          heroPosition ? [heroPosition] : []
+        ),
+        queryFn: () => fetchHintTable(vilainLastAction.move, vilainLastAction.position, heroPosition),
       })
       setVilainHintsTable(hintTable)
       setVilainAction(vilainLastAction)

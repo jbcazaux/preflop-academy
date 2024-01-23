@@ -36,14 +36,18 @@
     "typescript": "5.3.3"
   },
   "dependencies": {
+    "@prisma/client": "5.8.1",
+    "@prisma/extension-accelerate": "0.6.2",
     "@tanstack/react-query": "5.17.12",
     "@tanstack/react-query-devtools": "5.17.12",
+    "@vercel/postgres": "0.5.1",
     "axios": "1.6.5",
     "classnames": "2.5.1",
     "client-only": "0.0.1",
     "next": "14.0.4",
     "next-intl": "3.4.2",
     "pino": "8.17.2",
+    "prisma": "5.8.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "server-only": "0.0.1",
@@ -59,6 +63,8 @@
     "test": "NODE_ENV=test jest",
     "test:coverage": "jest --coverage",
     "ncuu": "ncu -u",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "prisma:generate": "prisma generate --no-engine",
+    "prisma:push": "prisma db push"
   }
 }

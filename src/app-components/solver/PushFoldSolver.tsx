@@ -1,15 +1,15 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { useEffect, useMemo, useState } from 'react'
 
 import style from './PushFoldSolver.module.scss'
 
-import { pushOrFold } from 'api/hintTables'
+import { fetchPushOrFold } from 'api/hintTables'
 import Vertical from 'components/layout/Vertical'
 import { gtoPushFold } from 'data/gto-client'
 import ButtonPosition from 'domain/buttonPosition'
 import Hand from 'domain/hand'
-import HintTable from 'domain/hintTable'
 import Move from 'domain/move'
 import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
@@ -22,10 +22,16 @@ interface Props {
 const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
   const [stack, setStack] = useState<number>(5)
   const [action, setAction] = useState<Move | null>(null)
-  const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
+  //const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
+
+  const hero = useMemo(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
+
+  const { data: hintsTable } = useQuery({
+    queryKey: ['pushFold', hero, stack],
+    queryFn: () => fetchPushOrFold(stack, hero),
+  })
 
   useEffect(() => {
-    const hero = heroPositionFromButtonPosition(buttonPosition)
     gtoPushFold(hero, hand, stack)
       .then(result => {
         setAction(result)
@@ -35,20 +41,7 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
         console.error(e)
         return
       })
-  }, [buttonPosition, hand, stack])
-
-  useEffect(() => {
-    const hero = heroPositionFromButtonPosition(buttonPosition)
-    pushOrFold
-      .get(stack, hero)
-      .then(result => {
-        setHintsTable(result)
-      })
-      .catch(e => {
-        // eslint-disable-next-line no-console
-        console.error(e)
-      })
-  }, [buttonPosition, stack])
+  }, [hero, hand, stack])
 
   return (
     <Vertical>
@@ -63,6 +56,7 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
         PUSH/FOLD @ {positionsNamesMap.get(heroPositionFromButtonPosition(buttonPosition))}: {action}
       </div>
       {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} />}
+      {/* <HintsToPushFold hintsTable={hintsTable} position={hero} bb={stack} /> */}
     </Vertical>
   )
 }

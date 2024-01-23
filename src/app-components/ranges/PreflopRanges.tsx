@@ -7,7 +7,7 @@ import RangesMenu from './RangesMenu'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import RangeTable from 'components/RangeTable/RangeTable'
-import { getHintsTable } from 'data/gto'
+import { getHintsTable } from 'data/gto-server'
 import Move from 'domain/move'
 import Position, { positionsNamesMap } from 'domain/position'
 
@@ -39,11 +39,11 @@ interface Props {
   vilainPosition?: Position
 }
 
-const PreflopRanges = ({ heroPosition, heroMove, vilainPosition }: Props) => {
+const PreflopRanges = async ({ heroPosition, heroMove, vilainPosition }: Props) => {
   const vilainMove = getVilainMove(heroMove)
-  const heroHintTable = getHintsTable(heroMove, heroPosition, vilainPosition)
-  const vilainHintTable = vilainPosition ? getHintsTable(vilainMove, vilainPosition, heroPosition) : null
-  const _3betHintTable = heroMove === Move.CALL ? getHintsTable(Move._3BET, heroPosition, vilainPosition) : null
+  const heroHintTable = await getHintsTable(heroMove, heroPosition, vilainPosition)
+  const vilainHintTable = vilainPosition ? await getHintsTable(vilainMove, vilainPosition, heroPosition) : null
+  const _3betHintTable = heroMove === Move.CALL ? await getHintsTable(Move._3BET, heroPosition, vilainPosition) : null
 
   return (
     <Horizontal>
@@ -53,6 +53,7 @@ const PreflopRanges = ({ heroPosition, heroMove, vilainPosition }: Props) => {
           <Title move={heroMove} hero={heroPosition} vilain={vilainPosition} />
           <PercentageOfPlayedHands hintsTable={heroHintTable} />
           <RangeTable hintsTable={heroHintTable} />
+          {/*<HintsToRange hintsTable={heroHintTable} position={heroPosition} move={heroMove} vs={vilainPosition} />*/}
         </Vertical>
         {heroMove === Move.CALL && _3betHintTable && (
           <Vertical className={style['range-container']}>

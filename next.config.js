@@ -6,6 +6,11 @@ module.exports = withNextIntl({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   reactStrictMode: false,
   async headers() {
     return [

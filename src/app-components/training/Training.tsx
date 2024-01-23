@@ -1,5 +1,6 @@
 'use client'
 
+import { useQueryClient } from '@tanstack/react-query'
 import { useTranslations } from 'next-intl'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -35,6 +36,7 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
   const [goodAnswer, setGoodAnswer] = useState<Move | null>(null)
   const [score, setScore] = useState<Score>(new Score())
   const [heroPosition, setHeroPosition] = useState<Position | null>(heroPositionDefault)
+  const queryClient = useQueryClient()
 
   const t = useTranslations('training')
 
@@ -43,11 +45,11 @@ const Training = ({ heroPosition: heroPositionDefault, move }: Props) => {
 
   const newRandomPlay = useCallback(async () => {
     setGuess(null)
-    const play = await setRandomPlay(move, heroPositionDefault)
+    const play = await setRandomPlay(move, heroPositionDefault, queryClient)
     setHand(play.hand)
     setActions(play.actions)
     setHeroPosition(play.heroPosition)
-  }, [move, heroPositionDefault])
+  }, [move, heroPositionDefault, queryClient])
 
   useEffect(() => {
     // set good answer
