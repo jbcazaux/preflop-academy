@@ -65,6 +65,8 @@
     "ncuu": "ncu -u",
     "prepare": "husky install",
     "prisma:generate": "prisma generate --no-engine",
-    "prisma:push": "prisma db push"
+    "prisma:push": "prisma db push",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:studio": "prisma studio --port 7777"
   }
 }
