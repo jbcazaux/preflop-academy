@@ -10,6 +10,8 @@ junit.xml
 test-report.xml
 dumps/
 
+tsconfig.tsbuildinfo
+
 .env.local
 .env
 .env*.local

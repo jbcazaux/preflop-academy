@@ -7,11 +7,19 @@ import Move, { moveToUrlParam } from 'domain/move'
 import Position, { positionToUrlParam } from 'domain/position'
 import logger from 'utils/logger'
 
+const getBaseUrl = () => {
+  if (process.env.VERCEL) {
+    return `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+  }
+  return `${process.env.NEXT_PUBLIC_VERCEL_URL}/api`
+}
+const baseURL = getBaseUrl()
+
 const url = (move: Move, position: Position, vilainPosition?: Position): string =>
-  `${process.env.NEXT_PUBLIC_URL}/api/db/ranges/${moveToUrlParam(move)}/${positionToUrlParam(position)}${vilainPosition ? `/vs/${positionToUrlParam(vilainPosition)}` : ''}`
+  `${baseURL}/db/ranges/${moveToUrlParam(move)}/${positionToUrlParam(position)}${vilainPosition ? `/vs/${positionToUrlParam(vilainPosition)}` : ''}`
 
 const urlPushFold = (position: Position, stack: number): string =>
-  `${process.env.NEXT_PUBLIC_URL}/api/db/push-fold/${positionToUrlParam(position)}/${stack}`
+  `${baseURL}/db/push-fold/${positionToUrlParam(position)}/${stack}`
 
 export const getHintsTable = async (
   move: Move,
