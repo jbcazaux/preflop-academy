@@ -1,8 +1,9 @@
 import Board from 'domain/board'
+import { Range } from 'domain/combo'
 import Hand from 'domain/hand'
 
 export const POST = async (request: Request) => {
-  const body = (await request.json()) as { vilain: ReadonlyArray<string>; hero: Hand; board: Board }
+  const body = (await request.json()) as { vilain: Range; hero: Hand; board: Board }
 
   const rawResponse = await fetch(`${process.env.API_URL}/vs/range`, {
     method: 'POST',

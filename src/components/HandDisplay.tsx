@@ -9,7 +9,7 @@ interface Props {
 
 const HandDisplay = ({ hand }: Props) => (
   <div className={style.container}>
-    {hand.card1 && <Card card={hand.card1} />}
+    {hand.card1 ? <Card card={hand.card1} /> : <div className={style.spacer} />}
     {hand.card2 && <Card card={hand.card2} />}
   </div>
 )

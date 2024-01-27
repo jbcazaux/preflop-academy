@@ -1,8 +1,7 @@
 import 'server-only'
 
-import { RatioRange, convertToHintsTable } from 'domain/combo'
+import { RatioRange } from 'domain/combo'
 import Hand from 'domain/hand'
-import HintTable from 'domain/hintTable'
 import Move, { moveToUrlParam } from 'domain/move'
 import Position, { positionToUrlParam } from 'domain/position'
 import logger from 'utils/logger'
@@ -21,29 +20,21 @@ const url = (move: Move, position: Position, vilainPosition?: Position): string 
 const urlPushFold = (position: Position, stack: number): string =>
   `${baseURL}/db/push-fold/${positionToUrlParam(position)}/${stack}`
 
-export const getHintsTable = async (
-  move: Move,
-  heroPosition: Position,
-  vilainPosition?: Position
-): Promise<HintTable | null> => {
-  if (move !== Move.OPEN && !vilainPosition) return null
+export const getRange = async (move: Move, heroPosition: Position, vilainPosition?: Position): Promise<RatioRange> => {
+  if (move !== Move.OPEN && !vilainPosition) return {} // FIXME throw error rather than {}
 
   const rawResponse = await fetch(url(move, heroPosition, move !== Move.OPEN ? vilainPosition : undefined), {
     cache: 'force-cache',
   })
-  const result = (await rawResponse.json()) as RatioRange
-  logger.debug({ move, heroPosition, vilainPosition, result })
-  return convertToHintsTable(result)
+  const range = (await rawResponse.json()) as RatioRange
+  logger.debug({ move, heroPosition, vilainPosition, range })
+  return range
 }
 
-const openOrFold = async (hand: Hand, hero: Position): Promise<Move | null> => {
-  const [x, y] = hand.xyInRangeTable()
-  const openHintsTable = await getHintsTable(Move.OPEN, hero)
-  if (!openHintsTable) {
-    return null
-  }
-
-  return openHintsTable[x][y] ? Move.OPEN : Move.FOLD
+const openOrFold = async (hand: Hand, hero: Position): Promise<Move> => {
+  const range = await getRange(Move.OPEN, hero)
+  const combo = hand.asCombo()
+  return Object.keys(range).includes(combo) ? Move.OPEN : Move.FOLD
 }
 
 const foldOrCallOr3bet = async (
@@ -52,40 +43,34 @@ const foldOrCallOr3bet = async (
   raisePositions: ReadonlyArray<Position>
 ): Promise<Move | null> => {
   const initialRaiser = raisePositions[0]
-  const [x, y] = hand.xyInRangeTable()
+  const combo = hand.asCombo()
 
-  const _3BetHintsTable = await getHintsTable(Move._3BET, hero, initialRaiser)
-  if (_3BetHintsTable?.[x][y]) {
+  const _3BetRange = await getRange(Move._3BET, hero, initialRaiser)
+  if (_3BetRange[combo]) {
     return Move._3BET
   }
 
-  const callHintsTable = await getHintsTable(Move.CALL, hero, initialRaiser)
-  if (!callHintsTable) {
-    return null
-  }
+  const callRange = await getRange(Move.CALL, hero, initialRaiser)
 
-  return callHintsTable[x][y] ? Move.CALL : Move.FOLD
+  return callRange[combo] ? Move.CALL : Move.FOLD
 }
 
 const foldOrCall3betOr4bet = async (
   hand: Hand,
   hero: Position,
   raisePositions: ReadonlyArray<Position>
-): Promise<Move | null> => {
+): Promise<Move> => {
   const lastRaiser = raisePositions[raisePositions.length - 1]
-  const [x, y] = hand.xyInRangeTable()
+  const combo = hand.asCombo()
 
-  const _4BetHintsTable = await getHintsTable(Move._4BET, hero, lastRaiser)
-  if (_4BetHintsTable?.[x][y]) {
+  const _4BetRange = await getRange(Move._4BET, hero, lastRaiser)
+  if (_4BetRange[combo]) {
     return Move._4BET
   }
 
-  const _3BetsHintsTable = await getHintsTable(Move.CALL3BET, hero, lastRaiser)
-  if (!_3BetsHintsTable) {
-    return null
-  }
+  const _3BetsRange = await getRange(Move.CALL3BET, hero, lastRaiser)
 
-  return _3BetsHintsTable[x][y] ? Move.CALL3BET : Move.FOLD
+  return _3BetsRange[combo] ? Move.CALL3BET : Move.FOLD
 }
 
 const gto = (heroPosition: Position, raisePositions: ReadonlyArray<Position>, hand: Hand): Promise<Move | null> => {
@@ -109,13 +94,12 @@ const gto = (heroPosition: Position, raisePositions: ReadonlyArray<Position>, ha
 }
 export default gto
 
-export const pushfoldHintsTable = async (position: Position, stack: number): Promise<HintTable | null> => {
-  if (position === Position.BB || stack < 5 || stack > 20) return null
+export const pushfoldRange = async (position: Position, stack: number): Promise<RatioRange | null> => {
+  if (position === Position.BB || stack < 2 || stack > 20) return {} // FIXME throw error rather than {}
 
-  const rawResponse = await fetch(urlPushFold(position, stack), { cache: 'force-cache' })
-  const result = (await rawResponse.json()) as RatioRange
-
-  return convertToHintsTable(result)
+  const range = await fetch(urlPushFold(position, stack), { cache: 'force-cache' })
+  logger.debug({ position, stack, range })
+  return (await range.json()) as RatioRange
 }
 
 export const gtoPushFold = async (hero: Position, hand: Hand, stack: number): Promise<Move | null> => {
@@ -123,10 +107,11 @@ export const gtoPushFold = async (hero: Position, hand: Hand, stack: number): Pr
     return Promise.resolve(null)
   }
 
-  const pushFoldHintsTable = await pushfoldHintsTable(hero, stack)
-  if (!pushFoldHintsTable) {
+  const pfRange = await pushfoldRange(hero, stack)
+  if (!pfRange) {
     return null
   }
-  const [x, y] = hand.xyInRangeTable()
-  return pushFoldHintsTable[x][y] ? Move.ALL_IN : Move.FOLD
+
+  const combo = hand.asCombo()
+  return pfRange[combo] ? Move.ALL_IN : Move.FOLD
 }

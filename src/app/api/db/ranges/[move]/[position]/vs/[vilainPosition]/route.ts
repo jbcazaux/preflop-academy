@@ -3,6 +3,7 @@ import { withAccelerate } from '@prisma/extension-accelerate'
 
 import { urlParamToMove } from 'domain/move'
 import { stringToPosition } from 'domain/position'
+import logger from 'utils/logger'
 import { throwError } from 'utils/throw-error'
 
 const prisma = new PrismaClient({ log: ['info', 'query'] }).$extends(withAccelerate())
@@ -15,7 +16,7 @@ export const GET = async (
   const p = stringToPosition(position) || throwError(`invalid position: ${position}`)
   const vp = stringToPosition(vilainPosition) || throwError(`invalid vilain position: ${vilainPosition}`)
 
-  const ranges = await prisma.ranges.findUnique({
+  const data = await prisma.ranges.findUnique({
     where: {
       move_position_versus: {
         move: m,
@@ -28,8 +29,8 @@ export const GET = async (
     },
     cacheStrategy: { swr: 24 * 60 * 60, ttl: 24 * 60 * 60 },
   })
-
-  return Response.json(ranges ? ranges.range : null)
+  logger.debug({ position, move, vilainPosition })
+  return Response.json(data ? data.range : {})
 }
 
 export const runtime = 'edge'

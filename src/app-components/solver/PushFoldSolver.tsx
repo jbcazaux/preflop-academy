@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from 'react'
 
 import style from './PushFoldSolver.module.scss'
 
-import { fetchPushOrFold } from 'api/hintTables'
+import { fetchPushOrFold } from 'api/ranges'
 import Vertical from 'components/layout/Vertical'
 import { gtoPushFold } from 'data/gto-client'
 import ButtonPosition from 'domain/buttonPosition'
@@ -13,6 +13,7 @@ import Hand from 'domain/hand'
 import Move from 'domain/move'
 import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
+import { throwError } from 'utils/throw-error'
 
 interface Props {
   hand: Hand
@@ -22,14 +23,15 @@ interface Props {
 const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
   const [stack, setStack] = useState<number>(5)
   const [action, setAction] = useState<Move | null>(null)
-  //const [hintsTable, setHintsTable] = useState<HintTable | null>(null)
 
   const hero = useMemo(() => heroPositionFromButtonPosition(buttonPosition), [buttonPosition])
 
-  const { data: hintsTable } = useQuery({
+  const { data: pushFoldRange = {} } = useQuery({
     queryKey: ['pushFold', hero, stack],
     queryFn: () => fetchPushOrFold(stack, hero),
   })
+
+  throwError('oops')
 
   useEffect(() => {
     gtoPushFold(hero, hand, stack)
@@ -55,8 +57,7 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
       <div className={style.action}>
         PUSH/FOLD @ {positionsNamesMap.get(heroPositionFromButtonPosition(buttonPosition))}: {action}
       </div>
-      {hintsTable && <Ranges hintsTable={hintsTable} hand={hand} />}
-      {/* <HintsToPushFold hintsTable={hintsTable} position={hero} bb={stack} /> */}
+      <Ranges range={pushFoldRange} hand={hand} />
     </Vertical>
   )
 }

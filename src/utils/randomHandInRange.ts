@@ -1,17 +1,17 @@
+import { Combo, RatioRange } from 'domain/combo'
 import Hand from 'domain/hand'
-import HintTable from 'domain/hintTable'
 import Move from 'domain/move'
 
-const randomHandInRange = (move: Move, hintsTable: HintTable): Hand => {
+const randomHandInRange = (move: Move, range: RatioRange): Hand => {
   if (move === Move.OPEN) {
     let retriesLeft = 300
     let hand: Hand
-    let xy: [number, number]
+    let combo: Combo
     do {
       retriesLeft--
       hand = Hand.random()
-      xy = hand.xyInRangeTable()
-    } while (!hintsTable?.[xy[0]][xy[1]] && retriesLeft > 0)
+      combo = hand.asCombo()
+    } while (!range[combo] && retriesLeft > 0) // FIXME improve algorithm
 
     if (retriesLeft <= 0) {
       throw new Error('Cannot find a hand in range')

@@ -1,49 +1,41 @@
-import { fetchHintTable, fetchPushOrFold } from 'api/hintTables'
+import { fetchPushOrFold, fetchRange } from 'api/ranges'
 import { queryClient } from 'app/lib/clientProviders'
 import Hand from 'domain/hand'
 import Move from 'domain/move'
 import Position from 'domain/position'
 
-const openOrFold = async (hand: Hand, heroPosition: Position): Promise<Move | null> => {
-  const [x, y] = hand.xyInRangeTable()
-  const openHintsTable = await queryClient.fetchQuery({
-    queryKey: ['hintsTable', Move.OPEN, heroPosition],
-    queryFn: () => fetchHintTable(Move.OPEN, heroPosition),
+const openOrFold = async (hand: Hand, heroPosition: Position): Promise<Move> => {
+  const openRange = await queryClient.fetchQuery({
+    queryKey: ['range', Move.OPEN, heroPosition],
+    queryFn: () => fetchRange(Move.OPEN, heroPosition),
   })
-  if (!openHintsTable) {
-    return null
-  }
 
-  return openHintsTable[x][y] ? Move.OPEN : Move.FOLD
+  if (!openRange) {
+    return Move.FOLD
+  }
+  const combo = hand.asCombo()
+  return openRange[combo] ? Move.OPEN : Move.FOLD
 }
 
-const foldOrCallOr3bet = async (
-  hand: Hand,
-  hero: Position,
-  raisePositions: ReadonlyArray<Position>
-): Promise<Move | null> => {
+const foldOrCallOr3bet = async (hand: Hand, hero: Position, raisePositions: ReadonlyArray<Position>): Promise<Move> => {
   const initialRaiser = raisePositions[0]
-  const [x, y] = hand.xyInRangeTable()
+  const combo = hand.asCombo()
 
-  const _3BetHintsTable = await queryClient.fetchQuery({
-    queryKey: ['hintsTable', Move._3BET, hero, initialRaiser],
-    queryFn: () => fetchHintTable(Move._3BET, hero, initialRaiser),
+  const _3BetRange = await queryClient.fetchQuery({
+    queryKey: ['range', Move._3BET, hero, initialRaiser],
+    queryFn: () => fetchRange(Move._3BET, hero, initialRaiser),
   })
 
-  if (_3BetHintsTable?.[x][y]) {
+  if (_3BetRange[combo]) {
     return Move._3BET
   }
 
-  const callHintsTable = await queryClient.fetchQuery({
-    queryKey: ['hintsTable', Move.CALL, hero, initialRaiser],
-    queryFn: () => fetchHintTable(Move.CALL, hero, initialRaiser),
+  const callRange = await queryClient.fetchQuery({
+    queryKey: ['range', Move.CALL, hero, initialRaiser],
+    queryFn: () => fetchRange(Move.CALL, hero, initialRaiser),
   })
 
-  if (!callHintsTable) {
-    return null
-  }
-
-  return callHintsTable[x][y] ? Move.CALL : Move.FOLD
+  return callRange[combo] ? Move.CALL : Move.FOLD
 }
 
 const foldOrCall3betOr4bet = async (
@@ -52,23 +44,23 @@ const foldOrCall3betOr4bet = async (
   raisePositions: ReadonlyArray<Position>
 ): Promise<Move | null> => {
   const lastRaiser = raisePositions[raisePositions.length - 1]
-  const [x, y] = hand.xyInRangeTable()
+  const combo = hand.asCombo()
 
-  const _4BetHintsTable = await queryClient.fetchQuery({
-    queryKey: ['hintsTable', Move._4BET, hero, lastRaiser],
-    queryFn: () => fetchHintTable(Move._4BET, hero, lastRaiser),
+  const _4BetRange = await queryClient.fetchQuery({
+    queryKey: ['range', Move._4BET, hero, lastRaiser],
+    queryFn: () => fetchRange(Move._4BET, hero, lastRaiser),
   })
 
-  if (_4BetHintsTable?.[x][y]) {
+  if (_4BetRange[combo]) {
     return Move._4BET
   }
 
-  const _3BetsHintsTable = await queryClient.fetchQuery({
-    queryKey: ['hintsTable', Move.CALL3BET, hero, lastRaiser],
-    queryFn: () => fetchHintTable(Move.CALL3BET, hero, lastRaiser),
+  const _3BetsRange = await queryClient.fetchQuery({
+    queryKey: ['range', Move.CALL3BET, hero, lastRaiser],
+    queryFn: () => fetchRange(Move.CALL3BET, hero, lastRaiser),
   })
 
-  return _3BetsHintsTable?.[x][y] ? Move.CALL3BET : Move.FOLD
+  return _3BetsRange[combo] ? Move.CALL3BET : Move.FOLD
 }
 
 const gto = (heroPosition: Position, raisePositions: ReadonlyArray<Position>, hand: Hand): Promise<Move | null> => {
@@ -96,15 +88,15 @@ export const gtoPushFold = async (hero: Position, hand: Hand, stack: number): Pr
   if (hand.card1 === null || hand.card2 === null) {
     return Promise.resolve(null)
   }
-  const [x, y] = hand.xyInRangeTable()
+  const combo = hand.asCombo()
 
-  const pushFoldHintsTable = await queryClient.fetchQuery({
+  const pushFoldRange = await queryClient.fetchQuery({
     queryKey: ['pushFold', hero, stack],
     queryFn: () => fetchPushOrFold(stack, hero),
   })
-  if (!pushFoldHintsTable) {
+  if (!pushFoldRange) {
     return Promise.resolve(null)
   }
 
-  return pushFoldHintsTable[x][y] ? Move.ALL_IN : Move.FOLD
+  return pushFoldRange[combo] ? Move.ALL_IN : Move.FOLD
 }

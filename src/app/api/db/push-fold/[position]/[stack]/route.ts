@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client/edge'
 
 import { RatioRange } from 'domain/combo'
 import Position, { stringToPosition } from 'domain/position'
+import logger from 'utils/logger'
 import { throwError } from 'utils/throw-error'
 
 const prisma = new PrismaClient()
@@ -13,7 +14,7 @@ export const GET = async (
   const p = stringToPosition(position) || throwError(`invalid position: ${position}`)
   const bb = Number(stack)
 
-  const ranges = await prisma.pushFold.findUnique({
+  const data = await prisma.pushFold.findUnique({
     where: {
       bb_position: {
         bb,
@@ -24,8 +25,8 @@ export const GET = async (
       range: true,
     },
   })
-
-  return Response.json(ranges)
+  logger.debug({ position, stack, data })
+  return Response.json(data ? data.range : {})
 }
 
 export const POST = async (request: Request) => {

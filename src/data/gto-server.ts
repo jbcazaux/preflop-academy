@@ -1,18 +1,17 @@
 import 'server-only'
 
-import { convertToHintsTable } from 'domain/combo'
-import HintTable from 'domain/hintTable'
+import { RatioRange } from 'domain/combo'
 import Move from 'domain/move'
 import Position from 'domain/position'
 import { findAllRanges } from 'src/repositories/ranges'
 import logger from 'utils/logger'
 
-export const getHintsTable = async (
+export const getRange = async (
   move: Move,
   heroPosition: Position,
   vilainPosition?: Position
-): Promise<HintTable | null> => {
-  logger.debug({ where: 'gto-server.getHintsTable', move, heroPosition, vilainPosition })
+): Promise<RatioRange | null> => {
+  logger.debug({ where: 'gto-server.getRange', move, heroPosition, vilainPosition })
 
   if (move !== Move.OPEN && !vilainPosition) return null
 
@@ -24,6 +23,6 @@ export const getHintsTable = async (
     .filter(r => (r.move !== Move.OPEN ? r.versus === vilainPosition : true))
     .map(r => r.range)
     .at(0)
-  logger.debug({ where: 'gto-server.getHintsTable', range })
-  return range ? convertToHintsTable(range) : null
+  logger.debug({ where: 'gto-server.getRange', range })
+  return range || null
 }

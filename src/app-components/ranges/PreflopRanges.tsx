@@ -7,7 +7,7 @@ import RangesMenu from './RangesMenu'
 import Horizontal from 'components/layout/Horizontal'
 import Vertical from 'components/layout/Vertical'
 import RangeTable from 'components/RangeTable/RangeTable'
-import { getHintsTable } from 'data/gto-server'
+import { getRange } from 'data/gto-server'
 import Move from 'domain/move'
 import Position, { positionsNamesMap } from 'domain/position'
 
@@ -41,9 +41,9 @@ interface Props {
 
 const PreflopRanges = async ({ heroPosition, heroMove, vilainPosition }: Props) => {
   const vilainMove = getVilainMove(heroMove)
-  const heroHintTable = await getHintsTable(heroMove, heroPosition, vilainPosition)
-  const vilainHintTable = vilainPosition ? await getHintsTable(vilainMove, vilainPosition, heroPosition) : null
-  const _3betHintTable = heroMove === Move.CALL ? await getHintsTable(Move._3BET, heroPosition, vilainPosition) : null
+  const heroRange = (await getRange(heroMove, heroPosition, vilainPosition)) || {}
+  const vilainRange = vilainPosition ? await getRange(vilainMove, vilainPosition, heroPosition) : null
+  const _3betRange = heroMove === Move.CALL ? await getRange(Move._3BET, heroPosition, vilainPosition) : null
 
   return (
     <Horizontal>
@@ -51,22 +51,21 @@ const PreflopRanges = async ({ heroPosition, heroMove, vilainPosition }: Props) 
       <Horizontal className={style.wrap}>
         <Vertical className={style['range-container']}>
           <Title move={heroMove} hero={heroPosition} vilain={vilainPosition} />
-          <PercentageOfPlayedHands hintsTable={heroHintTable} />
-          <RangeTable hintsTable={heroHintTable} />
-          {/*<HintsToRange hintsTable={heroHintTable} position={heroPosition} move={heroMove} vs={vilainPosition} />*/}
+          <PercentageOfPlayedHands range={heroRange} />
+          <RangeTable range={heroRange} />
         </Vertical>
-        {heroMove === Move.CALL && _3betHintTable && (
+        {heroMove === Move.CALL && _3betRange && (
           <Vertical className={style['range-container']}>
             <Title move={Move._3BET} hero={heroPosition} vilain={vilainPosition} />
-            <PercentageOfPlayedHands hintsTable={_3betHintTable} />
-            <RangeTable hintsTable={_3betHintTable} />
+            <PercentageOfPlayedHands range={_3betRange} />
+            <RangeTable range={_3betRange} />
           </Vertical>
         )}
-        {hasVilainOpen(heroMove) && vilainPosition && (
+        {hasVilainOpen(heroMove) && vilainPosition && vilainRange && (
           <Vertical className={style['range-container']}>
             <Title move={vilainMove} hero={vilainPosition} vilain={heroPosition} />
-            <PercentageOfPlayedHands hintsTable={vilainHintTable} />
-            <RangeTable hintsTable={vilainHintTable} />
+            <PercentageOfPlayedHands range={vilainRange} />
+            <RangeTable range={vilainRange} />
           </Vertical>
         )}
       </Horizontal>

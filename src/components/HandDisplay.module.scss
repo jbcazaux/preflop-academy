@@ -1,6 +1,18 @@
+@use 'style/breakpoints.scss' as *;
+
 .container {
   display: flex;
   justify-content: center;
-  height: 50px;
+
   margin: 10px 0;
+
+  .spacer {
+    height: 45px;
+    margin: 2px;
+    width: 1px;
+
+    @media (max-width: $breakpoints-max-tablet) {
+      height: 35px;
+    }
+  }
 }

@@ -3,7 +3,7 @@ import { QueryClient } from '@tanstack/react-query'
 import { getRandomMoveType } from './trainingMovesDistribution'
 import { Play } from './types'
 
-import { fetchHintTable } from 'api/hintTables'
+import { fetchRange } from 'api/ranges'
 import Action from 'domain/action'
 import Hand from 'domain/hand'
 import Move from 'domain/move'
@@ -89,18 +89,18 @@ export const setRandomPlay = async (
     }
     case Move.CALL3BET:
     case Move._4BET: {
-      const openHintsTable = await queryClient.fetchQuery({
-        queryKey: ['hintsTable', hero, Move.OPEN],
-        queryFn: () => fetchHintTable(Move.OPEN, hero),
+      const openRange = await queryClient.fetchQuery({
+        queryKey: ['range', hero, Move.OPEN],
+        queryFn: () => fetchRange(Move.OPEN, hero),
       })
-      if (openHintsTable !== null) {
+      if (openRange !== null) {
         return {
-          hand: randomHandInRange(Move.OPEN, openHintsTable),
+          hand: randomHandInRange(Move.OPEN, openRange),
           actions: getRandomOpenActionForCall3BetOr4Bet(hero),
           heroPosition: hero,
         }
       }
-      return throwError(`hintTable is null open @${hero}`)
+      return throwError(`range is null open @${hero}`)
     }
     default:
       throw Error('should not be there - setRandomPlay / ' + newMove)

@@ -1,7 +1,13 @@
 import { Card } from './card'
+import { Combo } from './combo'
+
+import { throwError } from 'utils/throw-error'
 
 export default class Hand {
-  constructor(readonly card1: Card | null, readonly card2: Card | null) {}
+  constructor(
+    readonly card1: Card | null,
+    readonly card2: Card | null
+  ) {}
 
   static newHand = new Hand(null, null)
 
@@ -24,7 +30,9 @@ export default class Hand {
     return this
   }
 
-  isSuited = (): boolean => (this.card1 && this.card2) ? (this.card1.id - this.card2.id) % 4 === 0 : false
+  isSuited = (): boolean => (this.card1 && this.card2 ? (this.card1.id - this.card2.id) % 4 === 0 : false)
+
+  isPair = (): boolean => (this.card1 && this.card2 ? this.card1.value() === this.card2.value() : false)
 
   isEmpty = (): boolean => this.card1 === null && this.card2 === null
 
@@ -45,13 +53,27 @@ export default class Hand {
     return new Hand(c1, c2)
   }
 
+  asCombo = (): Combo => {
+    if (!this.isComplete || this.card1 === null || this.card2 === null) {
+      return throwError('Cannot compute combo if hand is not complete')
+    }
+
+    if (this.isPair()) return `${this.card1.value()}${this.card2?.value()}` as Combo
+    const pos = this.isPair() ? '' : this.isSuited() ? 's' : 'o'
+    const c1c2 = this.card1.isBigger(this.card2)
+      ? `${this.card1.value()}${this.card2.value()}`
+      : `${this.card2.value()}${this.card1.value()}`
+
+    return `${c1c2}${pos}` as Combo
+  }
+
   xyInRangeTable = (): [number, number] => {
     const h = this.sort()
     if (!h.card1 || !h.card2) {
       throw new Error('Can not compute range if hand is not complete')
     }
-    const x = - Math.floor((h.card1.id - 1) / 4) + 12
-    const y = - Math.floor((h.card2.id - 1) / 4) + 12
+    const x = -Math.floor((h.card1.id - 1) / 4) + 12
+    const y = -Math.floor((h.card2.id - 1) / 4) + 12
 
     return this.isSuited() ? [x, y] : [y, x]
   }

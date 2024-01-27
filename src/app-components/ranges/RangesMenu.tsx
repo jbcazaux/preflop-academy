@@ -91,7 +91,6 @@ const RangesMenu = ({ heroMove, heroPosition, vilainPosition }: Props) => {
             <LinkButton
               className={style.button}
               key={position}
-              // disabled={!getHintsTable(heroMove, position, vilainPosition)}
               disabled={!isMoveAllowed(heroMove, position, vilainPosition)}
               href={link}
               active={heroPosition === position}

@@ -1,4 +1,4 @@
-import { pushfoldHintsTable } from 'data/gto'
+import { pushfoldRange } from 'data/gto'
 import { stringToPosition } from 'domain/position'
 import { throwError } from 'utils/throw-error'
 
@@ -9,6 +9,6 @@ export const GET = async (
   const s = Number(stack)
   const p = stringToPosition(position) || throwError(`invalid position: ${position}`)
 
-  const table = await pushfoldHintsTable(p, s)
-  return Response.json(table)
+  const range = await pushfoldRange(p, s)
+  return Response.json(range)
 }

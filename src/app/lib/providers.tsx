@@ -1,3 +1,4 @@
+import { AbstractIntlMessages, NextIntlClientProvider, useMessages } from 'next-intl'
 import React, { ReactNode } from 'react'
 
 import ClientProviders from './clientProviders'
@@ -9,6 +10,15 @@ interface Props {
   locale: Locale
 }
 
-const Providers = ({ children }: Props) => <ClientProviders>{children}</ClientProviders>
+const Providers = ({ children, locale }: Props) => {
+  const { error } = useMessages()
+  return (
+    <ClientProviders>
+      <NextIntlClientProvider locale={locale} messages={{ error } as AbstractIntlMessages}>
+        {children}
+      </NextIntlClientProvider>
+    </ClientProviders>
+  )
+}
 
 export default Providers

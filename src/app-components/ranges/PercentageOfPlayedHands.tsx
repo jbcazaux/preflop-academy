@@ -1,26 +1,30 @@
-import HintTable from 'domain/hintTable'
+import { Combo, RatioRange, isComboType } from 'domain/combo'
 
-interface Props {
-  hintsTable: HintTable | null
+export const computePercentage = (range: RatioRange): string => {
+  const playRange: ReadonlyArray<Combo> = Object.entries(range)
+    .filter(([, v]) => v > 0)
+    .map(([k]) => k)
+    .filter(isComboType)
+
+  const moves = playRange.reduce((acc, combo) => {
+    if (combo[0] === combo[1]) return acc + 12
+    if (combo[2] === 's') return acc + 4 * 2
+    if (combo[2] === 'o') return acc + 12 * 2
+    return acc
+  }, 0)
+  return Number((100 * moves) / (52 * 51)).toFixed(2)
 }
 
-const PercentageOfPlayedHand = ({ hintsTable }: Props) => {
-  if (!hintsTable) {
+interface Props {
+  range: RatioRange | null
+}
+
+const PercentageOfPlayedHand = ({ range }: Props) => {
+  if (!range) {
     return <div>N/A</div>
   }
 
-  const moves = hintsTable.reduce((acc, line, i) => {
-    const l = line.reduce((accLine, h, j) => {
-      if (!h) return accLine
-      const pair = i === j
-      if (pair) return accLine + 12
-      const suited = i < j
-      if (suited) return accLine + 4 * 2
-      return accLine + 12 * 2
-    }, 0)
-    return acc + l
-  }, 0)
-  return <div>{Number((100 * moves) / (52 * 51)).toFixed(2)}%</div>
+  return <div>{computePercentage(range)}%</div>
 }
 
 export default PercentageOfPlayedHand

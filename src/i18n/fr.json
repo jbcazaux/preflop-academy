@@ -1,4 +1,8 @@
 {
+  "error": {
+    "generic": "Une erreur est survenue. Veuillez actualiser la page.",
+    "try-again": "Réessayer"
+  },
   "menu": {
     "home": "Accueil",
     "training": "Exercices",

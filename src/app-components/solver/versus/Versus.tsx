@@ -10,21 +10,26 @@ import versusApi, { VsResult } from 'api/versus'
 import Vertical from 'components/layout/Vertical'
 import Loader from 'components/Loader/Loader'
 import Board from 'domain/board'
-import { ComboType } from 'domain/combo'
+import { Combo, isComboType, RatioRange } from 'domain/combo'
 import Hand from 'domain/hand'
 
 interface Props {
   hand: Hand
   board: Board
-  vilainRange: ReadonlyArray<ComboType>
+  vilainRange: RatioRange
 }
 
-const Versus = ({ hand, board, vilainRange }: Props) => {
+const Versus = ({ hand, board, vilainRange: vr }: Props) => {
   const { data: config } = useQuery<Config>({
     queryKey: ['config'],
     queryFn: fetchConfig,
     initialData: { DISABLE_PREFLOP_VERSUS_RANGE: true },
   })
+
+  const vilainRange: ReadonlyArray<Combo> = Object.entries(vr)
+    .filter(([, v]) => v > 0)
+    .map(([k]) => k)
+    .filter(isComboType)
 
   const {
     data: resultPreflop = null,

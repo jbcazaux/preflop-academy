@@ -1,4 +1,8 @@
 {
+  "error": {
+    "generic": "An error occurred. Please refresh the page.",
+    "try-again": "Try again"
+  },
   "menu": {
     "home": "Home",
     "training": "Training",

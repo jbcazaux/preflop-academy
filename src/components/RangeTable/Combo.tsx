@@ -2,16 +2,17 @@ import cn from 'classnames'
 
 import style from './Combo.module.scss'
 
+import { Combo } from 'domain/combo'
+
 interface Props {
   active: boolean
   pair: boolean
   suited: boolean
   selected?: boolean
-  children: string
-  xy: [number, number]
+  combo: Combo
 }
 
-const Combo = ({ active, suited, pair, selected = false, xy, children }: Props) => (
+const Combo = ({ active, suited, pair, selected = false, combo }: Props) => (
   <div
     className={cn('combo', style.combo, {
       [style.suited]: suited,
@@ -19,10 +20,9 @@ const Combo = ({ active, suited, pair, selected = false, xy, children }: Props) 
       [style.active]: active,
       [style.selected]: selected,
     })}
-    data-xy={xy}
+    data-combo={combo}
   >
-    {children}
-    {pair ? '' : suited ? 's' : 'o'}
+    {combo}
   </div>
 )
 

@@ -22,7 +22,7 @@ import Action from 'domain/action'
 import Board from 'domain/board'
 import ButtonPosition from 'domain/buttonPosition'
 import { Card as CardObject } from 'domain/card'
-import { Range } from 'domain/combo'
+import { RatioRange } from 'domain/combo'
 import Hand from 'domain/hand'
 import { positionBySeatNumberAndButtonPosition } from 'domain/position'
 
@@ -30,7 +30,7 @@ const Solver = () => {
   const [buttonPosition, setButtonPosition] = useState<ButtonPosition>(0)
   const [hand, setHand] = useState<Hand>(Hand.newHand)
   const [board, setBoard] = useState<Board>(Board.newBoard)
-  const [vilainRange, setVilainRange] = useState<Range>([])
+  const [vilainRange, setVilainRange] = useState<RatioRange>({})
   const solverContainerRef = useRef<HTMLDivElement>(null)
 
   const [actions, setActions] = useState<ReadonlyArray<Action>>([])

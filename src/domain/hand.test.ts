@@ -23,4 +23,10 @@ describe('Hand', () => {
     expect(new Hand(new Card(1), new Card(2)).isSuited()).toBeFalsy()
     expect(new Hand(null, new Card(2)).isSuited()).toBeFalsy()
   })
+
+  it('converts to combo', () => {
+    expect(new Hand(new Card(49), new Card(50)).asCombo()).toEqual('AA')
+    expect(new Hand(new Card(48), new Card(49)).asCombo()).toEqual('AKo')
+    expect(new Hand(new Card(48), new Card(52)).asCombo()).toEqual('AKs')
+  })
 })
