@@ -39,7 +39,7 @@ export class Card {
 export const names = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'JACK', 'QUEEN', 'KING', 'AS']
 export type CardId = number
 
-const cardsValueMap: Record<string, number> = {
+export const cardsValueMap: Record<string, number> = {
   2: 1,
   3: 5,
   4: 9,

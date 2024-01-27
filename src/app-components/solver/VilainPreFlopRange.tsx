@@ -12,6 +12,7 @@ import ButtonPosition from 'domain/buttonPosition'
 import { RatioRange } from 'domain/combo'
 import Move from 'domain/move'
 import Position, { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
+import { throwError } from 'utils/throw-error'
 
 interface Props {
   buttonPosition: ButtonPosition
@@ -34,7 +35,7 @@ const VilainPreflopRange = ({ buttonPosition, actions, onVilainRangeUpdate }: Pr
       }
 
       const vilainLastAction = actions.reduce((acc: Action | null, cur) => (cur.position !== hero ? cur : acc), null)
-      if (!vilainLastAction) throw new Error('can not happen')
+      if (!vilainLastAction) return throwError('can not happen')
       const heroPosition = vilainLastAction.move === Move.OPEN ? undefined : hero
       const vr = await queryClient.fetchQuery({
         queryKey: ['range', vilainLastAction.move, vilainLastAction.position].concat(
@@ -60,9 +61,7 @@ const VilainPreflopRange = ({ buttonPosition, actions, onVilainRangeUpdate }: Pr
           </>
         )}
       </ActionComponent>
-      {vilainRange && onVilainRangeUpdate && (
-        <RangesEditor defaultRange={vilainRange} onCombosUpdate={onVilainRangeUpdate} />
-      )}
+      {vilainRange && <RangesEditor defaultRange={vilainRange} onCombosUpdate={onVilainRangeUpdate} />}
     </Vertical>
   )
 }

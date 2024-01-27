@@ -15,7 +15,7 @@ import { Combo, Range, RatioRange } from 'domain/combo'
 
 interface Props {
   defaultRange: RatioRange
-  onCombosUpdate: (r: RatioRange) => void
+  onCombosUpdate?: (r: RatioRange) => void
 }
 
 const RangesEditor = ({ onCombosUpdate, defaultRange }: Props) => {
@@ -23,7 +23,7 @@ const RangesEditor = ({ onCombosUpdate, defaultRange }: Props) => {
   const [range, setRange] = useState<RatioRange>(defaultRange)
 
   const generateCombos = () => {
-    onCombosUpdate(range)
+    onCombosUpdate && onCombosUpdate(range)
   }
 
   useEffect(generateCombos, [range, onCombosUpdate])
@@ -54,7 +54,7 @@ const RangesEditor = ({ onCombosUpdate, defaultRange }: Props) => {
         <div onClick={handleClick}>
           <RangeTable range={range} />
         </div>
-        <RangeSelector numberOfHands={numberOfHands} setNumberOfHands={setNumberOfHands} />
+        {onCombosUpdate && <RangeSelector numberOfHands={numberOfHands} setNumberOfHands={setNumberOfHands} />}
       </Vertical>
     </Horizontal>
   )

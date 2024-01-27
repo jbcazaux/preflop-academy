@@ -1,6 +1,7 @@
 'use client'
 
 import { useQueryClient } from '@tanstack/react-query'
+import cn from 'classnames'
 import { useEffect, useMemo, useState } from 'react'
 
 import style from './PreflopSolver.module.scss'
@@ -23,11 +24,12 @@ interface Props {
   board: Board
   buttonPosition: ButtonPosition
   actions: ReadonlyArray<Action>
+  className?: string
   onVilainRangeUpdate?: (r: RatioRange) => void
   children?: React.ReactNode
 }
 
-const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, children }: Props) => {
+const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, className, children }: Props) => {
   const [range, setRange] = useState<RatioRange>({})
   const [hintsTableName, setHintsTableName] = useState<string>('- No Table To display -')
   const queryClient = useQueryClient()
@@ -128,20 +130,13 @@ const PreFlopSolver = ({ hand, buttonPosition, actions, onVilainRangeUpdate, chi
   }, [hand, hero, actions, queryClient])
 
   return (
-    <div className={style.container}>
+    <div className={cn(style.container, className)}>
+      <VilainPreflopRange actions={actions} buttonPosition={buttonPosition} onVilainRangeUpdate={onVilainRangeUpdate} />
       <Vertical>
-        <div className={style.wrap}>
-          <VilainPreflopRange
-            actions={actions}
-            buttonPosition={buttonPosition}
-            onVilainRangeUpdate={onVilainRangeUpdate}
-          />
-          <Vertical>
-            <Gto hero={hero} hand={hand} actions={actions} />
-            <Ranges range={range} hand={hand} hintsTableName={hintsTableName} />
-          </Vertical>
-        </div>
+        <Gto hero={hero} hand={hand} actions={actions} />
+        <Ranges range={range} hand={hand} hintsTableName={hintsTableName} />
       </Vertical>
+
       {children}
     </div>
   )

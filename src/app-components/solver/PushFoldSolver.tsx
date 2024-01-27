@@ -13,7 +13,6 @@ import Hand from 'domain/hand'
 import Move from 'domain/move'
 import { heroPositionFromButtonPosition, positionsNamesMap } from 'domain/position'
 import Ranges from 'src/app-components/ranges/Ranges'
-import { throwError } from 'utils/throw-error'
 
 interface Props {
   hand: Hand
@@ -30,8 +29,6 @@ const PushFoldSolver = ({ hand, buttonPosition }: Props) => {
     queryKey: ['pushFold', hero, stack],
     queryFn: () => fetchPushOrFold(stack, hero),
   })
-
-  throwError('oops')
 
   useEffect(() => {
     gtoPushFold(hero, hand, stack)

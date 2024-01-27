@@ -1,5 +1,6 @@
 .idea/
 *.iml
+*.swp
 node_modules/
 coverage/
 test-report.xml
